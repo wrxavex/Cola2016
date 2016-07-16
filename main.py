@@ -2,14 +2,15 @@ from kivy.app import App
 from kivy.uix.widget import Widget
 
 
-class MyPaintWidget(Widget):
-    pass
+class Cola2016Widget(Widget):
+    def on_touch_down(self, touch):
+        print(touch)
 
 
-class MyPaintApp(App):
+class Cola2016App(App):
     def build(self):
-        return MyPaintWidget()
+        return Cola2016Widget()
 
 
 if __name__ == '__main__':
-    MyPaintApp().run()
+    Cola2016App().run()
