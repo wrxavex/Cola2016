@@ -36,9 +36,9 @@ class ColaWidget(Widget):
 
 
 class ColaApp(App):
-    # def build(self):
-    #     return Cola2016Widget()
-    pass
+    def build(self):
+        return Cola2016Widget()
+
 
 if __name__ == '__main__':
     ColaApp().run()
