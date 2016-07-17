@@ -30,8 +30,9 @@ def read_mcp3008():
     # Print the ADC values.
     print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
     print(values)
+    format_values = '| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values)
     # Pause for half a second.
-    return '| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values)
+    return format_values
 
 
 # class ColaWidget(Widget):
