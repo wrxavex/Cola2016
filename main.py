@@ -1,10 +1,7 @@
 from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.uix.label import Label
 from kivy.clock import Clock
-from kivy.core.text import LabelBase
 from kivy.properties import ObjectProperty
-
+from kivy.uix.boxlayout import BoxLayout
 
 from time import strftime
 
@@ -51,6 +48,8 @@ class ColaApp(App):
         self.root.ids.mcp.text = strftime('[b]%H[/b]:%M:%S')
 
 
+class ColaLayout(BoxLayout):
+    time_prop = ObjectProperty(None)
 
 
 if __name__ == '__main__':
