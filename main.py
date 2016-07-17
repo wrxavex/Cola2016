@@ -1,9 +1,10 @@
+from __future__ import division
+
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 
-from __future__ import division
 import Adafruit_PCA9685 as servo
 
 
