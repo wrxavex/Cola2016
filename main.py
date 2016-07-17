@@ -16,7 +16,8 @@ mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
 print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*range(8)))
 print('-' * 57)
 
-while True:
+
+def read_mcp3008():
     # Read all the ADC channel values in a list.
     values = [0]*8
     for i in range(8):
@@ -25,12 +26,13 @@ while True:
     # Print the ADC values.
     print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
     # Pause for half a second.
-    time.sleep(0.0001)
+    return values
 
 
 class Cola2016Widget(Widget):
     def on_touch_down(self, touch):
         print(touch)
+        read_mcp3008()
 
 
 class Cola2016App(App):
