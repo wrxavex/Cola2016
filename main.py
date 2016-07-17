@@ -3,10 +3,20 @@ from kivy.clock import Clock
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 
-from time import strftime
+from __future__ import division
+import time
+import Adafruit_PCA9685 as servo
 
+# import SPI Libery:MCP 3008
 import Adafruit_GPIO.SPI as SPI
+
 import Adafruit_MCP3008
+
+
+
+servo_min = 130  # min Pulse length out of 4096
+servo_max = 600  # max Pulse length out of 4096
+pwm.set_pwm_freq(60)  # Set frequency to 60hz, good for servos.
 
 
 CLK = 11
@@ -46,6 +56,8 @@ class ColaApp(App):
 
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
+
+        values[0] = (values(0) - 396) * (470.0 / 627.0) + 130.0
 
         print('rotation value: %d' % values[0])
         if values[0] >= 512:
