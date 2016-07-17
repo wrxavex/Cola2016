@@ -50,6 +50,12 @@ class ColaApp(App):
         values_string = ', '.join(values)
         self.root.ids.mcp.text = values_string
 
+    def switch_on:
+        print('press switch')
+
+    def reset_on:
+        print('reset on')
+
 
 class ColaLayout(BoxLayout):
     time_prop = ObjectProperty(None)

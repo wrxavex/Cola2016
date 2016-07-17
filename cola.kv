@@ -2,5 +2,26 @@ BoxLayout:
     orientation: 'vertical'
 
     Label:
+        id: mcp_label
+        text: 'Values of MCP3008'
+
+    Label:
         id: mcp
         text: 'Coca Cola 2016'
+
+    Label:
+        text: 'Buttons for switch'
+
+    Button:
+        id: switch
+        text: 'switch'
+        on_press: app.switch_on()
+
+    Label:
+        text: 'Button for Reset'
+
+    Button:
+        id: reset
+        text: 'Reset Button'
+        on_press: app.reset_on()
+
