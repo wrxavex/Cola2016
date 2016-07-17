@@ -29,6 +29,7 @@ def read_mcp3008():
     print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
     print(values)
     # Pause for half a second.
+    return values
 
 
 # class ColaWidget(Widget):
@@ -44,8 +45,8 @@ class ColaApp(App):
         Clock.schedule_interval(self.update_mcp3008_value, 1)
 
     def update_mcp3008_value(self, nap):
-        read_mcp3008()
-        self.root.ids.mcp.text = strftime('[b]%H[/b]:%M:%S')
+        values = read_mcp3008()
+        self.root.ids.mcp.text = values
 
 
 class ColaLayout(BoxLayout):
