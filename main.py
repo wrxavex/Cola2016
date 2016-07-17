@@ -3,6 +3,8 @@ from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.core.text import LabelBase
+from kivy.properties import ObjectProperty
+
 
 from time import strftime
 
