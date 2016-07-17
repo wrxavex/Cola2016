@@ -4,15 +4,14 @@ from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 
 from __future__ import division
-import time
 import Adafruit_PCA9685 as servo
 
-# import SPI Libery:MCP 3008
-import Adafruit_GPIO.SPI as SPI
+
 
 import Adafruit_MCP3008
 
-
+# Servo : IC2 = 0x40
+pwm = servo.PCA9685()
 
 servo_min = 130  # min Pulse length out of 4096
 servo_max = 600  # max Pulse length out of 4096
@@ -58,6 +57,7 @@ class ColaApp(App):
         values = read_mcp3008()
 
         values[0] = (values(0) - 396) * (470.0 / 627.0) + 130.0
+        pwm.set_pwm(0, 0, int(values[0]))  # servo..LR
 
         print('rotation value: %d' % values[0])
         if values[0] >= 512:
