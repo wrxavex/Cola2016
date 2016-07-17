@@ -64,7 +64,7 @@ class ColaApp(App):
     #     return ColaWidget
 
     def on_start(self):
-        Clock.schedule_interval(self.update_mcp3008_value, 1)
+        Clock.schedule_interval(self.update_mcp3008_value, 0.0016)
 
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
