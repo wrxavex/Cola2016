@@ -2,13 +2,13 @@ from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.clock import Clock
+from kivy.core.text import LabelBase
 
 
 import time
 
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
-from kivy.properties import ObjectProperty
 
 
 CLK = 11
@@ -42,12 +42,14 @@ class ColaApp(App):
     # def build(self):
     #     return ColaWidget
 
+    def on_start(self):
+        Clock.schedule_interval(self.update_mcp3008_value, 1)
+
     def update_mcp3008_value(self, nap):
         read_mcp3008()
         self.root.ids.mcp.text = 'test'
 
-    def on_start(self):
-        Clock.schedule_interval(self.update_mcp3008_value, 1)
+
 
 
 if __name__ == '__main__':
