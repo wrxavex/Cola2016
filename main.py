@@ -46,7 +46,8 @@ class ColaApp(App):
 
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
-        self.root.ids.mcp.text = values
+        values_string = ', '.join(values)
+        self.root.ids.mcp.text = values_string
 
 
 class ColaLayout(BoxLayout):
