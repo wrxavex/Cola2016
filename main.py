@@ -29,16 +29,16 @@ def read_mcp3008():
     return values
 
 
-class Cola2016Widget(Widget):
+class ColaWidget(Widget):
     def on_touch_down(self, touch):
         print(touch)
         read_mcp3008()
 
 
-class Cola2016App(App):
+class ColaApp(App):
     # def build(self):
     #     return Cola2016Widget()
     pass
 
 if __name__ == '__main__':
-    Cola2016App().run()
+    ColaApp().run()
