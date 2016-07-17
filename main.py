@@ -35,7 +35,7 @@ def read_mcp3008():
 #     def on_touch_down(self, touch):
 #         print(touch)
 
-ß
+
 class ColaApp(App):
     # def build(self):
     #     return ColaWidget
