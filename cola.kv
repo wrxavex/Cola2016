@@ -39,17 +39,23 @@ BoxLayout:
             id: L6
             text: 'L6: off'
 
+
+
     Label:
         id: mcp
         text: 'Coca Cola 2016'
 
-    Label:
-        text: 'Buttons for switch'
 
-    Button:
-        id: switch
-        text: 'switch'
-        on_press: app.switch_on()
+    BoxLayout:
+        orientation: 'horizontal'
+
+        Label:
+            text: 'Buttons for switch'
+
+        Button:
+            id: switch
+            text: 'switch'
+            on_press: app.switch_on()
 
     BoxLayout:
         orientation: 'horizontal'
@@ -64,42 +70,46 @@ BoxLayout:
 
         Label:
             id: HL2
-            text: 'HL1: off'
+            text: 'HL2: off'
 
         Button:
             id: H2
-            text: 'H1 switch'
+            text: 'H2 switch'
 
         Label:
             id: HL3
-            text: 'HL1: off'
+            text: 'HL3: off'
 
         Button:
             id: H3
-            text: 'H1 switch'
+            text: 'H3 switch'
 
         Label:
             id: HL4
-            text: 'HL1: off'
+            text: 'HL4: off'
 
         Button:
             id: H4
-            text: 'H1 switch'
+            text: 'H4 switch'
 
         Label:
             id: HL5
-            text: 'HL1: off'
+            text: 'HL5: off'
 
         Button:
             id: H5
-            text: 'H1 switch'
+            text: 'H5 switch'
 
 
-    Label:
-        text: 'Button for Reset'
+    BoxLayout:
+        orientation: 'horizontal'
 
-    Button:
-        id: reset
-        text: 'Reset Button'
-        on_press: app.reset_on()
+
+        Label:
+            text: 'Button for Reset'
+
+        Button:
+            id: reset
+            text: 'Reset Button'
+            on_press: app.reset_on()
 
