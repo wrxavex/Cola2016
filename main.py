@@ -69,7 +69,7 @@ class ColaApp(App):
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
 
-        values[0] = translate(value[0], 0, 1023, 130, 600)
+        values[0] = translate(values[0], 0, 1023, 130, 600)
         pwm.set_pwm(0, 0, int(values[0]))  # servo..LR
 
         print('rotation value: %d' % values[0])
