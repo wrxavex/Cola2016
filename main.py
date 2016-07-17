@@ -4,8 +4,7 @@ from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.core.text import LabelBase
 
-
-import time
+from time import strftime
 
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
