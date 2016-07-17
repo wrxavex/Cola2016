@@ -37,8 +37,7 @@ class Cola2016Widget(Widget):
 
 class Cola2016App(App):
     def build(self):
-        lb1 = Label(text='Hello')
-        return lb1
+        return Cola2016Widget()
 
 
 if __name__ == '__main__':
