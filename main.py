@@ -1,6 +1,8 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
+from kivy.clock import Clock
+
 
 import time
 
@@ -29,15 +31,20 @@ def read_mcp3008():
     return values
 
 
-class ColaWidget(Widget):
-    def on_touch_down(self, touch):
-        print(touch)
-        read_mcp3008()
+# class ColaWidget(Widget):
+#     def on_touch_down(self, touch):
+#         print(touch)
 
-
+ß
 class ColaApp(App):
-    def build(self):
-        return ColaWidget()
+    # def build(self):
+    #     return ColaWidget
+    def update_mcp3008_value(self, nap):
+        mcp3008_value = read_mcp3008()
+        self.root.ids.mcp3008.text = mcp3008_value
+
+    def on_start(self):
+        Clock.schedule_interval(self.update_mcp3008_value, 1)
 
 
 if __name__ == '__main__':
