@@ -48,6 +48,10 @@ class ColaApp(App):
         values = read_mcp3008()
 
         print('rotation value: %d' % values[0])
+        if values[0] >= 512:
+            self.root.ids.vr_rotation.text = 'cw'
+        else:
+            self.root.ids.vr_rotation.text = 'ccw'
 
         values = map(str, values)
         values_string = ', '.join(values)
