@@ -8,6 +8,8 @@ import time
 
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
+from kivy.properties import ObjectProperty
+
 
 CLK = 11
 MISO = 9
