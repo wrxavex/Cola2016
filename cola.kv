@@ -6,11 +6,30 @@ BoxLayout:
         text: 'Values of MCP3008'
 
     Label:
-        text: 'direction of rotation'
+    id: mcp
+    text: 'Coca Cola 2016'
 
-    Label:
-        id: vr_rotation
-        text: 'cw or ccw'
+    BoxLayout:
+        orientation: 'horizontal'
+
+        Label:
+            text: 'direction of rotation'
+
+        Label:
+            id: vr_rotation
+            text: 'cw or ccw'
+
+    BoxLayout:
+        orientation: 'horizontal'
+
+        Label:
+            text: 'Buttons for switch'
+
+        Button:
+            id: switch
+            text: 'switch'
+            on_press: app.switch_on()
+
 
     BoxLayout:
         orientation: 'horizontal'
@@ -39,23 +58,6 @@ BoxLayout:
             id: L6
             text: 'L6: off'
 
-
-
-    Label:
-        id: mcp
-        text: 'Coca Cola 2016'
-
-
-    BoxLayout:
-        orientation: 'horizontal'
-
-        Label:
-            text: 'Buttons for switch'
-
-        Button:
-            id: switch
-            text: 'switch'
-            on_press: app.switch_on()
 
     BoxLayout:
         orientation: 'horizontal'
