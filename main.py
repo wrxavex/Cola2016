@@ -47,7 +47,7 @@ class ColaApp(App):
 
     def update_mcp3008_value(self, nap):
         read_mcp3008()
-        self.root.ids.mcp.text = 'test'
+        self.root.ids.mcp.text = strftime('[b]%H[/b]:%M:%S')
 
 
 
