@@ -50,10 +50,10 @@ class ColaApp(App):
         values_string = ', '.join(values)
         self.root.ids.mcp.text = values_string
 
-    def switch_on:
+    def switch_on(self):
         print('press switch')
 
-    def reset_on:
+    def reset_on(self):
         print('reset on')
 
 
