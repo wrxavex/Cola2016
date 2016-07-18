@@ -71,6 +71,7 @@ class ColaApp(App):
 
         values[0] = translate(values[0], 0, 1023, 130, 600)
         pwm.set_pwm(0, 0, int(values[0]))  # servo..LR
+        pwm.set_pwm(1, 0, int(values[0]))  # servo..LR
 
         print('rotation value: %d' % values[0])
         if values[0] >= 512:
