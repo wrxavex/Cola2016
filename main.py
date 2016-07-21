@@ -142,13 +142,18 @@ class ColaApp(App):
         print('reset on')
 
     def hl1_toggle(self):
+        changed = 0
         if gs.hl1 == 0:
             gs.hl1_on()
             self.root.ids.HL1.text = 'h1 on'
+            changed = 1
 
-        elif gs.hl1 == 1:
+        elif gs.hl1 == 1 and changed == 0:
             gs.hl1_off()
             self.root.ids.HL1.text = 'h1 off'
+
+
+
 
 
 class ColaLayout(BoxLayout):
