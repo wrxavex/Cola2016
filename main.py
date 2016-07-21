@@ -56,6 +56,13 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
     return rightMin + (valueScaled * rightSpan)
 
 
+class GameStatus():
+
+    def __init__(self):
+        self.hl1 = 0
+        self.hl2 = 0
+
+
 class ColaApp(App):
     # def build(self):
     #     return ColaWidget
@@ -129,13 +136,12 @@ class ColaApp(App):
         print('reset on')
 
     def hl1_toggle(self):
-        if self.hl1 == 0:
-            self.hl1 = 1
+        if gs.hl1 == 0:
+            gs.hl1 = 1
             pwm.set_pwm(4, 0, 4095)
-        elif self.hl1 == 1:
-            self.hl1 = 0
+        elif gs.hl1 == 1:
+            gs.hl1 = 0
             pwm.set_pwm(4, 0, 0)
-
 
 
 class ColaLayout(BoxLayout):
@@ -143,4 +149,5 @@ class ColaLayout(BoxLayout):
 
 
 if __name__ == '__main__':
+    gs = GameStatus()
     ColaApp().run()
