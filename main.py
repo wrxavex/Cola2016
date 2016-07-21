@@ -78,6 +78,12 @@ class GameStatus():
         pwm.set_pwm(5, 0, 0)
         self.hl2 = 0
 
+    def game_reset(self):
+        self.hl1 = 0
+        self.hl2 = 0
+        pwm.set_pwm(4, 0, 0)
+        pwm.set_pwm(5, 0, 0)
+
 
 class ColaApp(App):
     # def build(self):
@@ -148,6 +154,7 @@ class ColaApp(App):
 
     def reset_on(self):
         print('reset on')
+        gs.game_reset()
 
     def hl1_toggle(self):
         if gs.hl1 == 0:
