@@ -79,12 +79,12 @@ class ColaApp(App):
         else:
             self.root.ids.vr_rotation.text = 'ccw'
 
-        if value[1] < 512:
+        if values[1] < 512:
             self.ids.switch.text = 'switch on'
         else:
             self.ids.switch.text = 'switch off'
 
-        if value[2] > 512:
+        if values[2] > 512:
             self.ids.H1.text = 'H1 switch on'
         else:
             self.ids.H1.text = 'H1 switch off'
