@@ -155,6 +155,9 @@ class ColaApp(App):
     def reset_on(self):
         print('reset on')
         gs.game_reset()
+        self.root.ids.HL1.text = 'h1 off'
+        self.root.ids.HL2.text = 'h2 off'
+
 
     def hl1_toggle(self):
         if gs.hl1 == 0:
