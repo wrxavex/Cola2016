@@ -71,6 +71,14 @@ class GameStatus():
         pwm.set_pwm(4, 0, 0)
         self.hl1 = 0
 
+    def hl2_on(self):
+        pwm.set_pwm(4, 0, 4095)
+        self.hl1 = 1
+
+    def hl2_off(self):
+        pwm.set_pwm(4, 0, 0)
+        self.hl1 = 0
+
 
 class ColaApp(App):
     # def build(self):
@@ -104,33 +112,33 @@ class ColaApp(App):
         #     self.root.ids.HL1.text = 'H1 off'
         #     pwm.set_pwm(4, 0, 0)
 
-        if values[3] > 512:
-            self.root.ids.HL2.text = 'H2 on'
-            pwm.set_pwm(5, 0, 4095)
-        else:
-            self.root.ids.HL2.text = 'H2 off'
-            pwm.set_pwm(5, 0, 0)
-
-        if values[4] > 512:
-            self.root.ids.HL3.text = 'H3 on'
-            pwm.set_pwm(6, 0, 4095)
-        else:
-            self.root.ids.HL3.text = 'H3 off'
-            pwm.set_pwm(6, 0, 0)
-
-        if values[5] > 512:
-            self.root.ids.HL4.text = 'H4 on'
-            pwm.set_pwm(7, 0, 4095)
-        else:
-            self.root.ids.HL4.text = 'H4 off'
-            pwm.set_pwm(7, 0, 0)
-
-        if values[6] > 512:
-            self.root.ids.HL5.text = 'H5 on'
-            pwm.set_pwm(8, 0, 4095)
-        else:
-            self.root.ids.HL5.text = 'H5 off'
-            pwm.set_pwm(8, 0, 0)
+        # if values[3] > 512:
+        #     self.root.ids.HL2.text = 'H2 on'
+        #     pwm.set_pwm(5, 0, 4095)
+        # else:
+        #     self.root.ids.HL2.text = 'H2 off'
+        #     pwm.set_pwm(5, 0, 0)
+        #
+        # if values[4] > 512:
+        #     self.root.ids.HL3.text = 'H3 on'
+        #     pwm.set_pwm(6, 0, 4095)
+        # else:
+        #     self.root.ids.HL3.text = 'H3 off'
+        #     pwm.set_pwm(6, 0, 0)
+        #
+        # if values[5] > 512:
+        #     self.root.ids.HL4.text = 'H4 on'
+        #     pwm.set_pwm(7, 0, 4095)
+        # else:
+        #     self.root.ids.HL4.text = 'H4 off'
+        #     pwm.set_pwm(7, 0, 0)
+        #
+        # if values[6] > 512:
+        #     self.root.ids.HL5.text = 'H5 on'
+        #     pwm.set_pwm(8, 0, 4095)
+        # else:
+        #     self.root.ids.HL5.text = 'H5 off'
+        #     pwm.set_pwm(8, 0, 0)
 
         values = map(str, values)
         values_string = ', '.join(values)
@@ -151,6 +159,14 @@ class ColaApp(App):
             gs.hl1_off()
             self.root.ids.HL1.text = 'h1 off'
 
+    def hl2_toggle(self):
+        if gs.hl2 == 0:
+            gs.hl2_on()
+            self.root.ids.Hl2.text = 'h2 on'
+
+        elif gs.hl2 == 0:
+            gs.hl2_off()
+            self.root.ids.HL2.text = 'h2 off'
 
 
 
