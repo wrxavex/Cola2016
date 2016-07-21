@@ -76,8 +76,6 @@ class ColaApp(App):
     #     return ColaWidget
 
     def on_start(self):
-        self.hl1 = 0
-        self.hl2 = 0
         Clock.schedule_interval(self.update_mcp3008_value, 0.0016)
 
     def update_mcp3008_value(self, nap):
@@ -152,9 +150,6 @@ class ColaApp(App):
         elif gs.hl1 == 1:
             gs.hl1_off()
             self.root.ids.HL1.text = 'h1 off'
-
-    def hl1_on(self):
-
 
 
 class ColaLayout(BoxLayout):
