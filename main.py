@@ -62,6 +62,14 @@ class GameStatus():
         self.hl1 = 0
         self.hl2 = 0
 
+    def hl1_on(self):
+        pwm.set_pwm(4, 0, 4095)
+        self.hl1 = 1
+
+    def hl1_off(self):
+        pwm.set_pwm(4, 0, 4095)
+        self.hl1 = 1
+
 
 class ColaApp(App):
     # def build(self):
@@ -137,14 +145,16 @@ class ColaApp(App):
 
     def hl1_toggle(self):
         if gs.hl1 == 0:
-            gs.hl1 = 1
-            pwm.set_pwm(4, 0, 4095)
-            self.root.ids.HL1.text = 'h1 on'
+            gs.hl1_on()
+            self.root.ids.root.HL1.text = 'h1 on'
+
 
         elif gs.hl1 == 1:
-            gs.hl1 = 0
-            pwm.set_pwm(4, 0, 0)
+            gs.hl1_off()
             self.root.ids.HL1.text = 'h1 off'
+
+    def hl1_on(self):
+
 
 
 class ColaLayout(BoxLayout):
