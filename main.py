@@ -61,6 +61,7 @@ class GameStatus():
     def __init__(self):
         self.hl1 = 0
         self.hl2 = 0
+        self.changed = 0
 
     def hl1_on(self):
         pwm.set_pwm(4, 0, 4095)
@@ -142,17 +143,17 @@ class ColaApp(App):
         print('reset on')
 
     def hl1_toggle(self):
-        changed = 0
+        gs.changed = 0
         if gs.hl1 == 0:
             gs.hl1_on()
             self.root.ids.HL1.text = 'h1 on'
-            changed = 1
+            gs.changed = 1
 
-        elif gs.hl1 == 1 and changed == 0:
+        elif gs.hl1 == 1 and gs.changed == 0:
             gs.hl1_off()
             self.root.ids.HL1.text = 'h1 off'
 
-        changed = 0
+        gs.changed = 0
 
 
 
