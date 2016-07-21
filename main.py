@@ -143,17 +143,14 @@ class ColaApp(App):
         print('reset on')
 
     def hl1_toggle(self):
-        gs.changed = 0
         if gs.hl1 == 0:
             gs.hl1_on()
             self.root.ids.HL1.text = 'h1 on'
-            gs.changed = 1
 
-        elif gs.hl1 == 1 and gs.changed == 0:
+        elif gs.hl1 == 1:
             gs.hl1_off()
             self.root.ids.HL1.text = 'h1 off'
 
-        gs.changed = 0
 
 
 
