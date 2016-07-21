@@ -161,7 +161,7 @@ class ColaApp(App):
     def hl2_toggle(self):
         if gs.hl2 == 0:
             gs.hl2_on()
-            self.root.ids.Hl2.text = 'h2 on'
+            self.root.ids.HL2.text = 'h2 on'
 
         elif gs.hl2 == 1:
             gs.hl2_off()
