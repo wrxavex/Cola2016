@@ -61,7 +61,6 @@ class GameStatus():
     def __init__(self):
         self.hl1 = 0
         self.hl2 = 0
-        self.changed = 0
 
     def hl1_on(self):
         pwm.set_pwm(4, 0, 4095)
@@ -167,9 +166,6 @@ class ColaApp(App):
         elif gs.hl2 == 0:
             gs.hl2_off()
             self.root.ids.HL2.text = 'h2 off'
-
-
-
 
 
 class ColaLayout(BoxLayout):
