@@ -68,8 +68,8 @@ class GameStatus():
         self.hl1 = 1
 
     def hl1_off(self):
-        pwm.set_pwm(4, 0, 4095)
-        self.hl1 = 1
+        pwm.set_pwm(4, 0, 0)
+        self.hl1 = 0
 
 
 class ColaApp(App):
