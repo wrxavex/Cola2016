@@ -132,9 +132,9 @@ class ColaApp(App):
         if self.hl1 == 0:
             self.hl1 = 1
             pwm.set_pwm(4, 0, 4095)
-        else:
+        elif self.hl1 == 1:
             self.hl1 = 0
-            pwm.set_pwm(4, 0 , 0)
+            pwm.set_pwm(4, 0, 0)
 
 
 
