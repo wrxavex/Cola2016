@@ -79,15 +79,40 @@ class ColaApp(App):
         else:
             self.root.ids.vr_rotation.text = 'ccw'
 
-        if values[1] < 512:
+        if values[1] > 512:
             self.root.ids.switch.text = 'switch on'
         else:
             self.root.ids.switch.text = 'switch off'
 
         if values[2] > 512:
-            self.root.ids.H1.text = 'H1 switch on'
+            self.root.ids.H1.text = 'H1 on'
         else:
-            self.root.ids.H1.text = 'H1 switch off'
+            self.root.ids.H1.text = 'H1 off'
+
+        if values[3] > 512:
+            self.root.ids.H1.text = 'H2 on'
+        else:
+            self.root.ids.H1.text = 'H2 off'
+
+        if values[4] > 512:
+            self.root.ids.H1.text = 'H3 on'
+        else:
+            self.root.ids.H1.text = 'H3 off'
+
+        if values[5] > 512:
+            self.root.ids.H1.text = 'H4 on'
+        else:
+            self.root.ids.H1.text = 'H4 off'
+
+        if values[6] > 512:
+            self.root.ids.H1.text = 'H5 on'
+        else:
+            self.root.ids.H1.text = 'H5 off'
+
+        if values[7] > 512:
+            self.root.ids.H1.text = 'H6 on'
+        else:
+            self.root.ids.H1.text = 'H6 off'
 
         values = map(str, values)
         values_string = ', '.join(values)
