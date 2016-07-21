@@ -144,8 +144,7 @@ class ColaApp(App):
     def hl1_toggle(self):
         if gs.hl1 == 0:
             gs.hl1_on()
-            self.root.ids.root.HL1.text = 'h1 on'
-
+            self.root.ids.HL1.text = 'h1 on'
 
         elif gs.hl1 == 1:
             gs.hl1_off()
