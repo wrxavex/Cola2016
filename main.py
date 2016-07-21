@@ -100,18 +100,24 @@ class ColaApp(App):
 
         if values[4] > 512:
             self.root.ids.HL3.text = 'H3 on'
+            pwm.set_pwm(6, 0, 4095)
         else:
             self.root.ids.HL3.text = 'H3 off'
+            pwm.set_pwm(6, 0, 0)
 
         if values[5] > 512:
             self.root.ids.HL4.text = 'H4 on'
+            pwm.set_pwm(7, 0, 4095)
         else:
             self.root.ids.HL4.text = 'H4 off'
+            pwm.set_pwm(7, 0, 0)
 
         if values[6] > 512:
             self.root.ids.HL5.text = 'H5 on'
+            pwm.set_pwm(8, 0, 4095)
         else:
             self.root.ids.HL5.text = 'H5 off'
+            pwm.set_pwm(8, 0, 0)
 
         values = map(str, values)
         values_string = ', '.join(values)
