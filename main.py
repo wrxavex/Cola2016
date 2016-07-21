@@ -163,7 +163,7 @@ class ColaApp(App):
             gs.hl2_on()
             self.root.ids.Hl2.text = 'h2 on'
 
-        elif gs.hl2 == 0:
+        elif gs.hl2 == 1:
             gs.hl2_off()
             self.root.ids.HL2.text = 'h2 off'
 
