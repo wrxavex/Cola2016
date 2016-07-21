@@ -6,9 +6,6 @@ from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 
 import Adafruit_PCA9685 as servo
-
-
-
 import Adafruit_MCP3008
 
 # Servo : IC2 = 0x40
@@ -62,6 +59,11 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 class ColaApp(App):
     # def build(self):
     #     return ColaWidget
+
+    def __init__(self):
+        self.hl1 = 0
+        self.hl2 = 0
+
 
     def on_start(self):
         Clock.schedule_interval(self.update_mcp3008_value, 0.0016)
@@ -128,6 +130,15 @@ class ColaApp(App):
 
     def reset_on(self):
         print('reset on')
+
+    def hl1_toggle(self):
+        if self.hl1 == 0:
+            self.hl1 = 1
+            pwm.set_pwm(4, 0, 4095)
+        else:
+            self.hl1 = 0
+            pwm.set_pwm(4, 0 , 0)
+
 
 
 class ColaLayout(BoxLayout):
