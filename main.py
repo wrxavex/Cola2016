@@ -97,12 +97,12 @@ class ColaApp(App):
         else:
             self.root.ids.switch_status_text.text = 'switch off'
 
-        if values[2] > 512:
-            # self.root.ids.HL1.text = 'H1 on'
-            # pwm.set_pwm(4, 0, 4095)
-        else:
-            # self.root.ids.HL1.text = 'H1 off'
-            # pwm.set_pwm(4, 0, 0)
+        # if values[2] > 512:
+        #     self.root.ids.HL1.text = 'H1 on'
+        #     pwm.set_pwm(4, 0, 4095)
+        # else:
+        #     self.root.ids.HL1.text = 'H1 off'
+        #     pwm.set_pwm(4, 0, 0)
 
         if values[3] > 512:
             self.root.ids.HL2.text = 'H2 on'
