@@ -90,29 +90,29 @@ class ColaApp(App):
             self.root.ids.H1.text = 'H1 off'
 
         if values[3] > 512:
-            self.root.ids.H1.text = 'H2 on'
+            self.root.ids.H2.text = 'H2 on'
         else:
-            self.root.ids.H1.text = 'H2 off'
+            self.root.ids.H2.text = 'H2 off'
 
         if values[4] > 512:
-            self.root.ids.H1.text = 'H3 on'
+            self.root.ids.H3.text = 'H3 on'
         else:
-            self.root.ids.H1.text = 'H3 off'
+            self.root.ids.H3.text = 'H3 off'
 
         if values[5] > 512:
-            self.root.ids.H1.text = 'H4 on'
+            self.root.ids.H4.text = 'H4 on'
         else:
-            self.root.ids.H1.text = 'H4 off'
+            self.root.ids.H4.text = 'H4 off'
 
         if values[6] > 512:
-            self.root.ids.H1.text = 'H5 on'
+            self.root.ids.H5.text = 'H5 on'
         else:
-            self.root.ids.H1.text = 'H5 off'
+            self.root.ids.H5.text = 'H5 off'
 
         if values[7] > 512:
-            self.root.ids.H1.text = 'H6 on'
+            self.root.ids.H6.text = 'H6 on'
         else:
-            self.root.ids.H1.text = 'H6 off'
+            self.root.ids.H6
 
         values = map(str, values)
         values_string = ', '.join(values)
