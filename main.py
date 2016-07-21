@@ -109,11 +109,6 @@ class ColaApp(App):
         else:
             self.root.ids.H5.text = 'H5 off'
 
-        if values[7] > 512:
-            self.root.ids.H6.text = 'H6 on'
-        else:
-            self.root.ids.H6
-
         values = map(str, values)
         values_string = ', '.join(values)
         self.root.ids.mcp.text = values_string
