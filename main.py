@@ -86,13 +86,17 @@ class ColaApp(App):
 
         if values[2] > 512:
             self.root.ids.HL1.text = 'H1 on'
+            pwm.set_pwm(4, 0, 4095)
         else:
             self.root.ids.HL1.text = 'H1 off'
+            pwm.set_pwm(4, 0, 0)
 
         if values[3] > 512:
             self.root.ids.HL2.text = 'H2 on'
+            pwm.set_pwm(5, 0, 4095)
         else:
             self.root.ids.HL2.text = 'H2 off'
+            pwm.set_pwm(5, 0, 0)
 
         if values[4] > 512:
             self.root.ids.HL3.text = 'H3 on'
