@@ -152,6 +152,8 @@ class ColaApp(App):
             gs.hl1_off()
             self.root.ids.HL1.text = 'h1 off'
 
+        changed = 0
+
 
 
 
