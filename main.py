@@ -136,16 +136,15 @@ class ColaApp(App):
         print('reset on')
 
     def hl1_toggle(self):
-        while True:
-            if gs.hl1 == 0:
-                gs.hl1 = 1
-                pwm.set_pwm(4, 0, 4095)
-                break
+        if gs.hl1 == 0:
+            gs.hl1 = 1
+            pwm.set_pwm(4, 0, 4095)
+            self.root.ids.HL1.text = 'h1 on'
 
-            elif gs.hl1 == 1:
-                gs.hl1 = 0
-                pwm.set_pwm(4, 0, 0)
-                break
+        elif gs.hl1 == 1:
+            gs.hl1 = 0
+            pwm.set_pwm(4, 0, 0)
+            self.root.ids.HL1.text = 'h1 off'
 
 
 class ColaLayout(BoxLayout):
