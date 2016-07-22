@@ -62,27 +62,28 @@ class GameStatus():
         self.hl1 = 0
         self.hl2 = 0
 
-    def hl1_on(self):
-        pwm.set_pwm(4, 0, 4095)
-        self.hl1 = 1
-
-    def hl1_off(self):
-        pwm.set_pwm(4, 0, 0)
-        self.hl1 = 0
-
-    def hl2_on(self):
-        pwm.set_pwm(5, 0, 4095)
-        self.hl2 = 1
-
-    def hl2_off(self):
-        pwm.set_pwm(5, 0, 0)
-        self.hl2 = 0
-
     def game_reset(self):
         self.hl1 = 0
         self.hl2 = 0
         pwm.set_pwm(4, 0, 0)
         pwm.set_pwm(5, 0, 0)
+
+    # def hl1_on(self):
+    #     pwm.set_pwm(4, 0, 4095)
+    #     self.hl1 = 1
+    #
+    # def hl1_off(self):
+    #     pwm.set_pwm(4, 0, 0)
+    #     self.hl1 = 0
+    #
+    # def hl2_on(self):
+    #     pwm.set_pwm(5, 0, 4095)
+    #     self.hl2 = 1
+    #
+    # def hl2_off(self):
+    #     pwm.set_pwm(5, 0, 0)
+    #     self.hl2 = 0
+
 
 
 class ColaApp(App):
@@ -158,24 +159,31 @@ class ColaApp(App):
         self.root.ids.HL1.text = 'h1 off'
         self.root.ids.HL2.text = 'h2 off'
 
+    def hl1_press(self):
+        gs.hl1 = 1
+        pwm.set_pwm(4, 0, 4095)
 
-    def hl1_toggle(self):
-        if gs.hl1 == 0:
-            gs.hl1_on()
-            self.root.ids.HL1.text = 'h1 on'
+    def hl2_press(self):
+        gs.hl2 = 1
+        pwm.set_pwm(5, 0, 4095)
 
-        elif gs.hl1 == 1:
-            gs.hl1_off()
-            self.root.ids.HL1.text = 'h1 off'
-
-    def hl2_toggle(self):
-        if gs.hl2 == 0:
-            gs.hl2_on()
-            self.root.ids.HL2.text = 'h2 on'
-
-        elif gs.hl2 == 1:
-            gs.hl2_off()
-            self.root.ids.HL2.text = 'h2 off'
+    # def hl1_toggle(self):
+    #     if gs.hl1 == 0:
+    #         gs.hl1_on()
+    #         self.root.ids.HL1.text = 'h1 on'
+    #
+    #     elif gs.hl1 == 1:
+    #         gs.hl1_off()
+    #         self.root.ids.HL1.text = 'h1 off'
+    #
+    # def hl2_toggle(self):
+    #     if gs.hl2 == 0:
+    #         gs.hl2_on()
+    #         self.root.ids.HL2.text = 'h2 on'
+    #
+    #     elif gs.hl2 == 1:
+    #         gs.hl2_off()
+    #         self.root.ids.HL2.text = 'h2 off'
 
 
 class ColaLayout(BoxLayout):
