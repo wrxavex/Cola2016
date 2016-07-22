@@ -167,7 +167,7 @@ class ColaApp(App):
         values_string = ', '.join(values)
         self.root.ids.mcp.text = values_string
 
-    def light_blinky(self):
+    def light_blinky(self, nap):
         while gs.sw == 1:
             if gs.sw_count % 3 == 0:
                 pwm.set_pwm(9, 0, 4095)
