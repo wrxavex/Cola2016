@@ -44,7 +44,18 @@ def read_mcp3008():
 # class ColaWidget(Widget):
 #     def on_touch_down(self, touch):
 #         print(touch)
-
+def light_blinky():
+    while gs.sw == 1:
+        pwm.set_pwm(9, 0, 4095)
+        time.sleep(1)
+        pwm.set_pwm(10, 0, 4095)
+        time.sleep(1)
+        pwm.set_pwm(11, 0, 4095)
+        time.sleep(1)
+        pwm.set_pwm(9, 0, 0)
+        pwm.set_pwm(10, 0, 0)
+        pwm.set_pwm(11, 0, 0)
+        time.sleep(1)
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is
@@ -167,17 +178,7 @@ class ColaApp(App):
     def switch_on(self):
         print('press switch')
         gs.sw = 1
-        while gs.sw == 1:
-            pwm.set_pwm(9, 0, 4095)
-            time.sleep(1)
-            pwm.set_pwm(10, 0, 4095)
-            time.sleep(1)
-            pwm.set_pwm(11, 0, 4095)
-            time.sleep(1)
-            pwm.set_pwm(9, 0, 0)
-            pwm.set_pwm(10, 0, 0)
-            pwm.set_pwm(11, 0, 0)
-            time.sleep(1)
+        light_blinky()
 
     def reset_on(self):
         print('reset on')
