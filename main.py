@@ -190,12 +190,14 @@ class ColaApp(App):
         print('press switch')
         gs.sw = 1
 
-
     def reset_on(self):
         print('reset on')
         gs.game_reset()
         self.root.ids.HL1.text = 'h1 off'
         self.root.ids.HL2.text = 'h2 off'
+        self.root.ids.HL3.text = 'h3 off'
+        self.root.ids.HL4.text = 'h4 off'
+        self.root.ids.HL5.text = 'h5 off'
 
     def h1_press(self):
         gs.h1 = 1
@@ -204,6 +206,18 @@ class ColaApp(App):
     def h2_press(self):
         gs.h2 = 1
         pwm.set_pwm(5, 0, 4095)
+
+    def h3_press(self):
+        gs.h3 = 1
+        pwm.set_pwm(6, 0, 4095)
+
+    def h4_press(self):
+        gs.h4 = 1
+        pwm.set_pwm(7, 0, 4095)
+
+    def h5_press(self):
+        gs.h5 = 1
+        pwm.set_pwm(8, 0, 4095)
 
     # def hl1_toggle(self):
     #     if gs.hl1 == 0:
