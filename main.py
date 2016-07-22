@@ -167,7 +167,7 @@ class ColaApp(App):
     def switch_on(self):
         print('press switch')
         gs.sw = 1
-        while gs.sw = 1:
+        while gs.sw == 1:
             pwm.set_pwm(9, 0, 4095)
             time.sleep(1)
             pwm.set_pwm(10, 0, 4095)
