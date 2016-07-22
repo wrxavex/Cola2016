@@ -44,7 +44,7 @@ def read_mcp3008():
 # class ColaWidget(Widget):
 #     def on_touch_down(self, touch):
 #         print(touch)
-def light_blinky():
+def light_blinky(dt):
     while gs.sw == 1:
         pwm.set_pwm(9, 0, 4095)
         time.sleep(1)
