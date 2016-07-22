@@ -44,18 +44,7 @@ def read_mcp3008():
 # class ColaWidget(Widget):
 #     def on_touch_down(self, touch):
 #         print(touch)
-def light_blinky(dt):
-    while gs.sw == 1:
-        pwm.set_pwm(9, 0, 4095)
-        time.sleep(1)
-        pwm.set_pwm(10, 0, 4095)
-        time.sleep(1)
-        pwm.set_pwm(11, 0, 4095)
-        time.sleep(1)
-        pwm.set_pwm(9, 0, 0)
-        pwm.set_pwm(10, 0, 0)
-        pwm.set_pwm(11, 0, 0)
-        time.sleep(1)
+
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is
@@ -73,6 +62,7 @@ class GameStatus():
 
     def __init__(self):
         self.sw = 0
+        self.sw_count = 0
         self.h1 = 0
         self.h2 = 0
         self.h3 = 0
@@ -81,6 +71,7 @@ class GameStatus():
 
     def game_reset(self):
         self.sw = 0
+        self.sw_count = 0
         self.h1 = 0
         self.h2 = 0
         self.h3 = 0
@@ -117,6 +108,7 @@ class ColaApp(App):
 
     def on_start(self):
         Clock.schedule_interval(self.update_mcp3008_value, 0.0016)
+        Clock.schedule_interval(light_blinky, 0.01)
 
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
@@ -175,10 +167,25 @@ class ColaApp(App):
         values_string = ', '.join(values)
         self.root.ids.mcp.text = values_string
 
+    def light_blinky(self):
+        while gs.sw == 1:
+            if gs.sw_count % 3 == 0:
+                pwm.set_pwm(9, 0, 4095)
+            else:
+                pwm.set_pwm(9, 0, 0)
+            if gs.sw_count % 3 == 1:
+                pwm.set_pwm(10, 0, 4095)
+            else:
+                pwm.set_pwm(10, 0, 0)
+            if gs.sw_count % 3 == 2:
+                pwm.set_pwm(11, 0, 4095)
+            else:
+                pwm.set_pwm(11, 0, 0)
+
     def switch_on(self):
         print('press switch')
         gs.sw = 1
-        Clock.schedule_once(light_blinky)
+
 
     def reset_on(self):
         print('reset on')
