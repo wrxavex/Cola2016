@@ -178,7 +178,7 @@ class ColaApp(App):
     def switch_on(self):
         print('press switch')
         gs.sw = 1
-        light_blinky()
+        Clock.schedule_once(light_blinky)
 
     def reset_on(self):
         print('reset on')
