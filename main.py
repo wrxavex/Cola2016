@@ -159,11 +159,11 @@ class ColaApp(App):
         self.root.ids.HL1.text = 'h1 off'
         self.root.ids.HL2.text = 'h2 off'
 
-    def hl1_press(self):
+    def h1_press(self):
         gs.hl1 = 1
         pwm.set_pwm(4, 0, 4095)
 
-    def hl2_press(self):
+    def h2_press(self):
         gs.hl2 = 1
         pwm.set_pwm(5, 0, 4095)
 
