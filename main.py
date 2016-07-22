@@ -168,19 +168,18 @@ class ColaApp(App):
         self.root.ids.mcp.text = values_string
 
     def light_blinky(self, nap):
-        while gs.sw == 1:
-            if gs.sw_count % 3 == 0:
-                pwm.set_pwm(9, 0, 4095)
-            else:
-                pwm.set_pwm(9, 0, 0)
-            if gs.sw_count % 3 == 1:
-                pwm.set_pwm(10, 0, 4095)
-            else:
-                pwm.set_pwm(10, 0, 0)
-            if gs.sw_count % 3 == 2:
-                pwm.set_pwm(11, 0, 4095)
-            else:
-                pwm.set_pwm(11, 0, 0)
+        if gs.sw == 1 and gs.sw_count % 3 == 0:
+            pwm.set_pwm(9, 0, 4095)
+        else:
+            pwm.set_pwm(9, 0, 0)
+        if gs.sw == 1 and gs.sw_count % 3 == 1:
+            pwm.set_pwm(10, 0, 4095)
+        else:
+            pwm.set_pwm(10, 0, 0)
+        if gs.sw == 1 and gs.sw_count % 3 == 2:
+            pwm.set_pwm(11, 0, 4095)
+        else:
+            pwm.set_pwm(11, 0, 0)
 
     def switch_on(self):
         print('press switch')
