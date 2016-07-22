@@ -1,5 +1,7 @@
 from __future__ import division
 
+import time
+
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty
@@ -59,14 +61,26 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 class GameStatus():
 
     def __init__(self):
-        self.hl1 = 0
-        self.hl2 = 0
+        self.sw = 0
+        self.h1 = 0
+        self.h2 = 0
+        self.h3 = 0
+        self.h4 = 0
+        self.h5 = 0
 
     def game_reset(self):
-        self.hl1 = 0
-        self.hl2 = 0
+        self.sw = 0
+        self.h1 = 0
+        self.h2 = 0
+        self.h3 = 0
+        self.h4 = 0
+        self.h5 = 0
         pwm.set_pwm(4, 0, 0)
         pwm.set_pwm(5, 0, 0)
+        pwm.set_pwm(6, 0, 0)
+        pwm.set_pwm(7, 0, 0)
+        pwm.set_pwm(8, 0, 0)
+        pwm.set_pwm(9, 0, 0)
 
     # def hl1_on(self):
     #     pwm.set_pwm(4, 0, 4095)
@@ -152,6 +166,18 @@ class ColaApp(App):
 
     def switch_on(self):
         print('press switch')
+        gs.sw = 1
+        while gs.sw = 1:
+            pwm.set_pwm(9, 0, 4095)
+            time.sleep(1)
+            pwm.set_pwm(10, 0, 4095)
+            time.sleep(1)
+            pwm.set_pwm(11, 0, 4095)
+            time.sleep(1)
+            pwm.set_pwm(9, 0, 0)
+            pwm.set_pwm(10, 0, 0)
+            pwm.set_pwm(11, 0, 0)
+            time.sleep(1)
 
     def reset_on(self):
         print('reset on')
@@ -160,11 +186,11 @@ class ColaApp(App):
         self.root.ids.HL2.text = 'h2 off'
 
     def h1_press(self):
-        gs.hl1 = 1
+        gs.h1 = 1
         pwm.set_pwm(4, 0, 4095)
 
     def h2_press(self):
-        gs.hl2 = 1
+        gs.h2 = 1
         pwm.set_pwm(5, 0, 4095)
 
     # def hl1_toggle(self):
