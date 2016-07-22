@@ -168,6 +168,7 @@ class ColaApp(App):
         self.root.ids.mcp.text = values_string
 
     def light_blinky(self, nap):
+        gs.sw_count += 1
         if gs.sw == 1 and gs.sw_count % 30 == 0:
             pwm.set_pwm(9, 0, 4095)
         else:
