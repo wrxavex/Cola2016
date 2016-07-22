@@ -170,6 +170,8 @@ class ColaApp(App):
     def light_blinky(self, nap):
         if gs.sw == 1:
             gs.sw_count += 1
+        else:
+            gs.sw_count = 0
 
         if gs.sw == 1 and gs.sw_count % 3 == 0:
             pwm.set_pwm(9, 0, 4095)
