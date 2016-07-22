@@ -108,7 +108,7 @@ class ColaApp(App):
 
     def on_start(self):
         Clock.schedule_interval(self.update_mcp3008_value, 0.0016)
-        Clock.schedule_interval(self.light_blinky, 1)
+        Clock.schedule_interval(self.light_blinky, 0.5)
 
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
@@ -173,15 +173,15 @@ class ColaApp(App):
         else:
             gs.sw_count = 0
 
-        if gs.sw == 1 and gs.sw_count % 3 == 0:
+        if gs.sw == 1 and gs.sw_count % 3 == 1:
             pwm.set_pwm(9, 0, 4095)
         else:
             pwm.set_pwm(9, 0, 0)
-        if gs.sw == 1 and gs.sw_count % 3 == 1:
+        if gs.sw == 1 and gs.sw_count % 3 == 2:
             pwm.set_pwm(10, 0, 4095)
         else:
             pwm.set_pwm(10, 0, 0)
-        if gs.sw == 1 and gs.sw_count % 3 == 2:
+        if gs.sw == 1 and gs.sw_count % 3 == 0:
             pwm.set_pwm(11, 0, 4095)
         else:
             pwm.set_pwm(11, 0, 0)
