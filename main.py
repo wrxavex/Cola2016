@@ -108,7 +108,7 @@ class ColaApp(App):
 
     def on_start(self):
         Clock.schedule_interval(self.update_mcp3008_value, 0.0016)
-        Clock.schedule_interval(self.light_blinky, 0.3)
+        Clock.schedule_interval(self.light_blinky, 0.1)
 
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
