@@ -173,15 +173,40 @@ class ColaApp(App):
         else:
             gs.sw_count = 0
 
-        if gs.sw == 1 and gs.sw_count % 3 == 1:
+        if gs.sw == 1 and gs.sw_count % 8 == 0:
+            pwm.set_pwm(4, 0, 4095)
+        else:
+            pwm.set_pwm(4, 0, 0)
+
+        if gs.sw == 1 and gs.sw_count % 8 == 1:
+            pwm.set_pwm(5, 0, 4095)
+        else:
+            pwm.set_pwm(5, 0, 0)
+
+        if gs.sw == 1 and gs.sw_count % 8 == 2:
+            pwm.set_pwm(6, 0, 4095)
+        else:
+            pwm.set_pwm(6, 0, 0)
+
+        if gs.sw == 1 and gs.sw_count % 8 == 3:
+            pwm.set_pwm(7, 0, 4095)
+        else:
+            pwm.set_pwm(7, 0, 0)
+
+        if gs.sw == 1 and gs.sw_count % 8 == 4:
+            pwm.set_pwm(8, 0, 4095)
+        else:
+            pwm.set_pwm(8, 0, 0)
+
+        if gs.sw == 1 and gs.sw_count % 8 == 5:
             pwm.set_pwm(9, 0, 4095)
         else:
             pwm.set_pwm(9, 0, 0)
-        if gs.sw == 1 and gs.sw_count % 3 == 2:
+        if gs.sw == 1 and gs.sw_count % 8 == 6:
             pwm.set_pwm(10, 0, 4095)
         else:
             pwm.set_pwm(10, 0, 0)
-        if gs.sw == 1 and gs.sw_count % 3 == 0:
+        if gs.sw == 1 and gs.sw_count % 8 == 7:
             pwm.set_pwm(11, 0, 4095)
         else:
             pwm.set_pwm(11, 0, 0)
