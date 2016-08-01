@@ -68,7 +68,12 @@ class GameStatus():
         self.h3 = 0
         self.h4 = 0
         self.h5 = 0
-        self.light_set = [[0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0], [0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1]]
+        self.light_set = [[1, 0, 0, 0, 0, 0],
+                          [0, 1, 0, 0, 0, 0],
+                          [0, 0, 1, 0, 0, 0],
+                          [0, 0, 0, 1, 0, 0],
+                          [0, 0, 0, 0, 1, 0],
+                          [0, 0, 0, 0, 0, 1]]
 
     def game_reset(self):
         self.sw = 0
@@ -174,7 +179,7 @@ class ColaApp(App):
         else:
             gs.sw_count = 0
 
-        rows = gs.sw_count % 4
+        rows = gs.sw_count % 6
 
         if gs.sw == 1 and gs.light_set[rows][0] == 1:
             pwm.set_pwm(4, 0, 4095)
@@ -205,6 +210,9 @@ class ColaApp(App):
             pwm.set_pwm(10, 0, 4095)
         else:
             pwm.set_pwm(10, 0, 0)
+
+        pwm.set_pwm(11, 0, 0)
+        pwm.set_pwm(12, 0, 0)
 
 
 
