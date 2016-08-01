@@ -61,14 +61,14 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 class GameStatus():
 
     def __init__(self):
-        self.sw = 0
+        self.sw = 1
         self.sw_count = 0
         self.h1 = 0
         self.h2 = 0
         self.h3 = 0
         self.h4 = 0
         self.h5 = 0
-        self.light_set = [[0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0]]
+        self.light_set = [[0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0], [0, 1, 1, 1, 1, 1]]
 
     def game_reset(self):
         self.sw = 0
