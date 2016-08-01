@@ -178,7 +178,7 @@ class ColaApp(App):
 
         if gs.sw == 1 and gs.light_set[rows][0] == 1:
             pwm.set_pwm(4, 0, 4095)
-        else
+        else:
             pwm.set_pwm(4, 0, 0)
 
         # if gs.sw == 1 and gs.sw_count % 2 == 0:
