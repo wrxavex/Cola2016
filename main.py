@@ -61,7 +61,7 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 class GameStatus():
 
     def __init__(self):
-        self.sw = 0
+        self.sw = 1
         self.sw_count = 0
         self.h1 = 0
         self.h2 = 0
