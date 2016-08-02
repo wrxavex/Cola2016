@@ -83,12 +83,12 @@ class GameStatus():
         self.h3 = 0
         self.h4 = 0
         self.h5 = 0
-        pwm.set_pwm(4, 0, 0)
-        pwm.set_pwm(5, 0, 0)
-        pwm.set_pwm(6, 0, 0)
-        pwm.set_pwm(7, 0, 0)
-        pwm.set_pwm(8, 0, 0)
-        pwm.set_pwm(9, 0, 0)
+        pwm.set_pwm(4, 0, 4095)
+        pwm.set_pwm(5, 0, 4095)
+        pwm.set_pwm(6, 0, 4095)
+        pwm.set_pwm(7, 0, 4095)
+        pwm.set_pwm(8, 0, 4095)
+        pwm.set_pwm(9, 0, 4095)
 
     # def hl1_on(self):
     #     pwm.set_pwm(4, 0, 4095)
@@ -107,7 +107,6 @@ class GameStatus():
     #     self.hl2 = 0
 
 
-
 class ColaApp(App):
     # def build(self):
     #     return ColaWidget
@@ -121,7 +120,9 @@ class ColaApp(App):
 
         values[0] = translate(values[0], 0, 1023, 130, 600)
         pwm.set_pwm(0, 0, int(values[0]))  # servo..LR
-        pwm.set_pwm(1, 0, int(values[0]))  # servo..LR
+
+
+        # pwm.set_pwm(1, 0, int(values[0]))  # servo..LR
 
         print('rotation value: %d' % values[0])
         if values[0] >= 512:
@@ -182,38 +183,36 @@ class ColaApp(App):
         rows = gs.sw_count % 6
 
         if gs.sw == 1 and gs.light_set[rows][0] == 1:
-            pwm.set_pwm(4, 0, 0)
+            pwm.set_pwm(1, 0, 4095)
         else:
-            pwm.set_pwm(4, 0, 4095)
+            pwm.set_pwm(1, 0, 0)
 
         if gs.sw == 1 and gs.light_set[rows][1] == 1:
-            pwm.set_pwm(5, 0, 0)
+            pwm.set_pwm(2, 0, 4095)
         else:
-            pwm.set_pwm(5, 0, 4095)
+            pwm.set_pwm(2, 0, 0)
 
         if gs.sw == 1 and gs.light_set[rows][2] == 1:
-            pwm.set_pwm(6, 0, 0)
+            pwm.set_pwm(3, 0, 4095)
         else:
-            pwm.set_pwm(6, 0, 4095)
+            pwm.set_pwm(3, 0, 0)
 
         if gs.sw == 1 and gs.light_set[rows][3] == 1:
-            pwm.set_pwm(7, 0, 0)
+            pwm.set_pwm(4, 0, 4095)
         else:
-            pwm.set_pwm(7, 0, 4095)
+            pwm.set_pwm(4, 0, 0)
 
         if gs.sw == 1 and gs.light_set[rows][4] == 1:
-            pwm.set_pwm(8, 0, 0)
+            pwm.set_pwm(5, 0, 4095)
         else:
-            pwm.set_pwm(8, 0, 4095)
+            pwm.set_pwm(5, 0, 0)
 
         if gs.sw == 1 and gs.light_set[rows][5] == 1:
-            pwm.set_pwm(9, 0, 0)
+            pwm.set_pwm(6, 0, 4095)
         else:
-            pwm.set_pwm(9, 0, 4095)
+            pwm.set_pwm(6, 0, 0)
 
-        pwm.set_pwm(10, 0, 4095)
-        pwm.set_pwm(11, 0, 4095)
-        pwm.set_pwm(12, 0, 4095)
+
 
 
 
@@ -272,23 +271,23 @@ class ColaApp(App):
 
     def h1_press(self):
         gs.h1 = 1
-        pwm.set_pwm(4, 0, 4095)
+        pwm.set_pwm(7, 0, 0)
 
     def h2_press(self):
         gs.h2 = 1
-        pwm.set_pwm(5, 0, 4095)
+        pwm.set_pwm(8, 0, 0)
 
     def h3_press(self):
         gs.h3 = 1
-        pwm.set_pwm(6, 0, 4095)
+        pwm.set_pwm(9, 0, 0)
 
     def h4_press(self):
         gs.h4 = 1
-        pwm.set_pwm(7, 0, 4095)
+        pwm.set_pwm(10, 0, 0)
 
     def h5_press(self):
         gs.h5 = 1
-        pwm.set_pwm(8, 0, 4095)
+        pwm.set_pwm(11, 0, 0)
 
     # def hl1_toggle(self):
     #     if gs.hl1 == 0:
