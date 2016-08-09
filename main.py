@@ -269,17 +269,17 @@ class ColaApp(App):
         self.root.ids.HL4.text = 'h4 off'
         self.root.ids.HL5.text = 'h5 off'
 
-    def all_light_on(self):
+    def all_light(self):
         pwm.set_pwm(1, 0, 4095)
         pwm.set_pwm(2, 0, 4095)
         pwm.set_pwm(3, 0, 4095)
         pwm.set_pwm(4, 0, 4095)
         pwm.set_pwm(5, 0, 4095)
-        pwm.set_pwm(6, 0, 4095)
-        pwm.set_pwm(7, 0, 4095)
-        pwm.set_pwm(8, 0, 4095)
-        pwm.set_pwm(9, 0, 4095)
-        pwm.set_pwm(10, 0, 4095)
+        # pwm.set_pwm(6, 0, 4095)
+        # pwm.set_pwm(7, 0, 4095)
+        # pwm.set_pwm(8, 0, 4095)
+        # pwm.set_pwm(9, 0, 4095)
+        # pwm.set_pwm(10, 0, 4095)
 
 
     def h1_press(self):
