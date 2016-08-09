@@ -176,40 +176,40 @@ class ColaApp(App):
         if gs.test_mode == 0 and values[2] > 850:
             self.root.ids.H2.text = 'H2 on'
             pwm.set_pwm(7, 0, 0)
-        else:
+        elif gs.test_mode == 0 and values[2] < 850:
             self.root.ids.H2.text = 'H2 off'
             pwm.set_pwm(7, 0, 4095)
 
         if gs.test_mode == 0 and values[3] > 850:
             self.root.ids.H3.text = 'H3 on'
             pwm.set_pwm(8, 0, 0)
-        else:
+        elif gs.test_mode == 0 and values[3] < 850:
             self.root.ids.H3.text = 'H3 off'
             pwm.set_pwm(8, 0, 4095)
 
         if gs.test_mode == 0 and values[4] > 850:
             self.root.ids.H4.text = 'H4 on'
             pwm.set_pwm(9, 0, 0)
-        else:
+        elif gs.test_mode == 0 and values[4] < 850:
             self.root.ids.H4.text = 'H4 off'
             pwm.set_pwm(9, 0, 4095)
 
         if gs.test_mode == 0 and values[5] > 850:
             self.root.ids.H5.text = 'H5 on'
             pwm.set_pwm(10, 0, 0)
-        else:
+        elif gs.test_mode == 0 and values[5] < 850:
             self.root.ids.H5.text = 'H5 off'
             pwm.set_pwm(10, 0, 4095)
 
         if gs.test_mode == 0 and values[6] > 850 and gs.sw == 0:
             gs.sw = 1
             self.root.ids.switch_status_text.text = 'switch on'
-        else:
+        elif gs.test_mode == 0 and values[6] < 850:
             self.root.ids.switch_status_text.text = 'switch off'
 
         if gs.test_mode == 0 and values[7] > 850:
             self.root.ids.switch_status_text.text = 'Collision detection'
-        else:
+        elif gs.test_mode == 0 and values[7] < 850:
             self.root.ids.switch_status_text.text = 'Collision detection'
 
         values = map(str, values)
