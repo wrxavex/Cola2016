@@ -162,7 +162,7 @@ class ColaApp(App):
         values[0] = translate(values[0], 0, 1023, servo_min, servo_max)
         pwm.set_pwm(12, 0, int(values[0]))  # servo..LR
 
-        print('rotation value: %d' % values[0])
+        # print('rotation value: %d' % values[0])
 
         if values[1] > 850:
             self.root.ids.H1.text = 'H1 on'
@@ -228,6 +228,8 @@ class ColaApp(App):
             gs.sw_count = 0
 
         numrows = len(gs.light_set)
+
+        print ('numrows = %s' % numrows)
 
         rows = gs.sw_count % numrows
 
