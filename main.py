@@ -328,8 +328,13 @@ class ColaApp(App):
         pwm.set_pwm(10, 0, 4095)
 
     def h1_press(self):
-        gs.h1 = 1
-        pwm.set_pwm(6, 0, 0)
+
+        if gs.test_mode == 1 and gs.h1 = 0:
+            gs.h1 = 1
+            pwm.set_pwm(6, 0, 0)
+        elif gs.test_mode == 1 and gs.h1 = 1:
+            gs.h1 = 0
+            pwm.set_pwm(6, 0, 4095)
 
     def h2_press(self):
         gs.h2 = 1
