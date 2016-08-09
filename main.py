@@ -163,10 +163,6 @@ class ColaApp(App):
         pwm.set_pwm(12, 0, int(values[0]))  # servo..LR
 
         print('rotation value: %d' % values[0])
-        if values[0] >= 512:
-            self.root.ids.vr_rotation.text = 'cw'
-        else:
-            self.root.ids.vr_rotation.text = 'ccw'
 
         if values[1] > 512:
             self.root.ids.switch_status_text.text = 'switch on'
@@ -207,18 +203,18 @@ class ColaApp(App):
         else:
             self.root.ids.HL5.text = 'H5 off'
             pwm.set_pwm(10, 0, 0)
-        #
-        # values = map(str, values)
-        # values_string = ', '.join(values)
-        #
-        # self.root.ids.mcp0.text = values[0]
-        # self.root.ids.mcp1.text = values[1]
-        # self.root.ids.mcp2.text = values[2]
-        # self.root.ids.mcp3.text = values[3]
-        # self.root.ids.mcp4.text = values[4]
-        # self.root.ids.mcp5.text = values[5]
-        # self.root.ids.mcp6.text = values[6]
-        # self.root.ids.mcp7.text = values[7]
+
+        values = map(str, values)
+        values_string = ', '.join(values)
+
+        self.root.ids.mcp0.text = values[0]
+        self.root.ids.mcp1.text = values[1]
+        self.root.ids.mcp2.text = values[2]
+        self.root.ids.mcp3.text = values[3]
+        self.root.ids.mcp4.text = values[4]
+        self.root.ids.mcp5.text = values[5]
+        self.root.ids.mcp6.text = values[6]
+        self.root.ids.mcp7.text = values[7]
 
     def light_blinky(self, nap):
         if gs.sw == 1:
