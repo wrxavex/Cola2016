@@ -174,13 +174,13 @@ class ColaApp(App):
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
 
-        values[0] = translate(values[0], 0, 1023, servo_min, servo_max)
-        pwm.set_pwm(12, 0, int(values[0]))  # servo..LR
+        values[0] = translate(values[0], 0, 1023, servo_min, servo_max)     # 讀可變電阻  五個變數是 1、 mcp3008的第一腳位讀值 2、類比讀值最小值 3、類比讀值最大值 4、舵機最小角 5、舵機最大角
+        pwm.set_pwm(12, 0, int(values[0]))  # 叫pca9685 讓舵機動 （第12pin）
 
         # print('rotation value: %d' % values[0])
 
-        if gs.test_mode == 0 and values[1] > 850:
-            self.root.ids.H1.text = 'H1 on'
+        if gs.test_mode == 0 and values[1] > 850:   # 讀第二個值，如果不在測試模式下才運作 test_mode 為是否是測試模式
+            self.root.ids.H1.text = 'H1 on'         # 設定 ui 把kivy的id是h1的物件 設為'H1 on'
             gs.h1 = 1
             pwm.set_pwm(6, 0, 0)
         elif gs.test_mode == 0 and values[1] < 850:
@@ -224,18 +224,18 @@ class ColaApp(App):
             self.root.ids.H5.text = 'H5 off'
             pwm.set_pwm(10, 0, 4095)
 
-        if gs.test_mode == 0 and values[6] > 850 and gs.sw == 0:
-            gs.sw = 1
+        if gs.test_mode == 0 and values[6] > 850 and gs.sw == 0:        # 觸發開關的條件
+            gs.sw = 1                                                   # 觸發後讓gs.sw = 1 （達成閃燈條件）
             self.root.ids.switch_status_text.text = 'switch on'
         elif gs.test_mode == 0 and values[6] < 850:
             self.root.ids.switch_status_text.text = 'switch off'
 
-        if gs.test_mode == 0 and values[7] > 850:
+        if gs.test_mode == 0 and values[7] > 850:                       # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
             self.root.ids.switch_status_text.text = 'Collision detection'
         elif gs.test_mode == 0 and values[7] < 850:
             self.root.ids.switch_status_text.text = 'No Collision detection'
 
-        if GPIO.input(17):
+        if GPIO.input(17):                                              # reset的pin，執行重置函式（reset_on)
             self.reset_on()
 
         values = map(str, values)
@@ -255,24 +255,25 @@ class ColaApp(App):
 
         self.root.ids.cputemp.text = get_cpu_temp
 
-    def light_blinky(self, nap):
+    def light_blinky(self, nap):    # 閃燈函式 gs.sw = 1 才會 count
         if gs.sw == 1:
             gs.sw_count += 1
         else:
             gs.sw_count = 0
 
-        if gs.sw_count > gs.sw_count_limit:
+        if gs.sw_count > gs.sw_count_limit:     # gs.sw_count_limit（count多少次才結束，也可以想成是閃燈時間） 在class game_status 設定
             gs.sw = 0
 
-        numrows = len(gs.light_set)
+        numrows = len(gs.light_set)         # 計算light_set的總行數
 
-        rows = gs.sw_count % numrows
+        rows = gs.sw_count % numrows        # 計算現在要顯示燈號陣列的行數 count對總行數取除數
 
         # print('numrows = %s' % numrows)
         # print('rows now = %s' % rows)
         # print('test mode = %s' % gs.test_mode)
 
-        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 1:
+        # 以下對應燈號和陣列 1是亮 0 是暗 test_mode = 1 時不運作
+        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 1:     # 第一顆燈
             gs.l1 = 1
             self.root.ids.L1.text = 'l1 On'
             pwm.set_pwm(0, 0, 0)
@@ -326,21 +327,21 @@ class ColaApp(App):
             self.root.ids.L6.text = 'l6 Off'
             pwm.set_pwm(5, 0, 4095)
 
-    def switch_on(self):
+    def switch_on(self):            # 目前沒用
         print('press switch')
         gs.sw = 1
 
-    def reset_on(self):
+    def reset_on(self):             # 按下reset的時候執行的
         print('reset on')
-        gs.test_mode = 0
-        gs.game_reset()
+        gs.test_mode = 0            # 關閉測試模式
+        gs.game_reset()             # 執行重置
         self.root.ids.H1.text = 'h1 off'
         self.root.ids.H2.text = 'h2 off'
         self.root.ids.H3.text = 'h3 off'
         self.root.ids.H4.text = 'h4 off'
         self.root.ids.H5.text = 'h5 off'
 
-    def all_light(self):
+    def all_light(self):            # all_light按鈕 → 全亮
         gs.test_mode = 1
         pwm.set_pwm(0, 0, 0)
         pwm.set_pwm(1, 0, 0)
@@ -377,7 +378,7 @@ class ColaApp(App):
         self.root.ids.L6.text = 'l6 On'
 
 
-    def all_close(self):
+    def all_close(self):            # all_close按鈕時執行
         gs.test_mode = 1
         pwm.set_pwm(0, 0, 4095)
         pwm.set_pwm(1, 0, 4095)
@@ -413,7 +414,7 @@ class ColaApp(App):
         self.root.ids.L5.text = 'l5 Off'
         self.root.ids.L6.text = 'l6 Off'
 
-    def h1_press(self):
+    def h1_press(self):         # 測試模式用 h1 按鈕
 
         if gs.test_mode == 1 and gs.h1 == 0:
             print('h1 on')
