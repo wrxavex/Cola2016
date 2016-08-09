@@ -331,6 +331,7 @@ class ColaApp(App):
         print('h1 press')
 
         if gs.test_mode == 1 and gs.h1 == 0:
+            print ('h1 on')
             gs.h1 = 1
             pwm.set_pwm(6, 0, 0)
         elif gs.test_mode == 1 and gs.h1 == 1:
