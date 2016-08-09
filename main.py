@@ -13,8 +13,9 @@ import Adafruit_MCP3008
 # Servo : IC2 = 0x40
 pwm = servo.PCA9685()
 
-servo_min = 130  # min Pulse length out of 4096
-servo_max = 600  # max Pulse length out of 4096
+# 設定舵機旋轉角度 min 及 max
+servo_min = 210  # min Pulse length out of 4096
+servo_max = 500  # max Pulse length out of 4096
 pwm.set_pwm_freq(60)  # Set frequency to 60hz, good for servos.
 
 
@@ -46,6 +47,7 @@ def read_mcp3008():
 #         print(touch)
 
 
+# 像arduino的map的用法
 def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is
     leftSpan = leftMax - leftMin
@@ -58,23 +60,31 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
     return rightMin + (valueScaled * rightSpan)
 
 
+# 遊戲設定值物件
 class GameStatus():
 
     def __init__(self):
-        self.sw = 1
-        self.sw_count = 0
-        self.h1 = 0
-        self.h2 = 0
-        self.h3 = 0
-        self.h4 = 0
-        self.h5 = 0
-        self.light_set = [[1, 0, 1, 1, 1, 1],
+        self.sw = 1             # sw的值
+        self.sw_count = 0       # 計算撞到sw後的計數
+
+        self.h1 = 0             # 偵測洞口一
+        self.h2 = 0             # 偵測洞口二
+        self.h3 = 0             # 偵測洞口三
+        self.h4 = 0             # 偵測洞口四
+        self.h5 = 0             # 偵測洞口五
+
+        self.cd = 0             # 偵測碰撞開關
+
+        self.light_set = [[1, 0, 1, 1, 1, 1],       # 六組燈光的調節
                           [0, 1, 0, 1, 1, 1],
                           [1, 0, 1, 0, 1, 1],
                           [1, 1, 0, 1, 0, 1],
                           [1, 1, 1, 0, 1, 0],
                           [1, 1, 1, 1, 0, 1]]
 
+        self.test_mode = 0      # 設定是否是測試模式
+
+        # 初始化PCA-9685，因為用的繼電器模組是low-active 所以初始值設high-4095（12bit）
         pwm.set_pwm(1, 0, 4095)
         pwm.set_pwm(2, 0, 4095)
         pwm.set_pwm(3, 0, 4095)
@@ -86,16 +96,23 @@ class GameStatus():
         pwm.set_pwm(9, 0, 4095)
         pwm.set_pwm(10, 0, 4095)
         pwm.set_pwm(11, 0, 4095)
-
+        pwm.set_pwm(12, 0, 4095)
+        pwm.set_pwm(13, 0, 4095)
+        pwm.set_pwm(14, 0, 4095)
+        pwm.set_pwm(15, 0, 4095)
 
     def game_reset(self):
         self.sw = 0
         self.sw_count = 0
+
         self.h1 = 0
         self.h2 = 0
         self.h3 = 0
         self.h4 = 0
         self.h5 = 0
+
+        self.cd = 0
+
         pwm.set_pwm(1, 0, 4095)
         pwm.set_pwm(2, 0, 4095)
         pwm.set_pwm(3, 0, 4095)
@@ -107,6 +124,10 @@ class GameStatus():
         pwm.set_pwm(9, 0, 4095)
         pwm.set_pwm(10, 0, 4095)
         pwm.set_pwm(11, 0, 4095)
+        pwm.set_pwm(12, 0, 4095)
+        pwm.set_pwm(13, 0, 4095)
+        pwm.set_pwm(14, 0, 4095)
+        pwm.set_pwm(15, 0, 4095)
 
     # def hl1_on(self):
     #     pwm.set_pwm(4, 0, 4095)
@@ -137,10 +158,7 @@ class ColaApp(App):
         values = read_mcp3008()
 
         values[0] = translate(values[0], 0, 1023, 130, 600)
-        pwm.set_pwm(0, 0, int(values[0]))  # servo..LR
-
-
-        # pwm.set_pwm(1, 0, int(values[0]))  # servo..LR
+        pwm.set_pwm(12, 0, int(values[0]))  # servo..LR
 
         print('rotation value: %d' % values[0])
         if values[0] >= 512:
@@ -155,38 +173,38 @@ class ColaApp(App):
 
         if values[2] > 512:
             self.root.ids.HL1.text = 'H1 on'
-            pwm.set_pwm(7, 0, 4095)
+            pwm.set_pwm(6, 0, 4095)
         else:
             self.root.ids.HL1.text = 'H1 off'
-            pwm.set_pwm(7, 0, 0)
+            pwm.set_pwm(6, 0, 0)
 
         if values[3] > 512:
             self.root.ids.HL2.text = 'H2 on'
-            pwm.set_pwm(8, 0, 4095)
+            pwm.set_pwm(7, 0, 4095)
         else:
             self.root.ids.HL2.text = 'H2 off'
-            pwm.set_pwm(8, 0, 0)
+            pwm.set_pwm(7, 0, 0)
 
         if values[4] > 512:
             self.root.ids.HL3.text = 'H3 on'
-            pwm.set_pwm(9, 0, 4095)
+            pwm.set_pwm(8, 0, 4095)
         else:
             self.root.ids.HL3.text = 'H3 off'
-            pwm.set_pwm(9, 0, 0)
+            pwm.set_pwm(8, 0, 0)
 
         if values[5] > 512:
             self.root.ids.HL4.text = 'H4 on'
-            pwm.set_pwm(10, 0, 4095)
+            pwm.set_pwm(9, 0, 4095)
         else:
             self.root.ids.HL4.text = 'H4 off'
-            pwm.set_pwm(10, 0, 0)
+            pwm.set_pwm(9, 0, 0)
 
         if values[6] > 512:
             self.root.ids.HL5.text = 'H5 on'
-            pwm.set_pwm(11, 0, 4095)
+            pwm.set_pwm(10, 0, 4095)
         else:
             self.root.ids.HL5.text = 'H5 off'
-            pwm.set_pwm(11, 0, 0)
+            pwm.set_pwm(10, 0, 0)
 
         values = map(str, values)
         values_string = ', '.join(values)
@@ -198,81 +216,39 @@ class ColaApp(App):
         else:
             gs.sw_count = 0
 
-        rows = gs.sw_count % 6
+        numrows = len(gs.light_set)
+
+        rows = gs.sw_count % numrows
 
         if gs.sw == 1 and gs.light_set[rows][0] == 1:
+            pwm.set_pwm(0, 0, 4095)
+        else:
+            pwm.set_pwm(0, 0, 0)
+
+        if gs.sw == 1 and gs.light_set[rows][1] == 1:
             pwm.set_pwm(1, 0, 4095)
         else:
             pwm.set_pwm(1, 0, 0)
 
-        if gs.sw == 1 and gs.light_set[rows][1] == 1:
+        if gs.sw == 1 and gs.light_set[rows][2] == 1:
             pwm.set_pwm(2, 0, 4095)
         else:
             pwm.set_pwm(2, 0, 0)
 
-        if gs.sw == 1 and gs.light_set[rows][2] == 1:
+        if gs.sw == 1 and gs.light_set[rows][3] == 1:
             pwm.set_pwm(3, 0, 4095)
         else:
             pwm.set_pwm(3, 0, 0)
 
-        if gs.sw == 1 and gs.light_set[rows][3] == 1:
+        if gs.sw == 1 and gs.light_set[rows][4] == 1:
             pwm.set_pwm(4, 0, 4095)
         else:
             pwm.set_pwm(4, 0, 0)
 
-        if gs.sw == 1 and gs.light_set[rows][4] == 1:
+        if gs.sw == 1 and gs.light_set[rows][5] == 1:
             pwm.set_pwm(5, 0, 4095)
         else:
             pwm.set_pwm(5, 0, 0)
-
-        if gs.sw == 1 and gs.light_set[rows][5] == 1:
-            pwm.set_pwm(6, 0, 4095)
-        else:
-            pwm.set_pwm(6, 0, 0)
-
-
-
-
-
-
-
-        # if gs.sw == 1 and gs.sw_count % 2 == 0:
-        #     pwm.set_pwm(4, 0, 4095)
-        # else:
-        #     pwm.set_pwm(4, 0, 0)
-        #
-        # if gs.sw == 1 and gs.sw_count % 2 == 1:
-        #     pwm.set_pwm(5, 0, 4095)
-        # else:
-        #     pwm.set_pwm(5, 0, 0)
-        #
-        # if gs.sw == 1 and gs.sw_count % 2 == 0:
-        #     pwm.set_pwm(6, 0, 4095)
-        # else:
-        #     pwm.set_pwm(6, 0, 0)
-        #
-        # if gs.sw == 1 and gs.sw_count % 2 == 1:
-        #     pwm.set_pwm(7, 0, 4095)
-        # else:
-        #     pwm.set_pwm(7, 0, 0)
-        #
-        # if gs.sw == 1 and gs.sw_count % 2 == 0:
-        #     pwm.set_pwm(8, 0, 4095)
-        # else:
-        #     pwm.set_pwm(8, 0, 0)
-        #
-        # if gs.sw == 1 and gs.sw_count % 2 == 1:
-        #     pwm.set_pwm(9, 0, 4095)
-        # else:
-        #     pwm.set_pwm(9, 0, 0)
-        # if gs.sw == 1 and gs.sw_count % 2 == 0:
-        #     pwm.set_pwm(10, 0, 4095)
-        # else:
-        #     pwm.set_pwm(10, 0, 0)
-        # if gs.sw == 1 and gs.sw_count % 2 == 1:
-        #     pwm.set_pwm(11, 0, 4095)
-        # else:
-        #     pwm.set_pwm(11, 0, 0)
 
     def switch_on(self):
         print('press switch')
@@ -287,25 +263,38 @@ class ColaApp(App):
         self.root.ids.HL4.text = 'h4 off'
         self.root.ids.HL5.text = 'h5 off'
 
+    def all_light_on(self):
+        pwm.set_pwm(1, 0, 4095)
+        pwm.set_pwm(2, 0, 4095)
+        pwm.set_pwm(3, 0, 4095)
+        pwm.set_pwm(4, 0, 4095)
+        pwm.set_pwm(5, 0, 4095)
+        pwm.set_pwm(6, 0, 4095)
+        pwm.set_pwm(7, 0, 4095)
+        pwm.set_pwm(8, 0, 4095)
+        pwm.set_pwm(9, 0, 4095)
+        pwm.set_pwm(10, 0, 4095)
+
+
     def h1_press(self):
         gs.h1 = 1
-        pwm.set_pwm(7, 0, 0)
+        pwm.set_pwm(6, 0, 0)
 
     def h2_press(self):
         gs.h2 = 1
-        pwm.set_pwm(8, 0, 0)
+        pwm.set_pwm(7, 0, 0)
 
     def h3_press(self):
         gs.h3 = 1
-        pwm.set_pwm(9, 0, 0)
+        pwm.set_pwm(8, 0, 0)
 
     def h4_press(self):
         gs.h4 = 1
-        pwm.set_pwm(10, 0, 0)
+        pwm.set_pwm(9, 0, 0)
 
     def h5_press(self):
         gs.h5 = 1
-        pwm.set_pwm(11, 0, 0)
+        pwm.set_pwm(10, 0, 0)
 
     # def hl1_toggle(self):
     #     if gs.hl1 == 0:
