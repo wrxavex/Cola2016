@@ -229,9 +229,10 @@ class ColaApp(App):
 
         numrows = len(gs.light_set)
 
-        print ('numrows = %s' % numrows)
-
         rows = gs.sw_count % numrows
+
+        print('numrows = %s' % numrows)
+        print('rows now = %s' % rows)
 
         if gs.sw == 1 and gs.light_set[rows][0] == 1:
             pwm.set_pwm(0, 0, 4095)
