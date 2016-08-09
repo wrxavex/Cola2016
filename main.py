@@ -243,32 +243,32 @@ class ColaApp(App):
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 1:
             pwm.set_pwm(0, 0, 0)
-        else:
+        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 0:
             pwm.set_pwm(0, 0, 4095)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][1] == 1:
             pwm.set_pwm(1, 0, 0)
-        else:
+        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][1] == 0:
             pwm.set_pwm(1, 0, 4095)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][2] == 1:
             pwm.set_pwm(2, 0, 0)
-        else:
+        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][2] == 0:
             pwm.set_pwm(2, 0, 4095)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][3] == 1:
             pwm.set_pwm(3, 0, 0)
-        else:
+        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][3] == 0:
             pwm.set_pwm(3, 0, 4095)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][4] == 1:
             pwm.set_pwm(4, 0, 0)
-        else:
+        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][4] == 0:
             pwm.set_pwm(4, 0, 4095)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][5] == 1:
             pwm.set_pwm(5, 0, 0)
-        else:
+        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][5] == 0:
             pwm.set_pwm(5, 0, 4095)
 
     def switch_on(self):
