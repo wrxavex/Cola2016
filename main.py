@@ -201,7 +201,8 @@ class ColaApp(App):
             self.root.ids.H5.text = 'H5 off'
             pwm.set_pwm(10, 0, 4095)
 
-        if gs.test_mode == 0 and values[6] > 850:
+        if gs.test_mode == 0 and values[6] > 850 and gs.sw = 0:
+            gs.sw = 1
             self.root.ids.switch_status_text.text = 'switch on'
         else:
             self.root.ids.switch_status_text.text = 'switch off'
