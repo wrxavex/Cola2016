@@ -287,6 +287,7 @@ class ColaApp(App):
 
     def all_light(self):
         gs.test_mode = 1
+        pwm.set_pwm(0, 0, 0)
         pwm.set_pwm(1, 0, 0)
         pwm.set_pwm(2, 0, 0)
         pwm.set_pwm(3, 0, 0)
@@ -300,6 +301,7 @@ class ColaApp(App):
 
     def all_close(self):
         gs.test_mode = 1
+        pwm.set_pwm(0, 0, 4095)
         pwm.set_pwm(1, 0, 4095)
         pwm.set_pwm(2, 0, 4095)
         pwm.set_pwm(3, 0, 4095)
