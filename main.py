@@ -207,18 +207,18 @@ class ColaApp(App):
         else:
             self.root.ids.HL5.text = 'H5 off'
             pwm.set_pwm(10, 0, 0)
-
-        values = map(str, values)
-        values_string = ', '.join(values)
-
-        self.root.ids.mcp0.text = values[0]
-        self.root.ids.mcp1.text = values[1]
-        self.root.ids.mcp2.text = values[2]
-        self.root.ids.mcp3.text = values[3]
-        self.root.ids.mcp4.text = values[4]
-        self.root.ids.mcp5.text = values[5]
-        self.root.ids.mcp6.text = values[6]
-        self.root.ids.mcp7.text = values[7]
+        #
+        # values = map(str, values)
+        # values_string = ', '.join(values)
+        #
+        # self.root.ids.mcp0.text = values[0]
+        # self.root.ids.mcp1.text = values[1]
+        # self.root.ids.mcp2.text = values[2]
+        # self.root.ids.mcp3.text = values[3]
+        # self.root.ids.mcp4.text = values[4]
+        # self.root.ids.mcp5.text = values[5]
+        # self.root.ids.mcp6.text = values[6]
+        # self.root.ids.mcp7.text = values[7]
 
     def light_blinky(self, nap):
         if gs.sw == 1:
