@@ -353,6 +353,29 @@ class ColaApp(App):
         pwm.set_pwm(8, 0, 0)
         pwm.set_pwm(9, 0, 0)
         pwm.set_pwm(10, 0, 0)
+        gs.h1 = 1
+        gs.h2 = 1
+        gs.h3 = 1
+        gs.h4 = 1
+        gs.h5 = 1
+        gs.l1 = 1
+        gs.l2 = 1
+        gs.l3 = 1
+        gs.l4 = 1
+        gs.l5 = 1
+        gs.l6 = 1
+        self.root.ids.H1.text = 'H1 on'
+        self.root.ids.H2.text = 'H2 on'
+        self.root.ids.H3.text = 'H3 on'
+        self.root.ids.H4.text = 'H4 on'
+        self.root.ids.H5.text = 'H5 on'
+        self.root.ids.L1.text = 'l1 On'
+        self.root.ids.L2.text = 'l2 On'
+        self.root.ids.L3.text = 'l3 On'
+        self.root.ids.L4.text = 'l4 On'
+        self.root.ids.L5.text = 'l5 On'
+        self.root.ids.L6.text = 'l6 On'
+
 
     def all_close(self):
         gs.test_mode = 1
@@ -367,6 +390,28 @@ class ColaApp(App):
         pwm.set_pwm(8, 0, 4095)
         pwm.set_pwm(9, 0, 4095)
         pwm.set_pwm(10, 0, 4095)
+        gs.h1 = 0
+        gs.h2 = 0
+        gs.h3 = 0
+        gs.h4 = 0
+        gs.h5 = 0
+        gs.l1 = 0
+        gs.l2 = 0
+        gs.l3 = 0
+        gs.l4 = 0
+        gs.l5 = 0
+        gs.l6 = 0
+        self.root.ids.H1.text = 'H1 off'
+        self.root.ids.H2.text = 'H2 off'
+        self.root.ids.H3.text = 'H3 off'
+        self.root.ids.H4.text = 'H4 off'
+        self.root.ids.H5.text = 'H5 off'
+        self.root.ids.L1.text = 'l1 Off'
+        self.root.ids.L2.text = 'l2 Off'
+        self.root.ids.L3.text = 'l3 Off'
+        self.root.ids.L4.text = 'l4 off'
+        self.root.ids.L5.text = 'l5 Off'
+        self.root.ids.L6.text = 'l6 Off'
 
     def h1_press(self):
 
