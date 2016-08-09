@@ -218,7 +218,7 @@ class ColaApp(App):
         elif gs.test_mode == 0 and values[7] < 850:
             self.root.ids.switch_status_text.text = 'No Collision detection'
 
-        if GPIO.input(17) and gs.sw == 0:
+        if GPIO.input(17):
             self.reset_on()
 
         values = map(str, values)
@@ -236,7 +236,7 @@ class ColaApp(App):
         cpu_temp_raw_data = subprocess.check_output(["/opt/vc/bin/vcgencmd", "measure_temp"])
         get_cpu_temp = cpu_temp_raw_data.strip()
 
-        self.root.ids.mcp7.text = get_cpu_temp
+        self.root.ids.cpu_temp.text = get_cpu_temp
 
     def light_blinky(self, nap):
         if gs.sw == 1:
