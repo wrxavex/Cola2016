@@ -270,12 +270,12 @@ class ColaApp(App):
         self.root.ids.HL5.text = 'h5 off'
 
     def all_light(self):
-        pwm.set_pwm(1, 0, 4095)
-        pwm.set_pwm(2, 0, 4095)
-        pwm.set_pwm(3, 0, 4095)
-        pwm.set_pwm(4, 0, 4095)
-        pwm.set_pwm(5, 0, 4095)
-        # pwm.set_pwm(6, 0, 4095)
+        pwm.set_pwm(1, 0, 0)
+        pwm.set_pwm(2, 0, 0)
+        pwm.set_pwm(3, 0, 0)
+        pwm.set_pwm(4, 0, 0)
+        pwm.set_pwm(5, 0, 0)
+        pwm.set_pwm(6, 0, 0)
         # pwm.set_pwm(7, 0, 4095)
         # pwm.set_pwm(8, 0, 4095)
         # pwm.set_pwm(9, 0, 4095)
