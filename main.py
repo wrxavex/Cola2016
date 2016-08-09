@@ -419,12 +419,64 @@ class ColaApp(App):
             pwm.set_pwm(0, 0, 0)
         elif gs.test_mode == 1 and gs.l1 == 1:
             print('l1 off')
-            self.root.ids.H1.text = 'L1 Off'
+            self.root.ids.L1.text = 'L1 Off'
             gs.l1 = 0
             pwm.set_pwm(0, 0, 4095)
 
+    def l2_press(self):
 
+        if gs.test_mode == 1 and gs.l2 == 0:
+            self.root.ids.L2.text = 'L2 On'
+            gs.l2 = 1
+            pwm.set_pwm(1, 0, 0)
+        elif gs.test_mode == 1 and gs.l2 == 1:
+            self.root.ids.L2.text = 'L2 Off'
+            gs.l2 = 0
+            pwm.set_pwm(1, 0, 4095)
 
+    def l3_press(self):
+
+        if gs.test_mode == 1 and gs.l3 == 0:
+            self.root.ids.L3.text = 'L3 On'
+            gs.l3 = 1
+            pwm.set_pwm(2, 0, 0)
+        elif gs.test_mode == 1 and gs.l3 == 1:
+            self.root.ids.L3.text = 'L3 Off'
+            gs.l3 = 0
+            pwm.set_pwm(2, 0, 4095)
+
+    def l4_press(self):
+
+        if gs.test_mode == 1 and gs.l4 == 0:
+            self.root.ids.L4.text = 'L4 On'
+            gs.l4 = 1
+            pwm.set_pwm(3, 0, 0)
+        elif gs.test_mode == 1 and gs.l4 == 1:
+            self.root.ids.L4.text = 'L4 Off'
+            gs.l4 = 0
+            pwm.set_pwm(3, 0, 4095)
+
+    def l5_press(self):
+
+        if gs.test_mode == 1 and gs.l5 == 0:
+            self.root.ids.L5.text = 'L5 On'
+            gs.l5 = 1
+            pwm.set_pwm(4, 0, 0)
+        elif gs.test_mode == 1 and gs.l5 == 1:
+            self.root.ids.L5.text = 'L5 Off'
+            gs.l5 = 0
+            pwm.set_pwm(4, 0, 4095)
+
+    def l6_press(self):
+
+        if gs.test_mode == 1 and gs.l6 == 0:
+            self.root.ids.L6.text = 'L6 On'
+            gs.l6 = 1
+            pwm.set_pwm(5, 0, 0)
+        elif gs.test_mode == 1 and gs.l6 == 1:
+            self.root.ids.L6.text = 'L6 Off'
+            gs.l6 = 0
+            pwm.set_pwm(5, 0, 4095)
 
     # def hl1_toggle(self):
     #     if gs.hl1 == 0:
