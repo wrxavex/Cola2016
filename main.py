@@ -12,6 +12,12 @@ from kivy.uix.boxlayout import BoxLayout
 import Adafruit_PCA9685 as servo
 import Adafruit_MCP3008
 
+import RPi.GPIO as GPIO
+
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
 # Servo : IC2 = 0x40
 pwm = servo.PCA9685()
 
@@ -211,6 +217,9 @@ class ColaApp(App):
             self.root.ids.switch_status_text.text = 'Collision detection'
         elif gs.test_mode == 0 and values[7] < 850:
             self.root.ids.switch_status_text.text = 'Collision detection'
+
+        if GPIO.input(17) and gs.sw == 0:
+            self.switch_on()
 
         values = map(str, values)
         values_string = ', '.join(values)
