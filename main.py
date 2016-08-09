@@ -102,6 +102,7 @@ class GameStatus():
         self.test_mode = 0      # 設定是否是測試模式
 
         # 初始化PCA-9685，因為用的繼電器模組是low-active 所以初始值設high-4095（12bit）
+        pwm.set_pwm(0, 0, 4095)
         pwm.set_pwm(1, 0, 4095)
         pwm.set_pwm(2, 0, 4095)
         pwm.set_pwm(3, 0, 4095)
@@ -129,7 +130,7 @@ class GameStatus():
         self.h5 = 0
 
         self.cd = 0
-
+        pwm.set_pwm(0, 0, 4095)
         pwm.set_pwm(1, 0, 4095)
         pwm.set_pwm(2, 0, 4095)
         pwm.set_pwm(3, 0, 4095)
