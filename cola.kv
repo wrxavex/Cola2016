@@ -125,51 +125,35 @@ BoxLayout:
     BoxLayout:
         orientation: 'horizontal'
 
-        Label:
-            id: HL1
-            text: 'HL1: off'
+        Button:
+            id: all_close
+            text: 'All Close'
+            on_press: app.all_close()
 
         Button:
             id: H1
             text: 'H1 switch'
             on_press: app.h1_press()
 
-        Label:
-            id: HL2
-            text: 'HL2: off'
-
         Button:
             id: H2
             text: 'H2 switch'
             on_press: app.h2_press()
-
-        Label:
-            id: HL3
-            text: 'HL3: off'
 
         Button:
             id: H3
             text: 'H3 switch'
             on_press: app.h3_press()
 
-        Label:
-            id: HL4
-            text: 'HL4: off'
-
         Button:
             id: H4
             text: 'H4 switch'
             on_press: app.h4_press()
 
-        Label:
-            id: HL5
-            text: 'HL5: off'
-
         Button:
             id: H5
             text: 'H5 switch'
             on_press: app.h5_press()
-
 
     BoxLayout:
         orientation: 'horizontal'

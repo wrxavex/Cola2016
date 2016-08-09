@@ -170,38 +170,38 @@ class ColaApp(App):
             self.root.ids.switch_status_text.text = 'switch off'
 
         if values[2] > 512:
-            self.root.ids.HL1.text = 'H1 on'
+            self.root.ids.H1.text = 'H1 on'
             pwm.set_pwm(6, 0, 4095)
         else:
-            self.root.ids.HL1.text = 'H1 off'
+            self.root.ids.H1.text = 'H1 off'
             pwm.set_pwm(6, 0, 0)
 
         if values[3] > 512:
-            self.root.ids.HL2.text = 'H2 on'
+            self.root.ids.H2.text = 'H2 on'
             pwm.set_pwm(7, 0, 4095)
         else:
-            self.root.ids.HL2.text = 'H2 off'
+            self.root.ids.H2.text = 'H2 off'
             pwm.set_pwm(7, 0, 0)
 
         if values[4] > 512:
-            self.root.ids.HL3.text = 'H3 on'
+            self.root.ids.H3.text = 'H3 on'
             pwm.set_pwm(8, 0, 4095)
         else:
-            self.root.ids.HL3.text = 'H3 off'
+            self.root.ids.H3.text = 'H3 off'
             pwm.set_pwm(8, 0, 0)
 
         if values[5] > 512:
-            self.root.ids.HL4.text = 'H4 on'
+            self.root.ids.H4.text = 'H4 on'
             pwm.set_pwm(9, 0, 4095)
         else:
-            self.root.ids.HL4.text = 'H4 off'
+            self.root.ids.H4.text = 'H4 off'
             pwm.set_pwm(9, 0, 0)
 
         if values[6] > 512:
-            self.root.ids.HL5.text = 'H5 on'
+            self.root.ids.H5.text = 'H5 on'
             pwm.set_pwm(10, 0, 4095)
         else:
-            self.root.ids.HL5.text = 'H5 off'
+            self.root.ids.H5.text = 'H5 off'
             pwm.set_pwm(10, 0, 0)
 
         values = map(str, values)
@@ -276,11 +276,22 @@ class ColaApp(App):
         pwm.set_pwm(4, 0, 0)
         pwm.set_pwm(5, 0, 0)
         pwm.set_pwm(6, 0, 0)
-        # pwm.set_pwm(7, 0, 4095)
-        # pwm.set_pwm(8, 0, 4095)
-        # pwm.set_pwm(9, 0, 4095)
-        # pwm.set_pwm(10, 0, 4095)
+        pwm.set_pwm(7, 0, 0)
+        pwm.set_pwm(8, 0, 0)
+        pwm.set_pwm(9, 0, 0)
+        pwm.set_pwm(10, 0, 0)
 
+    def all_close(self):
+        pwm.set_pwm(1, 0, 4095)
+        pwm.set_pwm(2, 0, 4095)
+        pwm.set_pwm(3, 0, 4095)
+        pwm.set_pwm(4, 0, 4095)
+        pwm.set_pwm(5, 0, 4095)
+        pwm.set_pwm(6, 0, 4095)
+        pwm.set_pwm(7, 0, 4095)
+        pwm.set_pwm(8, 0, 4095)
+        pwm.set_pwm(9, 0, 4095)
+        pwm.set_pwm(10, 0, 4095)
 
     def h1_press(self):
         gs.h1 = 1
