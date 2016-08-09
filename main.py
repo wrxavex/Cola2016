@@ -66,16 +66,17 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 class GameStatus():
 
     def __init__(self):
-        self.sw = 0             # sw的值
-        self.sw_count = 0       # 計算撞到sw後的計數
+        self.sw = 0                 # sw的值
+        self.sw_count = 0           # 計算撞到sw後的計數
+        self.sw.count_limit = 100   # sw計數最大值→閃燈時間
 
-        self.h1 = 0             # 偵測洞口一
-        self.h2 = 0             # 偵測洞口二
-        self.h3 = 0             # 偵測洞口三
-        self.h4 = 0             # 偵測洞口四
-        self.h5 = 0             # 偵測洞口五
+        self.h1 = 0                 # 偵測洞口一
+        self.h2 = 0                 # 偵測洞口二
+        self.h3 = 0                 # 偵測洞口三
+        self.h4 = 0                 # 偵測洞口四
+        self.h5 = 0                 # 偵測洞口五
 
-        self.cd = 0             # 偵測碰撞開關
+        self.cd = 0                 # 偵測碰撞開關
 
         self.light_set = [[1, 0, 1, 1, 1, 1],       # 六組燈光的調節
                           [0, 1, 0, 1, 1, 1],
@@ -106,6 +107,7 @@ class GameStatus():
     def game_reset(self):
         self.sw = 0
         self.sw_count = 0
+
 
         self.h1 = 0
         self.h2 = 0
@@ -154,7 +156,7 @@ class ColaApp(App):
 
     def on_start(self):
         Clock.schedule_interval(self.update_mcp3008_value, 0.0016)
-        Clock.schedule_interval(self.light_blinky, 1)
+        Clock.schedule_interval(self.light_blinky, 0.5)
 
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
@@ -226,6 +228,9 @@ class ColaApp(App):
             gs.sw_count += 1
         else:
             gs.sw_count = 0
+
+        if gs.sw_count > 100:
+            gs.sw = 0
 
         numrows = len(gs.light_set)
 
