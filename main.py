@@ -83,6 +83,13 @@ class GameStatus():
         self.h4 = 0                 # 偵測洞口四
         self.h5 = 0                 # 偵測洞口五
 
+        self.l1 = 0                 # 一號燈（除錯用）以下類推
+        self.l2 = 0
+        self.l3 = 0
+        self.l4 = 0
+        self.l5 = 0
+        self.l6 = 0
+
         self.cd = 0                 # 偵測碰撞開關
 
         self.light_set = [[1, 0, 1, 1, 1, 1],       # 六組燈光的調節
@@ -174,36 +181,46 @@ class ColaApp(App):
 
         if gs.test_mode == 0 and values[1] > 850:
             self.root.ids.H1.text = 'H1 on'
+            gs.h1 = 1
             pwm.set_pwm(6, 0, 0)
         elif gs.test_mode == 0 and values[1] < 850:
             self.root.ids.H1.text = 'H1 off'
+            gs.h1 = 0
             pwm.set_pwm(6, 0, 4095)
 
         if gs.test_mode == 0 and values[2] > 850:
             self.root.ids.H2.text = 'H2 on'
+            gs.h2 = 1
             pwm.set_pwm(7, 0, 0)
         elif gs.test_mode == 0 and values[2] < 850:
             self.root.ids.H2.text = 'H2 off'
+            gs.h2 = 0
             pwm.set_pwm(7, 0, 4095)
 
         if gs.test_mode == 0 and values[3] > 850:
             self.root.ids.H3.text = 'H3 on'
+            gs.h3 = 1
             pwm.set_pwm(8, 0, 0)
         elif gs.test_mode == 0 and values[3] < 850:
+            gs.h3 = 0
             self.root.ids.H3.text = 'H3 off'
             pwm.set_pwm(8, 0, 4095)
 
         if gs.test_mode == 0 and values[4] > 850:
+            gs.h4 = 1
             self.root.ids.H4.text = 'H4 on'
             pwm.set_pwm(9, 0, 0)
         elif gs.test_mode == 0 and values[4] < 850:
+            gs.h4 = 0
             self.root.ids.H4.text = 'H4 off'
             pwm.set_pwm(9, 0, 4095)
 
         if gs.test_mode == 0 and values[5] > 850:
+            gs.h5 = 1
             self.root.ids.H5.text = 'H5 on'
             pwm.set_pwm(10, 0, 0)
         elif gs.test_mode == 0 and values[5] < 850:
+            gs.h5 = 0
             self.root.ids.H5.text = 'H5 off'
             pwm.set_pwm(10, 0, 4095)
 
@@ -382,6 +399,20 @@ class ColaApp(App):
             print('h5 off')
             gs.h5 = 0
             pwm.set_pwm(10, 0, 4095)
+
+    def l1_press(self):
+
+        if gs.test_mode == 1 and gs.l1 == 0:
+            print('l1 on')
+            gs.l1 = 1
+            pwm.set_pwm(0, 0, 0)
+        elif gs.test_mode == 1 and gs.l1 == 1:
+            print('l1 off')
+            gs.l1 = 0
+            pwm.set_pwm(0, 0, 4095)
+
+
+
 
     # def hl1_toggle(self):
     #     if gs.hl1 == 0:
