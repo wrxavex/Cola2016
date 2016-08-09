@@ -349,10 +349,12 @@ class ColaApp(App):
 
         if gs.test_mode == 1 and gs.h1 == 0:
             print('h1 on')
+            self.root.ids.H1.text = 'H1 On'
             gs.h1 = 1
             pwm.set_pwm(6, 0, 0)
         elif gs.test_mode == 1 and gs.h1 == 1:
             print('h1 off')
+            self.root.ids.H1.text = 'H1 Off'
             gs.h1 = 0
             pwm.set_pwm(6, 0, 4095)
 
@@ -360,10 +362,12 @@ class ColaApp(App):
 
         if gs.test_mode == 1 and gs.h2 == 0:
             print('h2 on')
+            self.root.ids.H2.text = 'H2 On'
             gs.h2 = 1
             pwm.set_pwm(7, 0, 0)
         elif gs.test_mode == 1 and gs.h2 == 1:
             print('h2 off')
+            self.root.ids.H2.text = 'H2 Off'
             gs.h2 = 0
             pwm.set_pwm(7, 0, 4095)
 
@@ -371,10 +375,12 @@ class ColaApp(App):
 
         if gs.test_mode == 1 and gs.h3 == 0:
             print('h3 on')
+            self.root.ids.H3.text = 'H3 On'
             gs.h3 = 1
             pwm.set_pwm(8, 0, 0)
         elif gs.test_mode == 1 and gs.h3 == 1:
             print('h3 off')
+            self.root.ids.H3.text = 'H3 Off'
             gs.h3 = 0
             pwm.set_pwm(8, 0, 4095)
 
@@ -382,10 +388,12 @@ class ColaApp(App):
 
         if gs.test_mode == 1 and gs.h4 == 0:
             print('h4 on')
+            self.root.ids.H4.text = 'H4 On'
             gs.h4 = 1
             pwm.set_pwm(9, 0, 0)
         elif gs.test_mode == 1 and gs.h4 == 1:
             print('h4 off')
+            self.root.ids.H4.text = 'H4 Off'
             gs.h4 = 0
             pwm.set_pwm(9, 0, 4095)
 
@@ -393,10 +401,12 @@ class ColaApp(App):
 
         if gs.test_mode == 1 and gs.h5 == 0:
             print('h5 on')
+            self.root.ids.H5.text = 'H5 On'
             gs.h5 = 1
             pwm.set_pwm(10, 0, 0)
         elif gs.test_mode == 1 and gs.h5 == 1:
             print('h5 off')
+            self.root.ids.H5.text = 'H5 Off'
             gs.h5 = 0
             pwm.set_pwm(10, 0, 4095)
 
@@ -404,10 +414,12 @@ class ColaApp(App):
 
         if gs.test_mode == 1 and gs.l1 == 0:
             print('l1 on')
+            self.root.ids.L1.text = 'l1 On'
             gs.l1 = 1
             pwm.set_pwm(0, 0, 0)
         elif gs.test_mode == 1 and gs.l1 == 1:
             print('l1 off')
+            self.root.ids.H1.text = 'L1 Off'
             gs.l1 = 0
             pwm.set_pwm(0, 0, 4095)
 
