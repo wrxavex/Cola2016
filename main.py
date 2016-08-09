@@ -166,38 +166,38 @@ class ColaApp(App):
 
         if values[1] > 850:
             self.root.ids.H1.text = 'H1 on'
-            pwm.set_pwm(6, 0, 4095)
+            pwm.set_pwm(6, 0, 0)
         else:
             self.root.ids.H1.text = 'H1 off'
-            pwm.set_pwm(6, 0, 0)
+            pwm.set_pwm(6, 0, 4095)
 
         if values[2] > 850:
             self.root.ids.H2.text = 'H2 on'
-            pwm.set_pwm(7, 0, 4095)
+            pwm.set_pwm(7, 0, 0)
         else:
             self.root.ids.H2.text = 'H2 off'
-            pwm.set_pwm(7, 0, 0)
+            pwm.set_pwm(7, 0, 4095)
 
         if values[3] > 850:
             self.root.ids.H3.text = 'H3 on'
-            pwm.set_pwm(8, 0, 4095)
+            pwm.set_pwm(8, 0, 0)
         else:
             self.root.ids.H3.text = 'H3 off'
-            pwm.set_pwm(8, 0, 0)
+            pwm.set_pwm(8, 0, 4095)
 
         if values[4] > 850:
             self.root.ids.H4.text = 'H4 on'
-            pwm.set_pwm(9, 0, 4095)
+            pwm.set_pwm(9, 0, 0)
         else:
             self.root.ids.H4.text = 'H4 off'
-            pwm.set_pwm(9, 0, 0)
+            pwm.set_pwm(9, 0, 4095)
 
         if values[5] > 850:
             self.root.ids.H5.text = 'H5 on'
-            pwm.set_pwm(10, 0, 4095)
+            pwm.set_pwm(10, 0, 0)
         else:
             self.root.ids.H5.text = 'H5 off'
-            pwm.set_pwm(10, 0, 0)
+            pwm.set_pwm(10, 0, 4095)
 
         if values[6] > 850:
             self.root.ids.switch_status_text.text = 'switch on'
@@ -235,34 +235,34 @@ class ColaApp(App):
         print('rows now = %s' % rows)
 
         if gs.sw == 1 and gs.light_set[rows][0] == 1:
-            pwm.set_pwm(0, 0, 4095)
-        else:
             pwm.set_pwm(0, 0, 0)
+        else:
+            pwm.set_pwm(0, 0, 4095)
 
         if gs.sw == 1 and gs.light_set[rows][1] == 1:
-            pwm.set_pwm(1, 0, 4095)
-        else:
             pwm.set_pwm(1, 0, 0)
+        else:
+            pwm.set_pwm(1, 0, 4095)
 
         if gs.sw == 1 and gs.light_set[rows][2] == 1:
-            pwm.set_pwm(2, 0, 4095)
-        else:
             pwm.set_pwm(2, 0, 0)
+        else:
+            pwm.set_pwm(2, 0, 4095)
 
         if gs.sw == 1 and gs.light_set[rows][3] == 1:
-            pwm.set_pwm(3, 0, 4095)
-        else:
             pwm.set_pwm(3, 0, 0)
+        else:
+            pwm.set_pwm(3, 0, 4095)
 
         if gs.sw == 1 and gs.light_set[rows][4] == 1:
-            pwm.set_pwm(4, 0, 4095)
-        else:
             pwm.set_pwm(4, 0, 0)
+        else:
+            pwm.set_pwm(4, 0, 4095)
 
         if gs.sw == 1 and gs.light_set[rows][5] == 1:
-            pwm.set_pwm(5, 0, 4095)
-        else:
             pwm.set_pwm(5, 0, 0)
+        else:
+            pwm.set_pwm(5, 0, 4095)
 
     def switch_on(self):
         print('press switch')
