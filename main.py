@@ -66,7 +66,7 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 class GameStatus():
 
     def __init__(self):
-        self.sw = 1             # sw的值
+        self.sw = 0             # sw的值
         self.sw_count = 0       # 計算撞到sw後的計數
 
         self.h1 = 0             # 偵測洞口一
@@ -164,47 +164,47 @@ class ColaApp(App):
 
         # print('rotation value: %d' % values[0])
 
-        if values[1] > 850:
+        if gs.test_mode == 0 and values[1] > 850:
             self.root.ids.H1.text = 'H1 on'
             pwm.set_pwm(6, 0, 0)
         else:
             self.root.ids.H1.text = 'H1 off'
             pwm.set_pwm(6, 0, 4095)
 
-        if values[2] > 850:
+        if gs.test_mode == 0 and values[2] > 850:
             self.root.ids.H2.text = 'H2 on'
             pwm.set_pwm(7, 0, 0)
         else:
             self.root.ids.H2.text = 'H2 off'
             pwm.set_pwm(7, 0, 4095)
 
-        if values[3] > 850:
+        if gs.test_mode == 0 and values[3] > 850:
             self.root.ids.H3.text = 'H3 on'
             pwm.set_pwm(8, 0, 0)
         else:
             self.root.ids.H3.text = 'H3 off'
             pwm.set_pwm(8, 0, 4095)
 
-        if values[4] > 850:
+        if gs.test_mode == 0 and values[4] > 850:
             self.root.ids.H4.text = 'H4 on'
             pwm.set_pwm(9, 0, 0)
         else:
             self.root.ids.H4.text = 'H4 off'
             pwm.set_pwm(9, 0, 4095)
 
-        if values[5] > 850:
+        if gs.test_mode == 0 and values[5] > 850:
             self.root.ids.H5.text = 'H5 on'
             pwm.set_pwm(10, 0, 0)
         else:
             self.root.ids.H5.text = 'H5 off'
             pwm.set_pwm(10, 0, 4095)
 
-        if values[6] > 850:
+        if gs.test_mode == 0 and values[6] > 850:
             self.root.ids.switch_status_text.text = 'switch on'
         else:
             self.root.ids.switch_status_text.text = 'switch off'
 
-        if values[7] > 850:
+        if gs.test_mode == 0 and values[7] > 850:
             self.root.ids.switch_status_text.text = 'Collision detection'
         else:
             self.root.ids.switch_status_text.text = 'Collision detection'
@@ -234,32 +234,32 @@ class ColaApp(App):
         print('numrows = %s' % numrows)
         print('rows now = %s' % rows)
 
-        if gs.sw == 1 and gs.light_set[rows][0] == 1:
+        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 1:
             pwm.set_pwm(0, 0, 0)
         else:
             pwm.set_pwm(0, 0, 4095)
 
-        if gs.sw == 1 and gs.light_set[rows][1] == 1:
+        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][1] == 1:
             pwm.set_pwm(1, 0, 0)
         else:
             pwm.set_pwm(1, 0, 4095)
 
-        if gs.sw == 1 and gs.light_set[rows][2] == 1:
+        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][2] == 1:
             pwm.set_pwm(2, 0, 0)
         else:
             pwm.set_pwm(2, 0, 4095)
 
-        if gs.sw == 1 and gs.light_set[rows][3] == 1:
+        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][3] == 1:
             pwm.set_pwm(3, 0, 0)
         else:
             pwm.set_pwm(3, 0, 4095)
 
-        if gs.sw == 1 and gs.light_set[rows][4] == 1:
+        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][4] == 1:
             pwm.set_pwm(4, 0, 0)
         else:
             pwm.set_pwm(4, 0, 4095)
 
-        if gs.sw == 1 and gs.light_set[rows][5] == 1:
+        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][5] == 1:
             pwm.set_pwm(5, 0, 0)
         else:
             pwm.set_pwm(5, 0, 4095)
@@ -270,6 +270,7 @@ class ColaApp(App):
 
     def reset_on(self):
         print('reset on')
+        gs.test_mode = 0
         gs.game_reset()
         self.root.ids.H1.text = 'h1 off'
         self.root.ids.H2.text = 'h2 off'
@@ -278,6 +279,7 @@ class ColaApp(App):
         self.root.ids.H5.text = 'h5 off'
 
     def all_light(self):
+        gs.test_mode = 1
         pwm.set_pwm(1, 0, 0)
         pwm.set_pwm(2, 0, 0)
         pwm.set_pwm(3, 0, 0)
@@ -290,6 +292,7 @@ class ColaApp(App):
         pwm.set_pwm(10, 0, 0)
 
     def all_close(self):
+        gs.test_mode = 1
         pwm.set_pwm(1, 0, 4095)
         pwm.set_pwm(2, 0, 4095)
         pwm.set_pwm(3, 0, 4095)
