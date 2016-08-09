@@ -273,33 +273,57 @@ class ColaApp(App):
         # print('test mode = %s' % gs.test_mode)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 1:
+            gs.l1 = 1
+            self.root.ids.L1.text = 'l1 On'
             pwm.set_pwm(0, 0, 0)
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 0:
+            gs.l1 = 0
             pwm.set_pwm(0, 0, 4095)
+            self.root.ids.L1.text = 'l1 Off'
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][1] == 1:
+            gs.l2 = 1
+            self.root.ids.L2.text = 'l2 On'
             pwm.set_pwm(1, 0, 0)
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][1] == 0:
+            gs.l2 = 0
+            self.root.ids.L2.text = 'l2 Off'
             pwm.set_pwm(1, 0, 4095)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][2] == 1:
+            gs.l3 = 1
+            self.root.ids.L3.text = 'l3 On'
             pwm.set_pwm(2, 0, 0)
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][2] == 0:
+            gs.l3 = 0
+            self.root.ids.L3.text = 'l3 Off'
             pwm.set_pwm(2, 0, 4095)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][3] == 1:
+            gs.l4 = 1
+            self.root.ids.L4.text = 'l4 On'
             pwm.set_pwm(3, 0, 0)
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][3] == 0:
+            gs.l4 = 0
+            self.root.ids.L4.text = 'l4 Off'
             pwm.set_pwm(3, 0, 4095)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][4] == 1:
+            gs.l5 = 1
+            self.root.ids.L5.text = 'l5 On'
             pwm.set_pwm(4, 0, 0)
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][4] == 0:
+            gs.l5 = 0
+            self.root.ids.L5.text = 'l5 Off'
             pwm.set_pwm(4, 0, 4095)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][5] == 1:
+            gs.l6 = 1
+            self.root.ids.L6.text = 'l6 On'
             pwm.set_pwm(5, 0, 0)
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][5] == 0:
+            gs.l6 = 0
+            self.root.ids.L6.text = 'l6 Off'
             pwm.set_pwm(5, 0, 4095)
 
     def switch_on(self):
@@ -345,7 +369,6 @@ class ColaApp(App):
         pwm.set_pwm(10, 0, 4095)
 
     def h1_press(self):
-
 
         if gs.test_mode == 1 and gs.h1 == 0:
             print('h1 on')
