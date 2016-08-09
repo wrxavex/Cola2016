@@ -68,7 +68,7 @@ class GameStatus():
     def __init__(self):
         self.sw = 0                 # sw的值
         self.sw_count = 0           # 計算撞到sw後的計數
-        self.sw.count_limit = 100   # sw計數最大值→閃燈時間
+        self.sw_count_limit = 100   # sw計數最大值→閃燈時間
 
         self.h1 = 0                 # 偵測洞口一
         self.h2 = 0                 # 偵測洞口二
