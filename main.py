@@ -329,6 +329,7 @@ class ColaApp(App):
 
     def h1_press(self):
         print('h1 press')
+        print('gs.h1 = %s' % gs.h1)
 
         if gs.test_mode == 1 and gs.h1 == 0:
             print ('h1 on')
