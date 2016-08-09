@@ -68,7 +68,7 @@ class GameStatus():
     def __init__(self):
         self.sw = 0                 # sw的值
         self.sw_count = 0           # 計算撞到sw後的計數
-        self.sw_count_limit = 100   # sw計數最大值→閃燈時間
+        self.sw_count_limit = 30   # sw計數最大值→閃燈時間
 
         self.h1 = 0                 # 偵測洞口一
         self.h2 = 0                 # 偵測洞口二
@@ -156,7 +156,7 @@ class ColaApp(App):
 
     def on_start(self):
         Clock.schedule_interval(self.update_mcp3008_value, 0.0016)
-        Clock.schedule_interval(self.light_blinky, 0.5)
+        Clock.schedule_interval(self.light_blinky, 0.25)
 
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
