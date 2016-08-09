@@ -328,8 +328,7 @@ class ColaApp(App):
         pwm.set_pwm(10, 0, 4095)
 
     def h1_press(self):
-        print('h1 press')
-        print('gs.h1 = %s' % gs.h1)
+
 
         if gs.test_mode == 1 and gs.h1 == 0:
             print('h1 on')
@@ -341,20 +340,48 @@ class ColaApp(App):
             pwm.set_pwm(6, 0, 4095)
 
     def h2_press(self):
-        gs.h2 = 1
-        pwm.set_pwm(7, 0, 0)
+
+        if gs.test_mode == 1 and gs.h2 == 0:
+            print('h2 on')
+            gs.h2 = 1
+            pwm.set_pwm(7, 0, 0)
+        elif gs.test_mode == 1 and gs.h2 == 1:
+            print('h2 off')
+            gs.h2 = 0
+            pwm.set_pwm(7, 0, 4095)
 
     def h3_press(self):
-        gs.h3 = 1
-        pwm.set_pwm(8, 0, 0)
+
+        if gs.test_mode == 1 and gs.h3 == 0:
+            print('h3 on')
+            gs.h3 = 1
+            pwm.set_pwm(8, 0, 0)
+        elif gs.test_mode == 1 and gs.h3 == 1:
+            print('h3 off')
+            gs.h3 = 0
+            pwm.set_pwm(8, 0, 4095)
 
     def h4_press(self):
-        gs.h4 = 1
-        pwm.set_pwm(9, 0, 0)
+
+        if gs.test_mode == 1 and gs.h4 == 0:
+            print('h4 on')
+            gs.h4 = 1
+            pwm.set_pwm(9, 0, 0)
+        elif gs.test_mode == 1 and gs.h4 == 1:
+            print('h4 off')
+            gs.h4 = 0
+            pwm.set_pwm(9, 0, 4095)
 
     def h5_press(self):
-        gs.h5 = 1
-        pwm.set_pwm(10, 0, 0)
+
+        if gs.test_mode == 1 and gs.h5 == 0:
+            print('h5 on')
+            gs.h5 = 1
+            pwm.set_pwm(10, 0, 0)
+        elif gs.test_mode == 1 and gs.h5 == 1:
+            print('h5 off')
+            gs.h5 = 0
+            pwm.set_pwm(10, 0, 4095)
 
     # def hl1_toggle(self):
     #     if gs.hl1 == 0:
