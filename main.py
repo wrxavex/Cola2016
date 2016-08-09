@@ -251,9 +251,9 @@ class ColaApp(App):
 
         rows = gs.sw_count % numrows
 
-        print('numrows = %s' % numrows)
-        print('rows now = %s' % rows)
-        print('test mode = %s' % gs.test_mode)
+        # print('numrows = %s' % numrows)
+        # print('rows now = %s' % rows)
+        # print('test mode = %s' % gs.test_mode)
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 1:
             pwm.set_pwm(0, 0, 0)
@@ -328,6 +328,7 @@ class ColaApp(App):
         pwm.set_pwm(10, 0, 4095)
 
     def h1_press(self):
+        print('h1 press')
 
         if gs.test_mode == 1 and gs.h1 == 0:
             gs.h1 = 1
