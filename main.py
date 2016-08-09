@@ -263,11 +263,11 @@ class ColaApp(App):
     def reset_on(self):
         print('reset on')
         gs.game_reset()
-        self.root.ids.HL1.text = 'h1 off'
-        self.root.ids.HL2.text = 'h2 off'
-        self.root.ids.HL3.text = 'h3 off'
-        self.root.ids.HL4.text = 'h4 off'
-        self.root.ids.HL5.text = 'h5 off'
+        self.root.ids.H1.text = 'h1 off'
+        self.root.ids.H2.text = 'h2 off'
+        self.root.ids.H3.text = 'h3 off'
+        self.root.ids.H4.text = 'h4 off'
+        self.root.ids.H5.text = 'h5 off'
 
     def all_light(self):
         pwm.set_pwm(1, 0, 0)
