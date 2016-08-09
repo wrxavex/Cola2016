@@ -2,7 +2,8 @@
 
 from __future__ import division
 
-import time
+import subprocess
+
 
 from kivy.app import App
 from kivy.clock import Clock
@@ -114,7 +115,6 @@ class GameStatus():
         self.sw = 0
         self.sw_count = 0
 
-
         self.h1 = 0
         self.h2 = 0
         self.h3 = 0
@@ -216,10 +216,10 @@ class ColaApp(App):
         if gs.test_mode == 0 and values[7] > 850:
             self.root.ids.switch_status_text.text = 'Collision detection'
         elif gs.test_mode == 0 and values[7] < 850:
-            self.root.ids.switch_status_text.text = 'Collision detection'
+            self.root.ids.switch_status_text.text = 'No Collision detection'
 
         if GPIO.input(17) and gs.sw == 0:
-            self.switch_on()
+            self.reset_on()
 
         values = map(str, values)
         values_string = ', '.join(values)
@@ -232,6 +232,11 @@ class ColaApp(App):
         self.root.ids.mcp5.text = values[5]
         self.root.ids.mcp6.text = values[6]
         self.root.ids.mcp7.text = values[7]
+
+        cpu_temp_raw_data = subprocess.check_output(["/opt/vc/bin/vcgencmd", "measure_temp"])
+        get_cpu_temp = cpu_temp_raw_data.strip()
+
+        self.root.ids.mcp7.text = get_cpu_temp
 
     def light_blinky(self, nap):
         if gs.sw == 1:
