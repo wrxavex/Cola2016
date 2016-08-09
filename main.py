@@ -169,7 +169,7 @@ class ColaApp(App):
         if gs.test_mode == 0 and values[1] > 850:
             self.root.ids.H1.text = 'H1 on'
             pwm.set_pwm(6, 0, 0)
-        else:
+        elif gs.test_mode == 0 and values[1] < 850:
             self.root.ids.H1.text = 'H1 off'
             pwm.set_pwm(6, 0, 4095)
 
