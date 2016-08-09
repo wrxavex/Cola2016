@@ -9,36 +9,36 @@ BoxLayout:
         orientation: 'horizontal'
 
         Label:
-            id: mcp0-label
-            text: 'value1'
+            id: mcp0_label
+            text: 'Value1'
 
         Label:
-            id: mcp1-label
-            text: 'value2'
+            id: mcp1_label
+            text: 'Value2'
 
         Label:
-            id: mcp2-label
-            text: 'value3'
+            id: mcp2_label
+            text: 'Value3'
 
         Label:
-            id: mcp3-label
-            text: 'value4'
+            id: mcp3_label
+            text: 'Value4'
 
         Label:
-            id: mcp4-label
-            text: 'value5'
+            id: mcp4_label
+            text: 'Value5'
 
         Label:
-            id: mcp5-label
-            text: 'value6'
+            id: mcp5_label
+            text: 'Value6'
 
         Label:
-            id: mcp6-label
-            text: 'value7'
+            id: mcp6_label
+            text: 'Value7'
 
         Label:
-            id: mcp7-label
-            text: 'value8'
+            id: mcp7_label
+            text: 'Value8'
 
     BoxLayout:
         orientation: 'horizontal'
@@ -92,27 +92,32 @@ BoxLayout:
     BoxLayout:
         orientation: 'horizontal'
 
-        Label:
+        Button:
+            id:all_light
+            text:'All Light'
+            on_press:app.all_light()
+
+        Button:
             id: L1
             text: 'L1: off'
 
-        Label:
+        Button:
             id: L2
             text: 'L2: off'
 
-        Label:
-            id:L3
+        Button:
+            id: L3
             text: 'L3: off'
 
-        Label:
+        Button:
             id: L4
             text: 'L4: off'
 
-        Label:
+        Button:
             id: L5
             text: 'L5: off'
 
-        Label:
+        Button:
             id: L6
             text: 'L6: off'
 
