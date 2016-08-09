@@ -229,7 +229,7 @@ class ColaApp(App):
         else:
             gs.sw_count = 0
 
-        if gs.sw_count > 100:
+        if gs.sw_count > gs.sw_count_limit:
             gs.sw = 0
 
         numrows = len(gs.light_set)
