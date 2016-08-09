@@ -27,8 +27,8 @@ MOSI = 10
 CS = 8
 
 mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
-print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*range(8)))
-print('-' * 57)
+# print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*range(8)))
+# print('-' * 57)
 
 
 def read_mcp3008():
@@ -38,8 +38,8 @@ def read_mcp3008():
         # The read_adc function will get the value of the specified channel (0-7).
         values[i] = mcp.read_adc(i)
     # Print the ADC values.
-    print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
-    print(values)
+    # print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
+    # print(values)
     # Pause for half a second.
     return values
 
@@ -159,50 +159,55 @@ class ColaApp(App):
     def update_mcp3008_value(self, nap):
         values = read_mcp3008()
 
-        values[0] = translate(values[0], 0, 1023, 130, 600)
+        values[0] = translate(values[0], 0, 1023, servo_min, servo_max)
         pwm.set_pwm(12, 0, int(values[0]))  # servo..LR
 
         print('rotation value: %d' % values[0])
 
-        if values[1] > 512:
-            self.root.ids.switch_status_text.text = 'switch on'
-        else:
-            self.root.ids.switch_status_text.text = 'switch off'
-
-        if values[2] > 512:
+        if values[1] > 850:
             self.root.ids.H1.text = 'H1 on'
             pwm.set_pwm(6, 0, 4095)
         else:
             self.root.ids.H1.text = 'H1 off'
             pwm.set_pwm(6, 0, 0)
 
-        if values[3] > 512:
+        if values[2] > 850:
             self.root.ids.H2.text = 'H2 on'
             pwm.set_pwm(7, 0, 4095)
         else:
             self.root.ids.H2.text = 'H2 off'
             pwm.set_pwm(7, 0, 0)
 
-        if values[4] > 512:
+        if values[3] > 850:
             self.root.ids.H3.text = 'H3 on'
             pwm.set_pwm(8, 0, 4095)
         else:
             self.root.ids.H3.text = 'H3 off'
             pwm.set_pwm(8, 0, 0)
 
-        if values[5] > 512:
+        if values[4] > 850:
             self.root.ids.H4.text = 'H4 on'
             pwm.set_pwm(9, 0, 4095)
         else:
             self.root.ids.H4.text = 'H4 off'
             pwm.set_pwm(9, 0, 0)
 
-        if values[6] > 512:
+        if values[5] > 850:
             self.root.ids.H5.text = 'H5 on'
             pwm.set_pwm(10, 0, 4095)
         else:
             self.root.ids.H5.text = 'H5 off'
             pwm.set_pwm(10, 0, 0)
+
+        if values[6] > 850:
+            self.root.ids.switch_status_text.text = 'switch on'
+        else:
+            self.root.ids.switch_status_text.text = 'switch off'
+
+        if values[7] > 850:
+            self.root.ids.switch_status_text.text = 'Collision detection'
+        else:
+            self.root.ids.switch_status_text.text = 'Collision detection'
 
         values = map(str, values)
         values_string = ', '.join(values)
