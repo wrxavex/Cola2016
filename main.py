@@ -432,11 +432,11 @@ class ColaApp(App):
     def all_close(self):            # all_close按鈕時執行
         gs.test_mode = 1
 
-            for i in range(6):
-                gs.lights_status[i] = 0
+        for i in range(6):
+            gs.lights_status[i] = 0
 
-            for i in range(5):
-                gs.hole_lights[i] = 0
+        for i in range(5):
+            gs.hole_lights[i] = 0
 
 
     def h1_press(self):         # 測試模式用 h1 按鈕
