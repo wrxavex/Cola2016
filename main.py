@@ -259,7 +259,7 @@ class ColaApp(App):
 
     def light_scan(self):
 
-        for i in range(5):
+        for i in range(6):
             if low_active == 1:
                 if gs.lights_status[i] == 1:
                     pwm.set_pwm(i, 0, 0)
@@ -456,7 +456,6 @@ class ColaApp(App):
         self.root.ids.L5.text = 'l5 On'
         self.root.ids.L6.text = 'l6 On'
 
-
     def all_close(self):            # all_close按鈕時執行
         gs.test_mode = 1
         pwm.set_pwm(0, 0, 4095)
@@ -495,136 +494,82 @@ class ColaApp(App):
 
     def h1_press(self):         # 測試模式用 h1 按鈕
 
-        if gs.test_mode == 1 and gs.h1 == 0:
+        if gs.test_mode == 1 and gs.hole_lights[0] == 0:
             print('h1 on')
-            self.root.ids.H1.text = 'H1 On'
-            gs.h1 = 1
-            pwm.set_pwm(6, 0, 0)
-        elif gs.test_mode == 1 and gs.h1 == 1:
+            gs.hole_lights[0] = 1
+        elif gs.test_mode == 1 and gs.hole_lights[0] == 1:
             print('h1 off')
-            self.root.ids.H1.text = 'H1 Off'
-            gs.h1 = 0
-            pwm.set_pwm(6, 0, 4095)
+            gs.hole_lights[0] = 0
 
     def h2_press(self):
 
-        if gs.test_mode == 1 and gs.h2 == 0:
-            print('h2 on')
-            self.root.ids.H2.text = 'H2 On'
-            gs.h2 = 1
-            pwm.set_pwm(7, 0, 0)
-        elif gs.test_mode == 1 and gs.h2 == 1:
-            print('h2 off')
-            self.root.ids.H2.text = 'H2 Off'
-            gs.h2 = 0
-            pwm.set_pwm(7, 0, 4095)
+        if gs.test_mode == 1 and gs.hole_lights[1] == 0:
+            gs.hole_lights[1] = 1
+        elif gs.test_mode == 1 and gs.hole_lights[1] == 1:
+            gs.hole_lights[1] = 0
 
     def h3_press(self):
 
-        if gs.test_mode == 1 and gs.h3 == 0:
-            print('h3 on')
-            self.root.ids.H3.text = 'H3 On'
-            gs.h3 = 1
-            pwm.set_pwm(8, 0, 0)
-        elif gs.test_mode == 1 and gs.h3 == 1:
-            print('h3 off')
-            self.root.ids.H3.text = 'H3 Off'
-            gs.h3 = 0
-            pwm.set_pwm(8, 0, 4095)
+        if gs.test_mode == 1 and gs.hole_lights[2] == 0:
+            gs.hole_lights[2] = 1
+        elif gs.test_mode == 1 and gs.hole_lights[2] == 1:
+            gs.hole_lights[2] = 0
 
     def h4_press(self):
 
-        if gs.test_mode == 1 and gs.h4 == 0:
-            print('h4 on')
-            self.root.ids.H4.text = 'H4 On'
-            gs.h4 = 1
-            pwm.set_pwm(9, 0, 0)
-        elif gs.test_mode == 1 and gs.h4 == 1:
-            print('h4 off')
-            self.root.ids.H4.text = 'H4 Off'
-            gs.h4 = 0
-            pwm.set_pwm(9, 0, 4095)
+        if gs.test_mode == 1 and gs.hole_lights[3] == 0:
+            gs.hole_lights[3] = 1
+        elif gs.test_mode == 1 and gs.hole_lights[3] == 1:
+            gs.hole_lights[3] = 0
 
     def h5_press(self):
 
-        if gs.test_mode == 1 and gs.h5 == 0:
-            print('h5 on')
-            self.root.ids.H5.text = 'H5 On'
-            gs.h5 = 1
-            pwm.set_pwm(10, 0, 0)
-        elif gs.test_mode == 1 and gs.h5 == 1:
-            print('h5 off')
-            self.root.ids.H5.text = 'H5 Off'
-            gs.h5 = 0
-            pwm.set_pwm(10, 0, 4095)
+        if gs.test_mode == 1 and gs.hole_lights[4] == 0:
+            gs.hole_lights[4] = 1
+        elif gs.test_mode == 1 and gs.hole_lights[4] == 1:
+            gs.hole_lights[4] = 0
 
     def l1_press(self):
 
-        if gs.test_mode == 1 and gs.l1 == 0:
-            print('l1 on')
-            self.root.ids.L1.text = 'l1 On'
-            gs.l1 = 1
-            pwm.set_pwm(0, 0, 0)
-        elif gs.test_mode == 1 and gs.l1 == 1:
-            print('l1 off')
-            self.root.ids.L1.text = 'L1 Off'
-            gs.l1 = 0
-            pwm.set_pwm(0, 0, 4095)
+        if gs.test_mode == 1 and gs.lights_status[0] == 0:
+            gs.lights_status[0] = 1
+        elif gs.test_mode == 1 and gs.lights_status[0] == 1:
+            gs.lights_status[0] = 0
 
     def l2_press(self):
 
-        if gs.test_mode == 1 and gs.l2 == 0:
-            self.root.ids.L2.text = 'L2 On'
-            gs.l2 = 1
-            pwm.set_pwm(1, 0, 0)
-        elif gs.test_mode == 1 and gs.l2 == 1:
-            self.root.ids.L2.text = 'L2 Off'
-            gs.l2 = 0
-            pwm.set_pwm(1, 0, 4095)
+        if gs.test_mode == 1 and gs.lights_status[1] == 0:
+            gs.lights_status[1] = 1
+        elif gs.test_mode == 1 and gs.lights_status[1] == 1:
+            gs.lights_status[1] = 0
 
     def l3_press(self):
 
-        if gs.test_mode == 1 and gs.l3 == 0:
-            self.root.ids.L3.text = 'L3 On'
-            gs.l3 = 1
-            pwm.set_pwm(2, 0, 0)
-        elif gs.test_mode == 1 and gs.l3 == 1:
-            self.root.ids.L3.text = 'L3 Off'
-            gs.l3 = 0
-            pwm.set_pwm(2, 0, 4095)
+        if gs.test_mode == 1 and gs.lights_status[2] == 0:
+            gs.lights_status[2] = 1
+        elif gs.test_mode == 1 and gs.lights_status[2] == 1:
+            gs.lights_status[2] = 0
 
     def l4_press(self):
 
-        if gs.test_mode == 1 and gs.l4 == 0:
-            self.root.ids.L4.text = 'L4 On'
-            gs.l4 = 1
-            pwm.set_pwm(3, 0, 0)
-        elif gs.test_mode == 1 and gs.l4 == 1:
-            self.root.ids.L4.text = 'L4 Off'
-            gs.l4 = 0
-            pwm.set_pwm(3, 0, 4095)
+        if gs.test_mode == 1 and gs.lights_status[3] == 0:
+            gs.lights_status[3] = 1
+        elif gs.test_mode == 1 and gs.lights_status[3] == 1:
+            gs.lights_status[3] = 0
 
     def l5_press(self):
 
-        if gs.test_mode == 1 and gs.l5 == 0:
-            self.root.ids.L5.text = 'L5 On'
-            gs.l5 = 1
-            pwm.set_pwm(4, 0, 0)
-        elif gs.test_mode == 1 and gs.l5 == 1:
-            self.root.ids.L5.text = 'L5 Off'
-            gs.l5 = 0
-            pwm.set_pwm(4, 0, 4095)
+        if gs.test_mode == 1 and gs.lights_status[4] == 0:
+            gs.lights_status[4] = 1
+        elif gs.test_mode == 1 and gs.lights_status[4] == 1:
+            gs.lights_status[4] = 0
 
     def l6_press(self):
 
-        if gs.test_mode == 1 and gs.l6 == 0:
-            self.root.ids.L6.text = 'L6 On'
-            gs.l6 = 1
-            pwm.set_pwm(5, 0, 0)
-        elif gs.test_mode == 1 and gs.l6 == 1:
-            self.root.ids.L6.text = 'L6 Off'
-            gs.l6 = 0
-            pwm.set_pwm(5, 0, 4095)
+        if gs.test_mode == 1 and gs.lights_status[5] == 0:
+            gs.lights_status[3] = 1
+        elif gs.test_mode == 1 and gs.lights_status[5] == 1:
+            gs.lights_status[5] = 0
 
 
 class ColaLayout(BoxLayout):
