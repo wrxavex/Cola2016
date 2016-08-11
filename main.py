@@ -235,14 +235,14 @@ class ColaApp(App):
         if GPIO.input(17):                                              # reset的pin，執行重置函式（reset_on)
             self.reset_on()
 
-        self.root.ids.mcp0.text = values[0]
-        self.root.ids.mcp1.text = values[1]
-        self.root.ids.mcp2.text = values[2]
-        self.root.ids.mcp3.text = values[3]
-        self.root.ids.mcp4.text = values[4]
-        self.root.ids.mcp5.text = values[5]
-        self.root.ids.mcp6.text = values[6]
-        self.root.ids.mcp7.text = values[7]
+        self.root.ids.mcp0.text = str(int(values[0]))
+        self.root.ids.mcp1.text = str(values[1])
+        self.root.ids.mcp2.text = str(values[2])
+        self.root.ids.mcp3.text = str(values[3])
+        self.root.ids.mcp4.text = str(values[4])
+        self.root.ids.mcp5.text = str(values[5])
+        self.root.ids.mcp6.text = str(values[6])
+        self.root.ids.mcp7.text = str(values[7])
 
         cpu_temp_raw_data = subprocess.check_output(["/opt/vc/bin/vcgencmd", "measure_temp"])
         get_cpu_temp = cpu_temp_raw_data.strip()
