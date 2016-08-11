@@ -17,17 +17,22 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 
+# 設17 pin為resetpin
 GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+# GPIO.setup(17, GPIO.IN)       # 不使用內建pull down
 
 # Servo : IC2 = 0x40
 pwm = servo.PCA9685()
+
+# 切換low active模式，若為low active 的輸出模組請設1
+low_active = 0
 
 # 設定舵機旋轉角度 min 及 max
 servo_min = 210  # min Pulse length out of 4096
 servo_max = 500  # max Pulse length out of 4096
 pwm.set_pwm_freq(60)  # Set frequency to 60hz, good for servos.
 
-
+# 設定 spi pin腳（非使用預設值）
 CLK = 11
 MISO = 9
 MOSI = 10
@@ -37,7 +42,7 @@ mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
 # print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*range(8)))
 # print('-' * 57)
 
-
+# 讀mcp3008的函式
 def read_mcp3008():
     # Read all the ADC channel values in a list.
     values = [0]*8
@@ -47,7 +52,6 @@ def read_mcp3008():
     # Print the ADC values.
     # print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
     # print(values)
-    # Pause for half a second.
     return values
 
 
@@ -56,7 +60,7 @@ def read_mcp3008():
 #         print(touch)
 
 
-# 像arduino的map的用法
+# 像arduino的map的用法，讀可變電阻用
 def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is
     leftSpan = leftMax - leftMin
@@ -72,34 +76,44 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 # 遊戲設定值物件
 class GameStatus():
 
+    # 設定初始值
     def __init__(self):
+
+        # 開關設定區
         self.sw = 0                 # sw的值
         self.sw_count = 0           # 計算撞到sw後的計數
         self.sw_count_limit = 30   # sw計數最大值→閃燈時間
 
+        # 洞口燈作用狀態
         self.h1 = 0                 # 偵測洞口一
         self.h2 = 0                 # 偵測洞口二
         self.h3 = 0                 # 偵測洞口三
         self.h4 = 0                 # 偵測洞口四
         self.h5 = 0                 # 偵測洞口五
+        self.hole_lights = [0,0,0,0,0]
 
-        self.l1 = 0                 # 一號燈（除錯用）以下類推
+        # 閃燈作用狀態
+        self.l1 = 0
         self.l2 = 0
         self.l3 = 0
         self.l4 = 0
         self.l5 = 0
         self.l6 = 0
+        self.lights_status = [0,0,0,0,0,0]
 
-        self.cd = 0                 # 偵測碰撞開關
+        # 偵測碰撞開關
+        self.cd = 0
 
-        self.light_set = [[1, 0, 1, 1, 1, 1],       # 六組燈光的調節
+        # 六組燈光的調節
+        self.light_set = [[1, 0, 1, 1, 1, 1],
                           [0, 1, 0, 1, 1, 1],
                           [1, 0, 1, 0, 1, 1],
                           [1, 1, 0, 1, 0, 1],
                           [1, 1, 1, 0, 1, 0],
                           [1, 1, 1, 1, 0, 1]]
 
-        self.test_mode = 0      # 設定是否是測試模式
+        # 設定是否是測試模式
+        self.test_mode = 0
 
         # 初始化PCA-9685，因為用的繼電器模組是low-active 所以初始值設high-4095（12bit）
         pwm.set_pwm(0, 0, 4095)
@@ -119,6 +133,7 @@ class GameStatus():
         pwm.set_pwm(14, 0, 4095)
         pwm.set_pwm(15, 0, 4095)
 
+    # 重置遊戲數值
     def game_reset(self):
         self.sw = 0
         self.sw_count = 0
@@ -147,83 +162,64 @@ class GameStatus():
         pwm.set_pwm(14, 0, 4095)
         pwm.set_pwm(15, 0, 4095)
 
-    # def hl1_on(self):
-    #     pwm.set_pwm(4, 0, 4095)
-    #     self.hl1 = 1
-    #
-    # def hl1_off(self):
-    #     pwm.set_pwm(4, 0, 0)
-    #     self.hl1 = 0
-    #
-    # def hl2_on(self):
-    #     pwm.set_pwm(5, 0, 4095)
-    #     self.hl2 = 1
-    #
-    # def hl2_off(self):
-    #     pwm.set_pwm(5, 0, 0)
-    #     self.hl2 = 0
 
-
+# 主要起點
 class ColaApp(App):
-    # def build(self):
-    #     return ColaWidget
 
+    # app 起點
     def on_start(self):
+
+        # 排程執行 udate_mcp3008_value
         Clock.schedule_interval(self.update_mcp3008_value, 0.0016)
+
+        # 排程執行 light+blinky 改變第二個值可以改變呼叫週期
         Clock.schedule_interval(self.light_blinky, 0.25)
 
+    # 更新mcp3008數值
     def update_mcp3008_value(self, nap):
+
+        # 呼叫 read_mcp3008取值
         values = read_mcp3008()
 
-        values[0] = translate(values[0], 0, 1023, servo_min, servo_max)     # 讀可變電阻  五個變數是 1、 mcp3008的第一腳位讀值 2、類比讀值最小值 3、類比讀值最大值 4、舵機最小角 5、舵機最大角
-        pwm.set_pwm(12, 0, int(values[0]))  # 叫pca9685 讓舵機動 （第12pin）
+        # 讀可變電阻  五個變數是 1、 mcp3008的第一腳位讀值 2、類比讀值最小值 3、類比讀值最大值 4、舵機最小角 5、舵機最大角
+        values[0] = translate(values[0], 0, 1023, servo_min, servo_max)
 
-        # print('rotation value: %d' % values[0])
+        # 叫pca9685 讓舵機動 （第12pin）
+        pwm.set_pwm(12, 0, int(values[0]))
 
         if gs.test_mode == 0 and values[1] > 850:   # 讀第二個值，如果不在測試模式下才運作 test_mode 為是否是測試模式
-            self.root.ids.H1.text = 'H1 on'         # 設定 ui 把kivy的id是h1的物件 設為'H1 on'
-            gs.h1 = 1
-            pwm.set_pwm(6, 0, 0)
+            gs.hole_lights[0] = 1
+
         elif gs.test_mode == 0 and values[1] < 850:
-            self.root.ids.H1.text = 'H1 off'
-            gs.h1 = 0
-            pwm.set_pwm(6, 0, 4095)
+            gs.hole_lights[0] = 0
 
         if gs.test_mode == 0 and values[2] > 850:
-            self.root.ids.H2.text = 'H2 on'
-            gs.h2 = 1
-            pwm.set_pwm(7, 0, 0)
+            gs.hole_lights[1] = 1
+
         elif gs.test_mode == 0 and values[2] < 850:
-            self.root.ids.H2.text = 'H2 off'
-            gs.h2 = 0
-            pwm.set_pwm(7, 0, 4095)
+            gs.hole_lights[1] = 0
+
 
         if gs.test_mode == 0 and values[3] > 850:
-            self.root.ids.H3.text = 'H3 on'
-            gs.h3 = 1
-            pwm.set_pwm(8, 0, 0)
+            gs.hole_lights[2] = 1
+
         elif gs.test_mode == 0 and values[3] < 850:
-            gs.h3 = 0
-            self.root.ids.H3.text = 'H3 off'
-            pwm.set_pwm(8, 0, 4095)
+            gs.hole_lights[2] = 0
+
 
         if gs.test_mode == 0 and values[4] > 850:
-            gs.h4 = 1
-            self.root.ids.H4.text = 'H4 on'
-            pwm.set_pwm(9, 0, 0)
+            gs.hole_lights[3] = 1
+
         elif gs.test_mode == 0 and values[4] < 850:
-            gs.h4 = 0
-            self.root.ids.H4.text = 'H4 off'
-            pwm.set_pwm(9, 0, 4095)
+            gs.hole_lights[3] = 0
+
 
         if gs.test_mode == 0 and values[5] > 850:
-            gs.h5 = 1
-            self.root.ids.H5.text = 'H5 on'
-            pwm.set_pwm(10, 0, 0)
+            gs.hole_lights[4] = 1
+
         elif gs.test_mode == 0 and values[5] < 850:
-            gs.h5 = 0
-            self.root.ids.H5.text = 'H5 off'
-            pwm.set_pwm(10, 0, 4095)
+            gs.hole_lights[4] = 0
+
 
         if gs.test_mode == 0 and values[6] > 850 and gs.sw == 0:        # 觸發開關的條件
             gs.sw = 1                                                   # 觸發後讓gs.sw = 1 （達成閃燈條件）
@@ -239,9 +235,6 @@ class ColaApp(App):
         if GPIO.input(17):                                              # reset的pin，執行重置函式（reset_on)
             self.reset_on()
 
-        values = map(str, values)
-        values_string = ', '.join(values)
-
         self.root.ids.mcp0.text = values[0]
         self.root.ids.mcp1.text = values[1]
         self.root.ids.mcp2.text = values[2]
@@ -256,13 +249,98 @@ class ColaApp(App):
 
         self.root.ids.cputemp.text = get_cpu_temp
 
-    def light_blinky(self, nap):    # 閃燈函式 gs.sw = 1 才會 count
+        self.light_scan()
+        self.hole_scan()
+        self.text_scan()
+
+    # 閃燈函式 gs.sw = 1 才會 count
+
+    # low active output to pca9685
+
+    def light_scan(self):
+
+        for i in range(5):
+            if low_active == 1:
+                if gs.lights_status[i] == 1:
+                    pwm.set_pwm(i, 0, 0)
+                else:
+                    pwm.set_pwm(i, 0, 4095)
+            if low_active == 0:
+                if gs.lights_status[i] == 1:
+                    pwm.set_pwm(i, 0, 4095)
+                else:
+                    pwm.set_pwm(i, 0, 0)
+
+    def hole_scan(self):
+
+        for i in range(5):
+            if low_active == 1:
+                if gs.hole_lights[i] == 1:
+                    pwm.set_pwm(i + 6, 0, 0)
+                else:
+                    pwm.set_pwm(i + 6, 0, 4095)
+            else:
+                if gs.hole_lights[i] == 1:
+                    pwm.set_pwm(i + 6, 0, 4095)
+                else:
+                    pwm.set_pwm(i + 6, 0, 0)
+
+    def text_scan(self):
+
+        if gs.hole_lights[0] == 1:
+            self.root.ids.H1.text = 'H1 on'
+        else:
+            self.root.ids.H1.text = 'H1 off'
+        if gs.hole_lights[1] == 1:
+            self.root.ids.H2.text = 'H2 on'
+        else:
+            self.root.ids.H2.text = 'H2 off'
+        if gs.hole_lights[2] == 1:
+            self.root.ids.H3.text = 'H3 on'
+        else:
+            self.root.ids.H3.text = 'H3 on'
+        if gs.hole_lights[3] == 1:
+            self.root.ids.H4.text = 'H4 on'
+        else:
+            self.root.ids.H4.text = 'H4 on'
+        if gs.hole_lights[4] == 1:
+            self.root.ids.H5.text = 'H5 on'
+        else:
+            self.root.ids.H5.text = 'H5 on'
+
+        if gs.lights_status[0] == 1:
+            self.root.ids.L1.text = 'l1 On'
+        else:
+            self.root.ids.L1.text = 'l1 Off'
+        if gs.lights_status[1] == 1:
+            self.root.ids.L2.text = 'l2 On'
+        else:
+            self.root.ids.L2.text = 'l2 Off'
+        if gs.lights_status[2] == 1:
+            self.root.ids.L3.text = 'l3 On'
+        else:
+            self.root.ids.L3.text = 'l3 Off'
+        if gs.lights_status[3] == 1:
+            self.root.ids.L4.text = 'l4 On'
+        else:
+            self.root.ids.L4.text = 'l4 Off'
+        if gs.lights_status[4] == 1:
+            self.root.ids.L5.text = 'l5 On'
+        else:
+            self.root.ids.L5.text = 'l5 Off'
+        if gs.lights_status[5] == 1:
+            self.root.ids.L6.text = 'l6 On'
+        else:
+            self.root.ids.L6.text = 'l6 Off'
+
+    def light_blinky(self, nap):
         if gs.sw == 1:
             gs.sw_count += 1
         else:
             gs.sw_count = 0
 
-        if gs.sw_count > gs.sw_count_limit:     # gs.sw_count_limit（count多少次才結束，也可以想成是閃燈時間） 在class game_status 設定
+        # gs.sw_count_limit（count多少次才結束，也可以想成是閃燈時間） 在class game_status 設定
+        if gs.sw_count > gs.sw_count_limit:
             gs.sw = 0
 
         numrows = len(gs.light_set)         # 計算light_set的總行數
@@ -547,24 +625,6 @@ class ColaApp(App):
             self.root.ids.L6.text = 'L6 Off'
             gs.l6 = 0
             pwm.set_pwm(5, 0, 4095)
-
-    # def hl1_toggle(self):
-    #     if gs.hl1 == 0:
-    #         gs.hl1_on()
-    #         self.root.ids.HL1.text = 'h1 on'
-    #
-    #     elif gs.hl1 == 1:
-    #         gs.hl1_off()
-    #         self.root.ids.HL1.text = 'h1 off'
-    #
-    # def hl2_toggle(self):
-    #     if gs.hl2 == 0:
-    #         gs.hl2_on()
-    #         self.root.ids.HL2.text = 'h2 on'
-    #
-    #     elif gs.hl2 == 1:
-    #         gs.hl2_off()
-    #         self.root.ids.HL2.text = 'h2 off'
 
 
 class ColaLayout(BoxLayout):
