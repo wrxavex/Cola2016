@@ -298,15 +298,15 @@ class ColaApp(App):
         if gs.hole_lights[2] == 1:
             self.root.ids.H3.text = 'H3 on'
         else:
-            self.root.ids.H3.text = 'H3 on'
+            self.root.ids.H3.text = 'H3 off'
         if gs.hole_lights[3] == 1:
             self.root.ids.H4.text = 'H4 on'
         else:
-            self.root.ids.H4.text = 'H4 on'
+            self.root.ids.H4.text = 'H4 off'
         if gs.hole_lights[4] == 1:
             self.root.ids.H5.text = 'H5 on'
         else:
-            self.root.ids.H5.text = 'H5 on'
+            self.root.ids.H5.text = 'H5 off'
 
         if gs.lights_status[0] == 1:
             self.root.ids.L1.text = 'l1 On'
@@ -514,7 +514,7 @@ class ColaApp(App):
     def l6_press(self):
 
         if gs.test_mode == 1 and gs.lights_status[5] == 0:
-            gs.lights_status[3] = 1
+            gs.lights_status[5] = 1
         elif gs.test_mode == 1 and gs.lights_status[5] == 1:
             gs.lights_status[5] = 0
 
