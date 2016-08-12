@@ -27,12 +27,16 @@ pwm = servo.PCA9685()
 # 切換low active模式，若為low active 的輸出模組請設1
 low_active = 0
 
+# 設定sw控制模式
+sw_mode = 1
+
 # 指定可變電阻最小值
 vr_min = 262
 
 # 指定可變電阻最大值
 vr_max = 453
 
+# 設定mcp3008引腳讀值觸發點 （0到1023）
 analogy_toggle_point = 850
 
 # 設定舵機旋轉角度 min 及 max
@@ -62,10 +66,6 @@ def read_mcp3008():
     # print(values)
     return values
 
-
-# class ColaWidget(Widget):
-#     def on_touch_down(self, touch):
-#         print(touch)
 
 
 # 像arduino的map的用法，讀可變電阻用
@@ -181,7 +181,8 @@ class ColaApp(App):
         if gs.test_mode == 0 and values[6] > analogy_toggle_point and gs.sw == 0:        # 觸發開關的條件
             gs.sw = 1                                                   # 觸發後讓gs.sw = 1 （達成閃燈條件）
             self.root.ids.switch_status_text.text = 'switch on'
-        elif gs.test_mode == 0 and values[6] < analogy_toggle_point:
+        elif gs.test_mode == 0 and values[6] < analogy_toggle_point and sw_mode == 1:
+            gs.sw = 0
             self.root.ids.switch_status_text.text = 'switch off'
 
         if gs.test_mode == 0 and values[7] > analogy_toggle_point:                       # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
