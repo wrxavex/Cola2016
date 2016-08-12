@@ -155,28 +155,28 @@ class ColaApp(App):
 
         if gs.test_mode == 0 and values[1] > analogy_toggle_point:   # 讀第二個值，如果不在測試模式下才運作 test_mode 為是否是測試模式
             gs.hole_lights[0] = 1
-        elif gs.test_mode == 0 and values[1] < analogy_toggle_point:
-            gs.hole_lights[0] = 0
+        # elif gs.test_mode == 0 and values[1] < analogy_toggle_point:
+        #     gs.hole_lights[0] = 0
 
         if gs.test_mode == 0 and values[2] > analogy_toggle_point:
             gs.hole_lights[1] = 1
-        elif gs.test_mode == 0 and values[2] < analogy_toggle_point:
-            gs.hole_lights[1] = 0
+        # elif gs.test_mode == 0 and values[2] < analogy_toggle_point:
+        #     gs.hole_lights[1] = 0
 
         if gs.test_mode == 0 and values[3] > analogy_toggle_point:
             gs.hole_lights[2] = 1
-        elif gs.test_mode == 0 and values[3] < analogy_toggle_point:
-            gs.hole_lights[2] = 0
+        # elif gs.test_mode == 0 and values[3] < analogy_toggle_point:
+        #     gs.hole_lights[2] = 0
 
         if gs.test_mode == 0 and values[4] > analogy_toggle_point:
             gs.hole_lights[3] = 1
-        elif gs.test_mode == 0 and values[4] < analogy_toggle_point:
-            gs.hole_lights[3] = 0
+        # elif gs.test_mode == 0 and values[4] < analogy_toggle_point:
+        #     gs.hole_lights[3] = 0
 
         if gs.test_mode == 0 and values[5] > analogy_toggle_point:
             gs.hole_lights[4] = 1
-        elif gs.test_mode == 0 and values[5] < analogy_toggle_point:
-            gs.hole_lights[4] = 0
+        # elif gs.test_mode == 0 and values[5] < analogy_toggle_point:
+        #     gs.hole_lights[4] = 0
 
         if gs.test_mode == 0 and values[6] > analogy_toggle_point and gs.sw == 0:        # 觸發開關的條件
             gs.sw = 1                                                   # 觸發後讓gs.sw = 1 （達成閃燈條件）
