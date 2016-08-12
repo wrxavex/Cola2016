@@ -314,34 +314,35 @@ class ColaApp(App):
         rows = gs.sw_count % numrows        # 計算現在要顯示燈號陣列的行數 count對總行數取除數
 
         # 以下對應燈號和陣列 1是亮 0 是暗 test_mode = 1 時不運作
-        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 1:     # 第一顆燈
+        if gs.sw == 1 and gs.light_set[rows][0] == 1:
             gs.lights_status[0] = 1
-        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 0:
+        elif gs.sw == 1 and gs.light_set[rows][0] == 0:
             gs.lights_status[0] = 0
 
-        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][1] == 1:
+        if gs.sw == 1 and gs.light_set[rows][1] == 1:
             gs.lights_status[1] = 1
-        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][1] == 0:
+        elif gs.sw == 1 and gs.light_set[rows][1] == 0:
             gs.lights_status[1] = 0
 
-        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][2] == 1:
+        if gs.sw == 1 and gs.light_set[rows][2] == 1:
             gs.lights_status[2] = 1
-        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][2] == 0:
+        elif gs.sw == 1 and gs.light_set[rows][2] == 0:
             gs.lights_status[2] = 1
 
-        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][3] == 1:
+        if gs.sw == 1 and gs.light_set[rows][3] == 1:
             gs.lights_status[3] = 1
-        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][3] == 0:
+        elif gs.sw == 1 and gs.light_set[rows][3] == 0:
             gs.lights_status[3] = 0
 
-        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][4] == 1:
+        if gs.sw == 1 and gs.light_set[rows][4] == 1:
             gs.lights_status[4] = 1
-        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][4] == 0:
+        elif gs.sw == 1 and gs.light_set[rows][4] == 0:
             gs.lights_status[4] = 0
 
-        if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][5] == 1:
+        if gs.sw == 1 and gs.light_set[rows][5] == 1:
             gs.lights_status[5] = 1
-        elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][5] == 0:
+        elif gs.sw == 1 and gs.light_set[rows][5] == 0:
+
             gs.lights_status[5] = 0
 
     def switch_on(self):            # 目前沒用
