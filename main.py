@@ -151,33 +151,26 @@ class ColaApp(App):
 
         if gs.test_mode == 0 and values[1] > 850:   # 讀第二個值，如果不在測試模式下才運作 test_mode 為是否是測試模式
             gs.hole_lights[0] = 1
-
         elif gs.test_mode == 0 and values[1] < 850:
             gs.hole_lights[0] = 0
 
         if gs.test_mode == 0 and values[2] > 850:
             gs.hole_lights[1] = 1
-
         elif gs.test_mode == 0 and values[2] < 850:
             gs.hole_lights[1] = 0
 
         if gs.test_mode == 0 and values[3] > 850:
             gs.hole_lights[2] = 1
-
         elif gs.test_mode == 0 and values[3] < 850:
             gs.hole_lights[2] = 0
 
-
         if gs.test_mode == 0 and values[4] > 850:
             gs.hole_lights[3] = 1
-
         elif gs.test_mode == 0 and values[4] < 850:
             gs.hole_lights[3] = 0
 
-
         if gs.test_mode == 0 and values[5] > 850:
             gs.hole_lights[4] = 1
-
         elif gs.test_mode == 0 and values[5] < 850:
             gs.hole_lights[4] = 0
 
@@ -247,27 +240,33 @@ class ColaApp(App):
 
     def text_scan(self):
 
+        # 洞口燈掃描
         if gs.hole_lights[0] == 1:
             self.root.ids.H1.text = 'H1 on'
         else:
             self.root.ids.H1.text = 'H1 off'
+
         if gs.hole_lights[1] == 1:
             self.root.ids.H2.text = 'H2 on'
         else:
             self.root.ids.H2.text = 'H2 off'
+
         if gs.hole_lights[2] == 1:
             self.root.ids.H3.text = 'H3 on'
         else:
             self.root.ids.H3.text = 'H3 off'
+
         if gs.hole_lights[3] == 1:
             self.root.ids.H4.text = 'H4 on'
         else:
             self.root.ids.H4.text = 'H4 off'
+
         if gs.hole_lights[4] == 1:
             self.root.ids.H5.text = 'H5 on'
         else:
             self.root.ids.H5.text = 'H5 off'
 
+        # 閃燈掃描
         if gs.lights_status[0] == 1:
             self.root.ids.L1.text = 'l1 On'
         else:
@@ -302,6 +301,7 @@ class ColaApp(App):
         # gs.sw_count_limit（count多少次才結束，也可以想成是閃燈時間） 在class game_status 設定
         if gs.sw_count > gs.sw_count_limit:
             gs.sw = 0
+            gs.lights_status = [0,0,0,0,0,0]
 
         numrows = len(gs.light_set)         # 計算light_set的總行數
 
