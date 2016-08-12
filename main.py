@@ -300,7 +300,7 @@ class ColaApp(App):
     def light_blinky(self, nap):
         if gs.sw == 1:
             gs.sw_count += 1
-        else:
+        elif gs.sw == 0:
             gs.sw_count = 0
             gs.lights_status = [0,0,0,0,0,0]
 
@@ -312,10 +312,6 @@ class ColaApp(App):
         numrows = len(gs.light_set)         # 計算light_set的總行數
 
         rows = gs.sw_count % numrows        # 計算現在要顯示燈號陣列的行數 count對總行數取除數
-
-        # print('numrows = %s' % numrows)
-        # print('rows now = %s' % rows)
-        # print('test mode = %s' % gs.test_mode)
 
         # 以下對應燈號和陣列 1是亮 0 是暗 test_mode = 1 時不運作
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 1:     # 第一顆燈
