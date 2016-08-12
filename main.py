@@ -302,6 +302,7 @@ class ColaApp(App):
             gs.sw_count += 1
         else:
             gs.sw_count = 0
+            gs.lights_status = [0,0,0,0,0,0]
 
         # gs.sw_count_limit（count多少次才結束，也可以想成是閃燈時間） 在class game_status 設定
         if gs.sw_count > gs.sw_count_limit:
