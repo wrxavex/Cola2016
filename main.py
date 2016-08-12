@@ -298,7 +298,7 @@ class ColaApp(App):
             self.root.ids.L6.text = 'l6 Off'
 
     def light_blinky(self, nap):
-        if gs.test_mode == 0 and gs.sw == 1:
+        if gs.sw == 1:
             gs.sw_count += 1
         elif gs.test_mode == 0 and gs.sw == 0:
             gs.sw_count = 0
