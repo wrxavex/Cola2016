@@ -304,16 +304,17 @@ class ColaApp(App):
             gs.sw_count = 0
             gs.lights_status = [0,0,0,0,0,0]
 
-        # gs.sw_count_limit（count多少次才結束，也可以想成是閃燈時間） 在class game_status 設定
+        # gs.sw_count_limit（count多少次才結束，也可以想成是閃燈時間）  在game_status的屬性 設定
         if gs.sw_count > gs.sw_count_limit:
             gs.sw = 0
+            gs.sw_count = 0
             gs.lights_status = [0,0,0,0,0,0]
 
         numrows = len(gs.light_set)         # 計算light_set的總行數
 
         rows = gs.sw_count % numrows        # 計算現在要顯示燈號陣列的行數 count對總行數取除數
 
-        # 以下對應燈號和陣列 1是亮 0 是暗 test_mode = 1 時不運作
+        # 以下對應燈號和陣列 1是亮 0 是暗
         if gs.sw == 1 and gs.light_set[rows][0] == 1:
             gs.lights_status[0] = 1
         elif gs.sw == 1 and gs.light_set[rows][0] == 0:
