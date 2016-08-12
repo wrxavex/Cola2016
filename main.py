@@ -27,6 +27,10 @@ pwm = servo.PCA9685()
 # 切換low active模式，若為low active 的輸出模組請設1
 low_active = 0
 
+#
+vr_min = 262
+vr_max = 453
+
 # 設定舵機旋轉角度 min 及 max
 servo_min = 210  # min Pulse length out of 4096
 servo_max = 500  # max Pulse length out of 4096
@@ -85,20 +89,9 @@ class GameStatus():
         self.sw_count_limit = 30   # sw計數最大值→閃燈時間
 
         # 洞口燈作用狀態
-        self.h1 = 0                 # 偵測洞口一
-        self.h2 = 0                 # 偵測洞口二
-        self.h3 = 0                 # 偵測洞口三
-        self.h4 = 0                 # 偵測洞口四
-        self.h5 = 0                 # 偵測洞口五
         self.hole_lights = [0,0,0,0,0]
 
         # 閃燈作用狀態
-        self.l1 = 0
-        self.l2 = 0
-        self.l3 = 0
-        self.l4 = 0
-        self.l5 = 0
-        self.l6 = 0
         self.lights_status = [0,0,0,0,0,0]
 
         # 偵測碰撞開關
@@ -115,52 +108,21 @@ class GameStatus():
         # 設定是否是測試模式
         self.test_mode = 0
 
-        # 初始化PCA-9685，因為用的繼電器模組是low-active 所以初始值設high-4095（12bit）
-        pwm.set_pwm(0, 0, 4095)
-        pwm.set_pwm(1, 0, 4095)
-        pwm.set_pwm(2, 0, 4095)
-        pwm.set_pwm(3, 0, 4095)
-        pwm.set_pwm(4, 0, 4095)
-        pwm.set_pwm(5, 0, 4095)
-        pwm.set_pwm(6, 0, 4095)
-        pwm.set_pwm(7, 0, 4095)
-        pwm.set_pwm(8, 0, 4095)
-        pwm.set_pwm(9, 0, 4095)
-        pwm.set_pwm(10, 0, 4095)
-        pwm.set_pwm(11, 0, 4095)
-        pwm.set_pwm(12, 0, 4095)
-        pwm.set_pwm(13, 0, 4095)
-        pwm.set_pwm(14, 0, 4095)
-        pwm.set_pwm(15, 0, 4095)
-
     # 重置遊戲數值
     def game_reset(self):
         self.sw = 0
         self.sw_count = 0
 
-        self.h1 = 0
-        self.h2 = 0
-        self.h3 = 0
-        self.h4 = 0
-        self.h5 = 0
+        # 取消測試模式
+        self.test_mode = 0
+
+        # 重置洞口燈
+        self.hole_lights = [0,0,0,0,0]
+
+        # 重置閃燈
+        self.lights_status = [0,0,0,0,0,0]
 
         self.cd = 0
-        pwm.set_pwm(0, 0, 4095)
-        pwm.set_pwm(1, 0, 4095)
-        pwm.set_pwm(2, 0, 4095)
-        pwm.set_pwm(3, 0, 4095)
-        pwm.set_pwm(4, 0, 4095)
-        pwm.set_pwm(5, 0, 4095)
-        pwm.set_pwm(6, 0, 4095)
-        pwm.set_pwm(7, 0, 4095)
-        pwm.set_pwm(8, 0, 4095)
-        pwm.set_pwm(9, 0, 4095)
-        pwm.set_pwm(10, 0, 4095)
-        pwm.set_pwm(11, 0, 4095)
-        pwm.set_pwm(12, 0, 4095)
-        pwm.set_pwm(13, 0, 4095)
-        pwm.set_pwm(14, 0, 4095)
-        pwm.set_pwm(15, 0, 4095)
 
 
 # 主要起點
@@ -199,7 +161,6 @@ class ColaApp(App):
         elif gs.test_mode == 0 and values[2] < 850:
             gs.hole_lights[1] = 0
 
-
         if gs.test_mode == 0 and values[3] > 850:
             gs.hole_lights[2] = 1
 
@@ -219,7 +180,6 @@ class ColaApp(App):
 
         elif gs.test_mode == 0 and values[5] < 850:
             gs.hole_lights[4] = 0
-
 
         if gs.test_mode == 0 and values[6] > 850 and gs.sw == 0:        # 觸發開關的條件
             gs.sw = 1                                                   # 觸發後讓gs.sw = 1 （達成閃燈條件）
@@ -353,58 +313,34 @@ class ColaApp(App):
 
         # 以下對應燈號和陣列 1是亮 0 是暗 test_mode = 1 時不運作
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 1:     # 第一顆燈
-            gs.l1 = 1
-            self.root.ids.L1.text = 'l1 On'
-            pwm.set_pwm(0, 0, 0)
+            gs.lights_status[0] = 1
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][0] == 0:
-            gs.l1 = 0
-            pwm.set_pwm(0, 0, 4095)
-            self.root.ids.L1.text = 'l1 Off'
+            gs.lights_status[0] = 0
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][1] == 1:
-            gs.l2 = 1
-            self.root.ids.L2.text = 'l2 On'
-            pwm.set_pwm(1, 0, 0)
+            gs.lights_status[1] = 1
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][1] == 0:
-            gs.l2 = 0
-            self.root.ids.L2.text = 'l2 Off'
-            pwm.set_pwm(1, 0, 4095)
+            gs.lights_status[1] = 0
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][2] == 1:
-            gs.l3 = 1
-            self.root.ids.L3.text = 'l3 On'
-            pwm.set_pwm(2, 0, 0)
+            gs.lights_status[2] = 1
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][2] == 0:
-            gs.l3 = 0
-            self.root.ids.L3.text = 'l3 Off'
-            pwm.set_pwm(2, 0, 4095)
+            gs.lights_status[2] = 1
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][3] == 1:
-            gs.l4 = 1
-            self.root.ids.L4.text = 'l4 On'
-            pwm.set_pwm(3, 0, 0)
+            gs.lights_status[3] = 1
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][3] == 0:
-            gs.l4 = 0
-            self.root.ids.L4.text = 'l4 Off'
-            pwm.set_pwm(3, 0, 4095)
+            gs.lights_status[3] = 0
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][4] == 1:
-            gs.l5 = 1
-            self.root.ids.L5.text = 'l5 On'
-            pwm.set_pwm(4, 0, 0)
+            gs.lights_status[4] = 1
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][4] == 0:
-            gs.l5 = 0
-            self.root.ids.L5.text = 'l5 Off'
-            pwm.set_pwm(4, 0, 4095)
+            gs.lights_status[4] = 0
 
         if gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][5] == 1:
-            gs.l6 = 1
-            self.root.ids.L6.text = 'l6 On'
-            pwm.set_pwm(5, 0, 0)
+            gs.lights_status[5] = 1
         elif gs.test_mode == 0 and gs.sw == 1 and gs.light_set[rows][5] == 0:
-            gs.l6 = 0
-            self.root.ids.L6.text = 'l6 Off'
-            pwm.set_pwm(5, 0, 4095)
+            gs.lights_status[5] = 0
 
     def switch_on(self):            # 目前沒用
         print('press switch')
@@ -414,11 +350,6 @@ class ColaApp(App):
         print('reset on')
         gs.test_mode = 0            # 關閉測試模式
         gs.game_reset()             # 執行重置
-        self.root.ids.H1.text = 'h1 off'
-        self.root.ids.H2.text = 'h2 off'
-        self.root.ids.H3.text = 'h3 off'
-        self.root.ids.H4.text = 'h4 off'
-        self.root.ids.H5.text = 'h5 off'
 
     def all_light(self):            # all_light按鈕 → 全亮
         gs.test_mode = 1
@@ -438,14 +369,11 @@ class ColaApp(App):
         for i in range(5):
             gs.hole_lights[i] = 0
 
-
     def h1_press(self):         # 測試模式用 h1 按鈕
 
         if gs.test_mode == 1 and gs.hole_lights[0] == 0:
-            print('h1 on')
             gs.hole_lights[0] = 1
         elif gs.test_mode == 1 and gs.hole_lights[0] == 1:
-            print('h1 off')
             gs.hole_lights[0] = 0
 
     def h2_press(self):
