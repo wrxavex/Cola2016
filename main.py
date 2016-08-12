@@ -27,9 +27,13 @@ pwm = servo.PCA9685()
 # 切換low active模式，若為low active 的輸出模組請設1
 low_active = 0
 
-#
+# 指定可變電阻最小值
 vr_min = 262
+
+# 指定可變電阻最大值
 vr_max = 453
+
+analogy_toggle_point = 850
 
 # 設定舵機旋轉角度 min 及 max
 servo_min = 210  # min Pulse length out of 4096
@@ -144,45 +148,45 @@ class ColaApp(App):
         values = read_mcp3008()
 
         # 讀可變電阻  五個變數是 1、 mcp3008的第一腳位讀值 2、類比讀值最小值 3、類比讀值最大值 4、舵機最小角 5、舵機最大角
-        values[0] = translate(values[0], 0, 1023, servo_min, servo_max)
+        values[0] = translate(values[0], vr_min, vr_max, servo_min, servo_max)
 
         # 叫pca9685 讓舵機動 （第12pin）
         pwm.set_pwm(12, 0, int(values[0]))
 
-        if gs.test_mode == 0 and values[1] > 850:   # 讀第二個值，如果不在測試模式下才運作 test_mode 為是否是測試模式
+        if gs.test_mode == 0 and values[1] > analogy_toggle_point:   # 讀第二個值，如果不在測試模式下才運作 test_mode 為是否是測試模式
             gs.hole_lights[0] = 1
-        elif gs.test_mode == 0 and values[1] < 850:
+        elif gs.test_mode == 0 and values[1] < analogy_toggle_point:
             gs.hole_lights[0] = 0
 
-        if gs.test_mode == 0 and values[2] > 850:
+        if gs.test_mode == 0 and values[2] > analogy_toggle_point:
             gs.hole_lights[1] = 1
-        elif gs.test_mode == 0 and values[2] < 850:
+        elif gs.test_mode == 0 and values[2] < analogy_toggle_point:
             gs.hole_lights[1] = 0
 
-        if gs.test_mode == 0 and values[3] > 850:
+        if gs.test_mode == 0 and values[3] > analogy_toggle_point:
             gs.hole_lights[2] = 1
-        elif gs.test_mode == 0 and values[3] < 850:
+        elif gs.test_mode == 0 and values[3] < analogy_toggle_point:
             gs.hole_lights[2] = 0
 
-        if gs.test_mode == 0 and values[4] > 850:
+        if gs.test_mode == 0 and values[4] > analogy_toggle_point:
             gs.hole_lights[3] = 1
-        elif gs.test_mode == 0 and values[4] < 850:
+        elif gs.test_mode == 0 and values[4] < analogy_toggle_point:
             gs.hole_lights[3] = 0
 
-        if gs.test_mode == 0 and values[5] > 850:
+        if gs.test_mode == 0 and values[5] > analogy_toggle_point:
             gs.hole_lights[4] = 1
-        elif gs.test_mode == 0 and values[5] < 850:
+        elif gs.test_mode == 0 and values[5] < analogy_toggle_point:
             gs.hole_lights[4] = 0
 
-        if gs.test_mode == 0 and values[6] > 850 and gs.sw == 0:        # 觸發開關的條件
+        if gs.test_mode == 0 and values[6] > analogy_toggle_point and gs.sw == 0:        # 觸發開關的條件
             gs.sw = 1                                                   # 觸發後讓gs.sw = 1 （達成閃燈條件）
             self.root.ids.switch_status_text.text = 'switch on'
-        elif gs.test_mode == 0 and values[6] < 850:
+        elif gs.test_mode == 0 and values[6] < analogy_toggle_point:
             self.root.ids.switch_status_text.text = 'switch off'
 
-        if gs.test_mode == 0 and values[7] > 850:                       # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
+        if gs.test_mode == 0 and values[7] > analogy_toggle_point:                       # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
             self.root.ids.switch_status_text.text = 'Collision detection'
-        elif gs.test_mode == 0 and values[7] < 850:
+        elif gs.test_mode == 0 and values[7] < analogy_toggle_point:
             self.root.ids.switch_status_text.text = 'No Collision detection'
 
         if GPIO.input(17):                                              # reset的pin，執行重置函式（reset_on)
