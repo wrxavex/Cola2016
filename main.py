@@ -198,7 +198,7 @@ class ColaApp(App):
             # reset的pin，執行重置函式（reset_on)
             self.reset_on()
 
-        else GPIO.input(17) == 0:
+        elif GPIO.input(17) == 0:
             self.root.ids.reset_status.text = 'no reset press'
 
 
