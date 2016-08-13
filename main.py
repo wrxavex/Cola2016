@@ -188,7 +188,7 @@ class ColaApp(App):
         # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
         if gs.test_mode == 0 and values[7] > analogy_toggle_point:
             self.root.ids.collision_status.text = 'Collision detection'
-        elif values[7] < analogy_toggle_point:
+        elif gs.test_mode == 0 and values[7] < analogy_toggle_point:
             self.root.ids.collision_status.text = 'No Collision detection'
 
         if GPIO.input(17):
@@ -378,6 +378,7 @@ class ColaApp(App):
 
     def all_light(self):            # all_light按鈕 → 全亮
         gs.test_mode = 1
+        gs.sw = 0
 
         for i in range(6):
             gs.lights_status[i] = 1
@@ -387,6 +388,7 @@ class ColaApp(App):
 
     def all_close(self):            # all_close按鈕時執行
         gs.test_mode = 1
+        gs.sw = 0
 
         for i in range(6):
             gs.lights_status[i] = 0
