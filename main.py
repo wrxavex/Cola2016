@@ -113,6 +113,7 @@ class GameStatus():
         # 設定是否是測試模式
         self.test_mode = 0
 
+        # PCA9685 在low_active = 1 時全部拉high，否則拉low
         for i in range(16):
             if low_active == 1:
                 pwm.set_pwm(i, 0, 4095)
