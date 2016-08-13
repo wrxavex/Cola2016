@@ -1,5 +1,5 @@
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'horizontal'
 
     Label:
         id: mcp_label
@@ -8,6 +8,12 @@ BoxLayout:
     Label:
         id: cputemp
         text: 'CPU Temp'
+
+    Button:
+        id: quitbutton
+        text: 'Exit App'
+        size_hint_x: .3
+        on_press: app.stop()
 
     BoxLayout:
         orientation: 'horizontal'
@@ -183,11 +189,5 @@ BoxLayout:
 
         Label:
             id: credit_text
-            text: '2016/08/11 ZNH'
-
-        Button:
-            id: quitbutton
-            text: 'Exit App'
-            size_hint_x: .3
-            on_press: app.stop()
+            text: '2016/08/13 ZNH'
 
