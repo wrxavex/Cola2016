@@ -5,6 +5,10 @@ BoxLayout:
         id: mcp_label
         text: 'Cola 2016'
 
+    Label:
+        id: cputemp
+        text: 'CPU Temp'
+
     BoxLayout:
         orientation: 'horizontal'
 
@@ -83,9 +87,6 @@ BoxLayout:
             id: collision_status
             text: 'collision status'
 
-        Label:
-            id: reset_status
-            text: 'reset pin status'
 
         Button:
             id: switch
@@ -169,9 +170,7 @@ BoxLayout:
         orientation: 'horizontal'
 
 
-        Label:
-            id: cputemp
-            text: 'CPU Temp'
+
 
         Button:
             id: reset
@@ -180,6 +179,10 @@ BoxLayout:
 
     BoxLayout:
         orientation: 'horizontal'
+
+        Label:
+            id: reset_status
+            text: 'reset pin status'
 
         Button:
             id: quitbutton
