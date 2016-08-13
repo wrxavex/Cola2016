@@ -366,7 +366,11 @@ class ColaApp(App):
             gs.lights_status[5] = 0
 
     def switch_on(self):            # 目前沒用
-        print('press switch')
+        print('press switch on')
+        gs.sw = 1
+
+    def switch_on(self):            # 目前沒用
+        print('press switch off')
         gs.sw = 1
 
     def reset_on(self):             # 按下reset的時候執行的

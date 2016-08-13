@@ -106,9 +106,14 @@ BoxLayout:
             text: 'display gs sw status'
 
         Button:
-            id: switch
-            text: 'switch'
+            id: switch_on
+            text: 'switch on'
             on_press: app.switch_on()
+
+        Button:
+            id: switch_off
+            text: 'switch off'
+            on_press: app.switch_off()
 
 
     BoxLayout:
