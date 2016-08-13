@@ -180,10 +180,8 @@ class ColaApp(App):
 
         if gs.test_mode == 0 and values[6] > analogy_toggle_point and gs.sw == 0:        # 觸發開關的條件
             gs.sw = 1                                                   # 觸發後讓gs.sw = 1 （達成閃燈條件）
-            self.root.ids.switch.text = 'switch on'
         elif gs.test_mode == 0 and values[6] < analogy_toggle_point and sw_mode == 1:
             gs.sw = 0
-            self.root.ids.switch.text = 'switch off'
 
         # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
         if gs.test_mode == 0 and values[7] > analogy_toggle_point:
