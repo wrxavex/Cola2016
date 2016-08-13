@@ -113,6 +113,14 @@ class GameStatus():
         # 設定是否是測試模式
         self.test_mode = 0
 
+        for i in range(16):
+            if low_active == 1:
+                pwm.set_pwm(i, 0, 0)
+
+            if low_active == 0:
+                pwm.set_pwm(i, 0, 4095)
+
+
     # 重置遊戲數值
     def game_reset(self):
 
