@@ -188,7 +188,7 @@ class ColaApp(App):
         # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
         if gs.test_mode == 0 and values[7] > analogy_toggle_point:
             self.root.ids.collision_status.text = 'Collision detection'
-        elif gs.test_mode == 0 and values[7] < analogy_toggle_point:
+        elif values[7] < analogy_toggle_point:
             self.root.ids.collision_status.text = 'No Collision detection'
 
         if GPIO.input(17):
@@ -317,7 +317,6 @@ class ColaApp(App):
             self.root.ids.gs_sw_status.text = 'GS SW Active'
         else:
             self.root.ids.gs_sw_status.text = 'GS SW no Active'
-
 
     def light_blinky(self, nap):
         if gs.sw == 1:
