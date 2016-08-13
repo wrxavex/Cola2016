@@ -36,6 +36,15 @@ low_active = 1
 # 設定sw控制模式，sw_mode = 1 的時候開關off的時候就會停止閃燈，sw_mode = 0的時候鬆開還是會閃完count_limit次數
 sw_mode = 1
 
+# mcp3008讀值的頻率，影響到整體的更新率
+mcp3008_Frequency = 0.016
+
+# 閃燈的頻率
+blink_Frequency = 0.25
+
+# sw計數最大值→閃燈時間
+sw_count_limit = 30
+
 # 指定可變電阻最小值
 vr_min = 262
 
@@ -91,7 +100,6 @@ class GameStatus():
         # 開關設定區
         self.sw = 0                 # sw的值
         self.sw_count = 0           # 計算撞到sw後的計數
-        self.sw_count_limit = 30   # sw計數最大值→閃燈時間
 
         # 閃燈作用狀態
         self.lights_status = [0,0,0,0,0,0]
@@ -121,7 +129,6 @@ class GameStatus():
             if low_active == 0:
                 pwm.set_pwm(i, 0, 0)
 
-
     # 重置遊戲數值
     def game_reset(self):
 
@@ -149,10 +156,10 @@ class ColaApp(App):
     def on_start(self):
 
         # 排程執行 udate_mcp3008_value
-        Clock.schedule_interval(self.update_mcp3008_value, 0.0016)
+        Clock.schedule_interval(self.update_mcp3008_value, mcp3008_Frequency)
 
         # 排程執行 light+blinky 改變第二個值可以改變呼叫週期
-        Clock.schedule_interval(self.light_blinky, 0.25)
+        Clock.schedule_interval(self.light_blinky, blink_Frequency)
 
     # 更新mcp3008數值
     def update_mcp3008_value(self, nap):
@@ -346,8 +353,8 @@ class ColaApp(App):
             gs.sw_count = 0
             gs.lights_status = [0,0,0,0,0,0]
 
-        # gs.sw_count_limit（count多少次才結束，也可以想成是閃燈時間）  在game_status的屬性 設定
-        if gs.sw_count > gs.sw_count_limit:
+        # sw_count_limit（count多少次才結束，也可以想成是閃燈時間）  在game_status的屬性 設定
+        if gs.sw_count > sw_count_limit:
             gs.sw = 0
             gs.sw_count = 0
             gs.lights_status = [0,0,0,0,0,0]
