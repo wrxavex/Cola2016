@@ -306,6 +306,11 @@ class ColaApp(App):
         else:
             self.root.ids.L6.text = 'l6 Off'
 
+        if gs.test_mode == 1:
+            self.root.ids.test_mode.text = 'TEST Mode'
+        else:
+            self.root.ids.test_mode.text = 'RUN Mode'
+
     def light_blinky(self, nap):
         if gs.sw == 1:
             gs.sw_count += 1
