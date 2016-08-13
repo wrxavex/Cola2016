@@ -2,19 +2,25 @@
 
 from __future__ import division
 
+# 讀cpu溫度時用到
 import subprocess
 
-# zero edit
+# kivy用
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 
+# PCA9685板用
 import Adafruit_PCA9685 as servo
+
+# MCP3008用
 import Adafruit_MCP3008
 
+# reset pin 用
 import RPi.GPIO as GPIO
 
+# 設定 gpio 命名為bcm
 GPIO.setmode(GPIO.BCM)
 
 # 設17 pin為resetpin
@@ -27,7 +33,7 @@ pwm = servo.PCA9685()
 # 切換low active模式，若為low active 的輸出模組請設1
 low_active = 1
 
-# 設定sw控制模式
+# 設定sw控制模式，sw_mode = 1 的時候
 sw_mode = 1
 
 # 指定可變電阻最小值
@@ -50,9 +56,8 @@ MISO = 9
 MOSI = 10
 CS = 8
 
+# 建立mcp 為adafruit mcp3008物件
 mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
-# print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*range(8)))
-# print('-' * 57)
 
 # 讀mcp3008的函式
 def read_mcp3008():
@@ -61,11 +66,7 @@ def read_mcp3008():
     for i in range(8):
         # The read_adc function will get the value of the specified channel (0-7).
         values[i] = mcp.read_adc(i)
-    # Print the ADC values.
-    # print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
-    # print(values)
     return values
-
 
 
 # 像arduino的map的用法，讀可變電阻用
@@ -92,16 +93,10 @@ class GameStatus():
         self.sw_count = 0           # 計算撞到sw後的計數
         self.sw_count_limit = 30   # sw計數最大值→閃燈時間
 
-        # 洞口燈作用狀態
-        self.hole_lights = [0,0,0,0,0]
-
         # 閃燈作用狀態
         self.lights_status = [0,0,0,0,0,0]
 
-        # 偵測碰撞開關
-        self.cd = 0
-
-        # 六組燈光的調節
+        # 六組閃燈的腳本，腳本為二維陣列，一次呼叫掃福一行值，依序為1到6號燈，值為1時亮燈，0時不亮
         self.light_set = [[1, 0, 1, 1, 1, 1],
                           [0, 1, 0, 1, 1, 1],
                           [1, 0, 1, 0, 1, 1],
@@ -109,23 +104,32 @@ class GameStatus():
                           [1, 1, 1, 0, 1, 0],
                           [1, 1, 1, 1, 0, 1]]
 
+        # 洞口燈作用狀態，共五個洞口燈
+        self.hole_lights = [0,0,0,0,0]
+
+        # 偵測碰撞開關
+        self.cd = 0
+
         # 設定是否是測試模式
         self.test_mode = 0
 
     # 重置遊戲數值
     def game_reset(self):
+
+        # 重置時sw和sw_count歸零
         self.sw = 0
         self.sw_count = 0
 
         # 取消測試模式
         self.test_mode = 0
 
-        # 重置洞口燈
-        self.hole_lights = [0,0,0,0,0]
-
         # 重置閃燈
         self.lights_status = [0,0,0,0,0,0]
 
+        # 重置洞口燈
+        self.hole_lights = [0,0,0,0,0]
+
+        # 沒用到的碰撞偵測
         self.cd = 0
 
 
@@ -153,42 +157,37 @@ class ColaApp(App):
         # 叫pca9685 讓舵機動 （第12pin）
         pwm.set_pwm(12, 0, int(values[0]))
 
-        if gs.test_mode == 0 and values[1] > analogy_toggle_point:   # 讀第二個值，如果不在測試模式下才運作 test_mode 為是否是測試模式
+        # values的[1]到[5]如果不在測試模式下才運作 gs.test_mode 為是否是測試模式
+        if gs.test_mode == 0 and values[1] > analogy_toggle_point:
             gs.hole_lights[0] = 1
-        # elif gs.test_mode == 0 and values[1] < analogy_toggle_point:
-        #     gs.hole_lights[0] = 0
 
         if gs.test_mode == 0 and values[2] > analogy_toggle_point:
             gs.hole_lights[1] = 1
-        # elif gs.test_mode == 0 and values[2] < analogy_toggle_point:
-        #     gs.hole_lights[1] = 0
 
         if gs.test_mode == 0 and values[3] > analogy_toggle_point:
             gs.hole_lights[2] = 1
-        # elif gs.test_mode == 0 and values[3] < analogy_toggle_point:
-        #     gs.hole_lights[2] = 0
 
         if gs.test_mode == 0 and values[4] > analogy_toggle_point:
             gs.hole_lights[3] = 1
-        # elif gs.test_mode == 0 and values[4] < analogy_toggle_point:
-        #     gs.hole_lights[3] = 0
 
         if gs.test_mode == 0 and values[5] > analogy_toggle_point:
             gs.hole_lights[4] = 1
-        # elif gs.test_mode == 0 and values[5] < analogy_toggle_point:
-        #     gs.hole_lights[4] = 0
 
-        if gs.test_mode == 0 and values[6] > analogy_toggle_point and gs.sw == 0:        # 觸發開關的條件
-            gs.sw = 1                                                   # 觸發後讓gs.sw = 1 （達成閃燈條件）
+        # 觸發開關的條件
+        if gs.test_mode == 0 and values[6] > analogy_toggle_point and gs.sw == 0:
+            # 觸發後讓gs.sw = 1 （達成閃燈條件）
+            gs.sw = 1
         elif gs.test_mode == 0 and values[6] < analogy_toggle_point and sw_mode == 1:
+            # 如果sw_mode是1的時候，鬆開sw按鈕會停止閃燈
             gs.sw = 0
 
-        # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
+        # 碰撞觸發的條件 還沒指定要做什麼，只是改變文字狀態（應該是要讓gs.sw = 1)
         if gs.test_mode == 0 and values[7] > analogy_toggle_point:
             self.root.ids.collision_status.text = 'Collision detection'
         elif gs.test_mode == 0 and values[7] < analogy_toggle_point:
             self.root.ids.collision_status.text = 'No Collision detection'
 
+        # 判斷 reset pin 狀態 預設是17 pin
         if GPIO.input(17):
 
             # 顯示 reset pin 狀態
@@ -197,9 +196,11 @@ class ColaApp(App):
             # reset的pin，執行重置函式（reset_on)
             self.reset_on()
 
+        # 沒按到reset pin的時候維持顯示 no reset press
         elif GPIO.input(17) == 0:
             self.root.ids.reset_status.text = 'no reset press'
 
+        # 配置mcp3008值到顯示的文字上
         self.root.ids.mcp0.text = str(int(values[0]))
         self.root.ids.mcp1.text = str(values[1])
         self.root.ids.mcp2.text = str(values[2])
@@ -209,18 +210,24 @@ class ColaApp(App):
         self.root.ids.mcp6.text = str(values[6])
         self.root.ids.mcp7.text = str(values[7])
 
+        # 取 cpu 的值
         cpu_temp_raw_data = subprocess.check_output(["/opt/vc/bin/vcgencmd", "measure_temp"])
         get_cpu_temp = cpu_temp_raw_data.strip()
 
+        # 顯示cpu值至cputemp
         self.root.ids.cputemp.text = get_cpu_temp
 
+        # 掃描light變數至硬體輸出
         self.light_scan()
+
+        # 掃描hole變數至硬體輸出
         self.hole_scan()
+
+        # 更新應對文字顯示資訊
         self.text_scan()
 
     # 閃燈函式 gs.sw = 1 才會 count
-
-    # low active output to pca9685
+    # low_active 指定 pca9685 輸出值為high或low
 
     def light_scan(self):
 
@@ -236,6 +243,7 @@ class ColaApp(App):
                 else:
                     pwm.set_pwm(i, 0, 0)
 
+    # low_active 指定 pca9685 輸出值為high或low
     def hole_scan(self):
 
         for i in range(5):
@@ -250,6 +258,7 @@ class ColaApp(App):
                 else:
                     pwm.set_pwm(i + 6, 0, 0)
 
+    # 更新應對文字顯示資訊
     def text_scan(self):
 
         # 洞口燈掃描
@@ -316,9 +325,14 @@ class ColaApp(App):
         else:
             self.root.ids.gs_sw_status.text = 'GS SW no Active'
 
+    # 閃燈陣列對付至硬體輸出的函式
     def light_blinky(self, nap):
+
+        # gs.sw = 1的話開始計數
         if gs.sw == 1:
             gs.sw_count += 1
+
+        # 不是測試模式時，sw為零時重置sw_count和lights_status的狀態（似乎可以和下面整合，加入todo）
         elif gs.test_mode == 0 and gs.sw == 0:
             gs.sw_count = 0
             gs.lights_status = [0,0,0,0,0,0]
@@ -365,20 +379,24 @@ class ColaApp(App):
 
             gs.lights_status[5] = 0
 
-    def switch_on(self):            # 按鈕執行 switch on
+    # 按鈕執行 switch on
+    def switch_on(self):
         print('press switch on')
         gs.sw = 1
 
-    def switch_off(self):            # 按鈕執行switch off
+    # 按鈕執行switch off
+    def switch_off(self):
         print('press switch off')
         gs.sw = 0
 
-    def reset_on(self):             # 按下reset的時候執行的
+    # 按下reset的時候執行的
+    def reset_on(self):
         print('reset on')
         gs.test_mode = 0            # 關閉測試模式
         gs.game_reset()             # 執行重置
 
-    def all_light(self):            # all_light按鈕 → 全亮
+    # all_light按鈕 → 全亮
+    def all_light(self):
         gs.test_mode = 1
         gs.sw = 0
 
@@ -388,7 +406,8 @@ class ColaApp(App):
         for i in range(5):
             gs.hole_lights[i] = 1
 
-    def all_close(self):            # all_close按鈕時執行
+    # all_close按鈕時執行
+    def all_close(self):
         gs.test_mode = 1
         gs.sw = 0
 
@@ -398,41 +417,7 @@ class ColaApp(App):
         for i in range(5):
             gs.hole_lights[i] = 0
 
-    def h1_press(self):         # 測試模式用 h1 按鈕
-
-        if gs.test_mode == 1 and gs.hole_lights[0] == 0:
-            gs.hole_lights[0] = 1
-        elif gs.test_mode == 1 and gs.hole_lights[0] == 1:
-            gs.hole_lights[0] = 0
-
-    def h2_press(self):
-
-        if gs.test_mode == 1 and gs.hole_lights[1] == 0:
-            gs.hole_lights[1] = 1
-        elif gs.test_mode == 1 and gs.hole_lights[1] == 1:
-            gs.hole_lights[1] = 0
-
-    def h3_press(self):
-
-        if gs.test_mode == 1 and gs.hole_lights[2] == 0:
-            gs.hole_lights[2] = 1
-        elif gs.test_mode == 1 and gs.hole_lights[2] == 1:
-            gs.hole_lights[2] = 0
-
-    def h4_press(self):
-
-        if gs.test_mode == 1 and gs.hole_lights[3] == 0:
-            gs.hole_lights[3] = 1
-        elif gs.test_mode == 1 and gs.hole_lights[3] == 1:
-            gs.hole_lights[3] = 0
-
-    def h5_press(self):
-
-        if gs.test_mode == 1 and gs.hole_lights[4] == 0:
-            gs.hole_lights[4] = 1
-        elif gs.test_mode == 1 and gs.hole_lights[4] == 1:
-            gs.hole_lights[4] = 0
-
+    # 測試模式用 l1 按鈕，以下類推
     def l1_press(self):
 
         if gs.test_mode == 1 and gs.lights_status[0] == 0:
@@ -474,6 +459,42 @@ class ColaApp(App):
             gs.lights_status[5] = 1
         elif gs.test_mode == 1 and gs.lights_status[5] == 1:
             gs.lights_status[5] = 0
+
+    # 測試模式用 h1 按鈕，以下類推
+    def h1_press(self):
+
+        if gs.test_mode == 1 and gs.hole_lights[0] == 0:
+            gs.hole_lights[0] = 1
+        elif gs.test_mode == 1 and gs.hole_lights[0] == 1:
+            gs.hole_lights[0] = 0
+
+    def h2_press(self):
+
+        if gs.test_mode == 1 and gs.hole_lights[1] == 0:
+            gs.hole_lights[1] = 1
+        elif gs.test_mode == 1 and gs.hole_lights[1] == 1:
+            gs.hole_lights[1] = 0
+
+    def h3_press(self):
+
+        if gs.test_mode == 1 and gs.hole_lights[2] == 0:
+            gs.hole_lights[2] = 1
+        elif gs.test_mode == 1 and gs.hole_lights[2] == 1:
+            gs.hole_lights[2] = 0
+
+    def h4_press(self):
+
+        if gs.test_mode == 1 and gs.hole_lights[3] == 0:
+            gs.hole_lights[3] = 1
+        elif gs.test_mode == 1 and gs.hole_lights[3] == 1:
+            gs.hole_lights[3] = 0
+
+    def h5_press(self):
+
+        if gs.test_mode == 1 and gs.hole_lights[4] == 0:
+            gs.hole_lights[4] = 1
+        elif gs.test_mode == 1 and gs.hole_lights[4] == 1:
+            gs.hole_lights[4] = 0
 
 
 class ColaLayout(BoxLayout):
