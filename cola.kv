@@ -1,19 +1,23 @@
 BoxLayout:
-    orientation: 'horizontal'
+    orientation: 'vertical'
 
-    Label:
-        id: mcp_label
-        text: 'Cola 2016'
+    BoxLayout:
+        orientation: 'horizontal'
 
-    Label:
-        id: cputemp
-        text: 'CPU Temp'
+        Label:
+            id: mcp_label
+            text: 'Cola 2016'
 
-    Button:
-        id: quitbutton
-        text: 'Exit App'
-        size_hint_x: .3
-        on_press: app.stop()
+        Label:
+            id: cputemp
+            text: 'CPU Temp'
+
+        Button:
+            id: quitbutton
+            text: 'Exit App'
+            size_hint_x: .3
+            on_press: app.stop()
+
 
     BoxLayout:
         orientation: 'horizontal'
@@ -190,4 +194,5 @@ BoxLayout:
         Label:
             id: credit_text
             text: '2016/08/13 ZNH'
+
 
