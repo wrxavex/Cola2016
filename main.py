@@ -371,7 +371,7 @@ class ColaApp(App):
 
     def switch_off(self):            # 按鈕執行switch off
         print('press switch off')
-        gs.sw = 1
+        gs.sw = 0
 
     def reset_on(self):             # 按下reset的時候執行的
         print('reset on')
