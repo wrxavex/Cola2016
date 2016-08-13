@@ -185,7 +185,8 @@ class ColaApp(App):
             gs.sw = 0
             self.root.ids.switch.text = 'switch off'
 
-        if gs.test_mode == 0 and values[7] > analogy_toggle_point:                       # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
+        # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
+        if gs.test_mode == 0 and values[7] > analogy_toggle_point:
             self.root.ids.collision_status.text = 'Collision detection'
         elif gs.test_mode == 0 and values[7] < analogy_toggle_point:
             self.root.ids.collision_status.text = 'No Collision detection'
@@ -200,7 +201,6 @@ class ColaApp(App):
 
         elif GPIO.input(17) == 0:
             self.root.ids.reset_status.text = 'no reset press'
-
 
         self.root.ids.mcp0.text = str(int(values[0]))
         self.root.ids.mcp1.text = str(values[1])
@@ -306,10 +306,18 @@ class ColaApp(App):
         else:
             self.root.ids.L6.text = 'l6 Off'
 
+        # 顯示是否是測試模式
         if gs.test_mode == 1:
             self.root.ids.test_mode.text = 'TEST Mode'
         else:
             self.root.ids.test_mode.text = 'RUN Mode'
+
+        # 顯示 gs.sw 狀態
+        if gs.sw == 1:
+            self.root.ids.gs_sw_status.text = 'GS SW Active'
+        else:
+            self.root.ids.gs_sw_status.text = 'GS SW no Active'
+
 
     def light_blinky(self, nap):
         if gs.sw == 1:
