@@ -25,7 +25,7 @@ GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 pwm = servo.PCA9685()
 
 # 切換low active模式，若為low active 的輸出模組請設1
-low_active = 0
+low_active = 1
 
 # 設定sw控制模式
 sw_mode = 1
