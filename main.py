@@ -115,10 +115,10 @@ class GameStatus():
 
         for i in range(16):
             if low_active == 1:
-                pwm.set_pwm(i, 0, 0)
+                pwm.set_pwm(i, 0, 4095)
 
             if low_active == 0:
-                pwm.set_pwm(i, 0, 4095)
+                pwm.set_pwm(i, 0, 0)
 
 
     # 重置遊戲數值
