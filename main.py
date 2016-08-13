@@ -365,11 +365,11 @@ class ColaApp(App):
 
             gs.lights_status[5] = 0
 
-    def switch_on(self):            # 目前沒用
+    def switch_on(self):            # 按鈕執行 switch on
         print('press switch on')
         gs.sw = 1
 
-    def switch_on(self):            # 目前沒用
+    def switch_off(self):            # 按鈕執行switch off
         print('press switch off')
         gs.sw = 1
 
