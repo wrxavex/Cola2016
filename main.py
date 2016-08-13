@@ -30,10 +30,10 @@ GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 # Servo : IC2 = 0x40
 pwm = servo.PCA9685()
 
-# 切換low active模式，若為low active 的輸出模組請設1
+# 切換low active模式，若為low active 的輸出模組請設1，high active請設0
 low_active = 1
 
-# 設定sw控制模式，sw_mode = 1 的時候
+# 設定sw控制模式，sw_mode = 1 的時候開關off的時候就會停止閃燈，sw_mode = 0的時候鬆開還是會閃完count_limit次數
 sw_mode = 1
 
 # 指定可變電阻最小值
