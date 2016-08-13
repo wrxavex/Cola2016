@@ -180,18 +180,27 @@ class ColaApp(App):
 
         if gs.test_mode == 0 and values[6] > analogy_toggle_point and gs.sw == 0:        # 觸發開關的條件
             gs.sw = 1                                                   # 觸發後讓gs.sw = 1 （達成閃燈條件）
-            self.root.ids.switch_status_text.text = 'switch on'
+            self.root.ids.switch.text = 'switch on'
         elif gs.test_mode == 0 and values[6] < analogy_toggle_point and sw_mode == 1:
             gs.sw = 0
-            self.root.ids.switch_status_text.text = 'switch off'
+            self.root.ids.switch.text = 'switch off'
 
         if gs.test_mode == 0 and values[7] > analogy_toggle_point:                       # 碰撞觸發的條件 還沒指定要做什麼（應該是要讓gs.sw = 1)
-            self.root.ids.switch_status_text.text = 'Collision detection'
+            self.root.ids.collision_status.text = 'Collision detection'
         elif gs.test_mode == 0 and values[7] < analogy_toggle_point:
-            self.root.ids.switch_status_text.text = 'No Collision detection'
+            self.root.ids.collision_status.text = 'No Collision detection'
 
-        if GPIO.input(17):                                              # reset的pin，執行重置函式（reset_on)
+        if GPIO.input(17):
+
+            # 顯示 reset pin 狀態
+            self.root.ids.reset_status.text = 'reset press'
+
+            # reset的pin，執行重置函式（reset_on)
             self.reset_on()
+
+        else GPIO.input(17) == 0:
+            self.root.ids.reset_status.text = 'no reset press'
+
 
         self.root.ids.mcp0.text = str(int(values[0]))
         self.root.ids.mcp1.text = str(values[1])
